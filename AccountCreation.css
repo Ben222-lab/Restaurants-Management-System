@@ -1,0 +1,121 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* CREATE ACCOUNT BOX */
+
+.Account_Creation {
+    background-color: white;
+
+    width: 500px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    box-shadow: 2px 4px 7px 1px rgb(218, 214, 214);
+
+    border-radius: 10px;
+}
+
+
+/* LOGO */
+
+.Account_Creation img {
+    margin-bottom: 10px;
+}
+
+
+/* HEADING */
+
+.Account_Creation h1 {
+    color: #941b0e;
+
+    font-family: Arial, sans-serif;
+
+    font-weight: 700;
+
+    margin-bottom: 25px;
+}
+
+
+/* INPUT */
+
+.Account_Creation input {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 7px;
+
+    border: 1px solid rgb(228, 223, 223);
+
+    background-color: rgb(245, 242, 242);
+
+    font-size: 15px;
+}
+
+
+/* BUTTON */
+
+.Account_Creation button {
+    width: 100%;
+
+    background-color: #9f1e0f;
+
+    color: white;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    font-family: Arial;
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+.Account_Creation button:hover {
+    background-color: #7d160b;
+
+    transition: 0.5s;
+}
+
+
+/* LOGIN LINK */
+
+.Account_Creation p {
+    margin-top: 20px;
+}
+
+.Account_Creation p a {
+    text-decoration: none;
+
+    color: #9f1e0f;
+
+    font-size: 17px;
+}
+
+.Account_Creation p a:hover {
+    color: #7d160b;
+}
+
+

@@ -1,0 +1,142 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+
+.Nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 50px;
+
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+}
+
+
+/* LOGO */
+
+.Logo {
+    width: 80px;
+}
+
+
+/* NAVIGATION LINKS */
+
+.Nav-bar ul {
+    display: flex;
+    gap: 35px;
+    list-style: none;
+}
+
+.Nav-bar li a {
+    text-decoration: none;
+    color: #941B0E;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+.Nav-bar li a:hover {
+    color: white;
+}
+
+
+/* GET STARTED BUTTON */
+
+.Nav-bar button {
+    border: none;
+    padding: 12px 18px;
+
+    color: black;
+    background-color: white;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.Nav-bar button:hover {
+    background-color: #941B0E;
+    color: black;
+}
+
+
+/* HOME SECTION */
+
+.Home {
+    min-height: 85vh;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 80px;
+
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+        url("./Images/restaurant.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* HOME TEXT */
+
+.Home-text {
+    max-width: 600px;
+}
+
+.Welcome {
+    color: #941B0E;
+    font-size: 18px;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.Home h1 {
+    font-size: 65px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.Description {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #dddddd;
+    margin-bottom: 30px;
+}
+
+
+/* EXPLORE BUTTON */
+
+.Explore {
+    background-color: white;
+    color: black;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 14px 25px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.Explore:hover {
+    background-color: #941B0E;
+}
+
