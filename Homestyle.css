@@ -64,7 +64,7 @@ body {
     font-size: 16px;
 
     cursor: pointer;
-
+    
     transition: 0.3s;
 }
 
@@ -73,8 +73,10 @@ body {
     color: black;
 }
 
-
-/* HOME SECTION */
+.Nav-bar button a{
+    text-decoration: none;
+    color: black;
+}
 
 .Home {
     min-height: 85vh;
@@ -83,17 +85,8 @@ body {
     align-items: center;
 
     padding-left: 80px;
-
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-        url("./Images/restaurant.jpg");
-
-    background-size: cover;
-    background-position: center;
 }
 
-
-/* HOME TEXT */
 
 .Home-text {
     max-width: 600px;
@@ -134,6 +127,11 @@ body {
     font-size: 16px;
 
     cursor: pointer;
+}
+
+.Explore a{
+    text-decoration: none;
+    color: black;
 }
 
 .Explore:hover {
