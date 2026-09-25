@@ -1,0 +1,83 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.Nav_bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background-color: black;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.Nav_bar li{
+    display: flex;
+    gap: 10px;
+    list-style: none;
+}
+
+.Nav_bar li a{
+    text-decoration: none;
+    color: #941B0E;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+.Nav_bar li a:hover{
+    color: white;
+}
+
+
+
+.Main {
+    background-color: rgb(52, 51, 51);
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.Main h2{
+    color: #AC1303;
+    font-size: 50px;
+}
+
+.Main p{
+    font-size: 20px;
+}
+
+.Main >button{
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: none;
+    border-radius: 7px;
+}
+
+.Main >button:hover{
+    background-color: #d3493a;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-radius: 30px;
+    background-color: #941B0E;
+}
+
+.grid button{
+    background-color: #941B0E;
+}
