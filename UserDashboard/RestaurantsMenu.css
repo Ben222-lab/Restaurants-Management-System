@@ -1,16 +1,23 @@
-*{
+* {
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
 }
 
-.Nav_bar{
+body {
+    background-color: black;
+}
+
+/* NAVBAR */
+
+.Nav_bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px 50px;
     background-color: black;
-    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+
     position: fixed;
     top: 0;
     left: 0;
@@ -18,77 +25,178 @@
     z-index: 1000;
 }
 
-.Nav_bar li{
+.Nav_bar li {
     display: flex;
     gap: 10px;
     list-style: none;
 }
 
-.Nav_bar li a{
+.Nav_bar li a {
     text-decoration: none;
-    color: #941B0E;
+    color: #FF8C00;
     font-size: 17px;
     transition: 0.3s;
 }
 
-.Nav_bar li a:hover{
+.Nav_bar li a:hover {
     color: white;
 }
 
 
+/* MAIN HOME SECTION */
 
 .Main {
-    background-image: url(../Images/image.png);
+    background-image: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(255, 140, 0, 0.35)
+        ),
+        url(../Images/image.png);
+
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
     min-height: 90vh;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     color: white;
     text-align: center;
 }
 
-.Main h2{
-    color: #AC1303;
+.Main h2 {
+    color: #FF8C00;
     font-size: 50px;
     font-weight: 1000;
     font-family: 'Times New Roman', Times, serif;
 }
 
-.Main p{
+.Main p {
     font-size: 20px;
     color: white;
 }
 
-.Main >button{
-    background-color: white;
+.Main > button {
+    background-color: #FF8C00;
+    color: black;
+
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+
     border: none;
     border-radius: 7px;
+
+    font-weight: bold;
+    transition: 0.3s;
 }
 
-.Main >button:hover{
-    background-color: #d3493a;
+.Main > button:hover {
+    background-color: white;
+    color: #FF8C00;
 }
 
-.grid{
-    background-color: rgb(209, 199, 199);
+
+/* MENU SECTION */
+
+.grid {
+    background: linear-gradient(
+        to bottom,
+        black,
+        #1a0d00,
+        #3d1c00
+    );
+
+    padding: 60px 30px;
+    min-height: 100vh;
 }
 
-.First_section h6{
-    color: #941B0E;
+.First_section {
+    text-align: center;
 }
 
-.First_section h2{
+.First_section h6 {
+    color: #FF8C00;
+}
+
+.First_section h2 {
     color: white;
 }
 
-.First_section p{
+.First_section p {
+    color: white;
+}
+
+
+/* MENU BUTTONS */
+
+.First_section button {
+    background-color: transparent;
+    color: #FF8C00;
+
+    border: 1px solid #FF8C00;
+    border-radius: 9px;
+
+    padding: 10px 15px;
+    margin: 5px;
+
+    transition: 0.3s;
+}
+
+.First_section button:hover {
+    background-color: #FF8C00;
     color: black;
+}
+
+
+/* NIGERIAN DISHES */
+
+.Sec h2 {
+    color: #FF8C00;
+    margin-top: 40px;
+}
+
+.Sec h6 {
+    color: white;
+}
+
+
+/* FOOD CARD */
+
+.card {
+    background-color: #111;
+    color: white;
+
+    border: 1px solid #FF8C00;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    color: #FF8C00;
+}
+
+.card-text {
+    color: white;
+}
+
+.card .btn {
+    background-color: #FF8C00;
+    border: none;
+    color: black;
+}
+
+.card .btn:hover {
+    background-color: white;
+    color: #FF8C00;
 }

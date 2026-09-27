@@ -6,27 +6,19 @@
 
 body {
     min-height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     background-color: white;
-
     font-family: Arial, sans-serif;
 }
 
 .Login {
     background-color: white;
-
     width: 450px;
-
     padding: 50px;
-
     text-align: center;
-
     box-shadow: 2px 4px 7px 1px rgb(218, 214, 214);
-
     border-radius: 10px;
 }
 
@@ -35,13 +27,18 @@ body {
 }
 
 .Login_1 h1 {
-    color: #941b0e;
+    color: #FF8C00;
     margin-bottom: 10px;
 }
 
 .Login_1 p {
-    color: #6e6a6a;
+    color: #5c5959;
     margin-bottom: 25px;
+}
+
+.Login button a{
+    text-decoration: none;
+    color: white;
 }
 
 input {
@@ -59,59 +56,42 @@ input {
 }
 
 input:focus {
-    border: 1px solid #9f1e0f;
+    border: 1px solid #FF8C00;
 }
 
 .Forget_password {
     display: block;
-
     text-align: right;
-
     text-decoration: none;
-
-    color: #9f1e0f;
-
+    color: #FF8C00;
     font-size: 15px;
-
     margin-bottom: 25px;
 }
 
 button {
     width: 100%;
-
-    background-color: #9f1e0f;
-
+    background-color: #FF8C00;
     color: white;
-
     padding: 15px;
-
     border: none;
-
     border-radius: 20px;
-
     font-family: Arial;
-
     font-size: 17px;
-
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #7d160b;
-
+    background-color: #693f0c;
     transition: 0.5s;
 }
 
 .Login > p {
     margin-top: 20px;
-
     text-align: center;
 }
 
 .Login > p a {
     text-decoration: none;
-
-    color: #9f1e0f;
-
+    color: #FF8C00;
     font-size: 17px;
 }

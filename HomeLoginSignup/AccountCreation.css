@@ -6,135 +6,79 @@
 
 body {
     min-height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     background-color: white;
-
     font-family: Arial, sans-serif;
 }
 
-
-/* CREATE ACCOUNT BOX */
-
 .Account_Creation {
     background-color: white;
-
     width: 500px;
-
     padding: 30px;
-
     text-align: center;
-
     box-shadow: 2px 4px 7px 1px rgb(218, 214, 214);
-
     border-radius: 10px;
 }
 
-
-/* LOGO */
 
 .Account_Creation img {
     margin-bottom: 10px;
 }
 
 
-/* HEADING */
-
 .Account_Creation h1 {
-    color: #941b0e;
-
+    color: #FF8C00;
     font-family: Arial, sans-serif;
-
     font-weight: 700;
-
     margin-bottom: 25px;
 }
 
 
-/* INPUT */
-
 .Account_Creation input {
     width: 100%;
-
     padding: 12px;
-
     border-radius: 7px;
-
     border: 1px solid rgb(236, 232, 232);
-
     background-color: white;
-
     outline: none;
-
     font-size: 15px;
-
     font-family: Arial, sans-serif;
 }
 
-
-/* INPUT WHEN CLICKED */
-
 .Account_Creation input:focus {
-    border: 1px solid #9f1e0f;
+    border: 1px solid #FF8C00;
 }
-
-
-/* BUTTON */
 
 .Account_Creation button {
     width: 100%;
-
-    background-color: #9f1e0f;
-
+    background-color: #FF8C00;
     color: white;
-
     padding: 15px;
-
     border: none;
-
     border-radius: 20px;
-
     font-family: Arial;
-
     font-size: 17px;
-
     cursor: pointer;
 }
 
-
-/* BUTTON HOVER */
-
 .Account_Creation button:hover {
-    background-color: #7d160b;
-
+    background-color: #FF8C00;
     transition: 0.5s;
 }
-
-
-/* TEXT BELOW BUTTON */
 
 .Account_Creation p {
     margin-top: 20px;
 }
 
-
-/* LINK */
-
 .Account_Creation p a {
     text-decoration: none;
-
-    color: #9f1e0f;
-
+    color: #FF8C00;
     font-size: 17px;
 }
 
-
-/* LINK HOVER */
-
 .Account_Creation p a:hover {
-    color: #7d160b;
+    color: #6c4619;
 }
 
