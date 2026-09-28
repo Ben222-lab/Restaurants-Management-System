@@ -92,12 +92,12 @@ body {
 }
 
 .Home {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     padding-left: 80px;
     position: relative;
-    top: 40px;
+    top: 40px;  
     background:
         radial-gradient(
             circle at 75% 50%,
@@ -110,6 +110,7 @@ body {
             #1f0d00 75%,
             #3d1c00 100%
         );
+        overflow: hidden;
 }
 
 .Home-text {
