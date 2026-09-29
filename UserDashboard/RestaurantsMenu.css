@@ -91,7 +91,6 @@ body {
         #1a0d00,
         #3d1c00
     );
-
     padding: 60px 30px;
     min-height: 100vh;
 }
@@ -173,3 +172,45 @@ body {
     justify-content: flex-end;
     gap: 20px;
 }
+
+.table_reservation {
+    background-color: white;
+    color: black;
+    padding: 60px 30px;
+    text-align: center;
+}
+
+.table_reservation h2 {
+    color: #FF8C00;
+    margin-bottom: 20px;
+}
+
+.table_reservation p {
+    color: black;
+    margin-bottom: 30px;
+}
+
+.btn {
+    background-color: #FF8C00;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: rgb(240, 235, 235);
+    color: #FF8C00;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+
