@@ -18,10 +18,12 @@
             <nav class="Nav_bar">
                 <img src="../Images/Logo.png" alt="img" width="80px">
 
-                <li><a href="">Menu</a></li>
-                <li><a href="">Reservation</a></li>
-                <li><a href="">Order</a></li>
-                <li><a href="">History</a></li>
+                <li><a href="#Menu1">Menu</a></li>
+                <li><a href="#Reservation1">Reservation</a></li>
+                <li><a href="" id="Order1">Order</a></li>
+                <li><a href="" id="History1">History</a></li>
+
+                <button class="btn"> <a href="../HomeLoginSignup/Home.html">Logout</a> </button>
             </nav>
         </header>
 
@@ -31,370 +33,383 @@
                 home. <br> At Taste Haven, we bring together delicious meals, fresh ingredients, and a warm
                 dining experience made just for you.
             </p>
-            <button>Explore our menu</button>
+            <a href="#Menu" class="Menuu" >Explore our menu</a>
+          
         </main>
 
-        <section class="grid">
-            <div class="First_section">
-                <img src="../Images/Logo.png" alt="img" width="80px">
-                <h6>THE MENU</h6>
-                <h2>Taste the whole table</h2>
-                <p>From smokey jollof to smooth drinks - pick a section and dig in.</p>
-                <button onclick="category('Nigeria')">Nigerian Dishes</button>
-                <button onclick="category('Intercontinental')">Intercontinental</button>
-                <button onclick="category('Desserts')">Desserts</button>
-                <button onclick="category('LocalDrinks')">Local Drinks</button>
-                <button onclick="category('FruitDrinks')">Fruit Drinks</button>
-                <button onclick="category('SoftDrinks')">Soft Drinks</button>
+        <section id="Menu" class="grid">
+    <div id="Menu1" class="First_section">
+        <img src="../Images/Logo.png" alt="img" width="80px">
 
-                <br> <br>
-                <div class="Sec1">
-                    <h2>Nigerian Dishes</h2>
-                    <h6>4 items . Home classics, served hot</h6>
+        <h6>THE MENU</h6>
+        <h2>Taste the whole table</h2>
+        <p>From smokey jollof to smooth drinks - pick a section and dig in.</p>
+
+        <a href="#Nigeria"><button>Nigerian Dishes</button></a>
+        <a href="#Intercontinental"><button>Intercontinental</button></a>
+        <a href="#Desserts"><button>Desserts</button></a>
+        <a href="#LocalDrinks"><button>Local Drinks</button></a>
+        <a href="#FruitDrinks"><button>Fruit Drinks</button></a>
+        <a href="#SoftDrinks"><button>Soft Drinks</button></a>
+
+        <br>
+        <br>
+
+        <div class="Sec1">
+            <h2>Nigerian Dishes</h2>
+            <h6>4 items . Home classics, served hot</h6>
+        </div>
+
+        <Section class="Nigeria_Head" id="Nigeria">
+
+            <div class="NigerianSub_section1">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/JollofRice.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Jollof Rice - ₦10,000</h5>
+                        <p class="card-text">Rich and flavorful Nigerian jollof rice cooked with fresh tomatoes...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
                 </div>
-
-                <!--Nigeria Dishes-->
-                <Section class="Nigeria_Head" id="Nigeria">
-                    <div class="NigerianSub_section1">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/JollofRice.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Jollof Rice - ₦10,000</h5>
-                                <p class="card-text">Rich and flavorful Nigerian jollof rice cooked with fresh tomatoes...
-                                </p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section2">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/FriedRice.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Fried Rice - ₦15,000</h5>
-                                <p class="card-text">Flavorful fried rice cooked with fresh vegetables, savory spices,...
-                                </p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section3">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/MoiMoi.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Moi-Moi - ₦5,000</h5>
-                                <p class="card-text">Soft and delicious steamed bean pudding made from blended...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Veg.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Vegetable Soup - ₦20,000</h5>
-                                <p class="card-text">Delicious vegetable soup prepared with fresh leafy vegetables...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-                </Section>
-
-                <br><br>
-                <div class="Sec2">
-                    <h2>intercontinental Dishes</h2>
-                    <h6>4 items . Home classics, served hot</h6>
-                </div>
-
-                <!--Intercontinental Dishes-->
-                <Section class="Nigeria_Head" id="Intercontinental">
-                    <div class="NigerianSub_section1">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Caviar.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Caviar - ₦100,000</h5>
-                                <p class="card-text">Fresh salmon grilled to perfection, seasoned with herbs and spices...
-                                </p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section2">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Grilled Salmon.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Grilled Salmon - ₦15,000</h5>
-                                <p class="card-text">Fresh salmon grilled to perfection, seasoned with herbs and spices...
-                                </p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section3">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Beef Lasanga.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Beef Lasanga - ₦15,000</h5>
-                                <p class="card-text">Layers of pasta, seasoned minced beef, rich tomato sauce, and...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Chicken Alfredo.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Chicken Alfredo - ₦20,000</h5>
-                                <p class="card-text">Tender grilled chicken served with creamy Alfredo Sauce and...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-                </Section>
-
-                <br> <br>
-                <div class="Sec3">
-                    <h2>Desserts</h2>
-                    <h6>4 items . Home classics, served cold</h6>
-                </div>
-
-                <!--Desserts Dishes-->
-                <Section class="Nigeria_Head" id="Desserts">
-                    <div class="NigerianSub_section1">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/caramelCustard.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Caramel Custard - ₦10,000</h5>
-                                <p class="card-text">Smooth and creamy custard topped with rich golden caramel for a...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section2">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/BlueBerryPie.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">BlueBerryPie - ₦10,000</h5>
-                                <p class="card-text">A buttery, flaky crust filled with juicy blueberries ana a delicious...
-                                </p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section3">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/cheesecake.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Cheese cake - ₦20,000</h5>
-                                <p class="card-text">Creamy, smooth cheesecake with a buttery crust, offering a rich and...
-                                </p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/fruitParfait.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Fruit Parfait - ₦50,000</h5>
-                                <p class="card-text">Layers of fresh fruits, creamy yogurt, and crunchy toppings for...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-                </Section>
-
-                <br> <br>
-                <div class="Sec4">
-                    <h2>Local Drinks</h2>
-                    <h6>4 items . Home classics, served cold</h6>
-                </div>
-
-                <!--Local Drinks-->
-                <Section class="Nigeria_Head" id="LocalDrinks">
-                    <div class="NigerianSub_section1">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/FuraDaNono.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Fura Da Nono - ₦5,000</h5>
-                                <p class="card-text">A traditional Nigerian drink made from millet ball and fresh...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section2">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/KunuAya.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Kunu Aya - ₦2,000</h5>
-                                <p class="card-text">A smooth and refreshing drink made from tiger nuts, blended...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section3">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/MilletDrink.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Millet Drink - ₦7,000</h5>
-                                <p class="card-text">A refreshing traditional drink from millet and lightly sweetened...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/ZoboDrink.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Zobo Drink - ₦3,000</h5>
-                                <p class="card-text">A refreshing hibiscus-based drink infused with natural fruits...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-                </Section>
-
-                <br> <br>
-                <div class="Sec5">
-                    <h2>Fruit Drinks</h2>
-                    <h6>4 items . Home classics, served cold</h6>
-                </div>
-
-                <!--Fruit Juice-->
-                <Section class="Nigeria_Head" id="SoftDrinks">
-                    <div class="NigerianSub_section1">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Guava.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Guava Juice - ₦5,000</h5>
-                                <p class="card-text">A refreshing drink made from ripe guava, offering a smooth texture...
-                                </p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section2">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/OrangeJuice.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Orange Juice - ₦7,000</h5>
-                                <p class="card-text">Freshly squeezed oranges blended into a refreshing, naturally...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section3">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Pineapple.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Pineapple Juice - ₦8,000</h5>
-                                <p class="card-text">A sweet and tangy deink made from fresh pineapple, perfect for a...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/waterMelon.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Watermelon Juice - ₦4,000</h5>
-                                <p class="card-text">Fresh watermelon blended into a light, naturally sweet, and...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-                </Section>
-
-                <br> <br>
-                <div class="Sec6">
-                    <h2>Soft Drinks</h2>
-                    <h6>4 items . Home classics, served cold</h6>
-                </div>
-
-                <!--Soft Drinks-->
-                <Section class="Nigeria_Head" id="Nigeria">
-                    <div class="NigerianSub_section1">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Pepsi.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Pepsi - ₦5,000</h5>
-                                <p class="card-text">A refreshing carbonated cola drink with a bold, crisp, and sweet taste.
-                                </p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section2">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/CocaCola.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Coca-Cola - ₦5,000</h5>
-                                <p class="card-text">A classic carbonated soft drink with a refreshing, sweet, and
-                                    distictive...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section3">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Fanta.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Fanta - ₦4,000</h5>
-                                <p class="card-text">A refreshing orange-flavored carbonated drink with a sweet...</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="NigerianSub_section4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../Images/Sprite.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Sprite - ₦4,000</h5>
-                                <p class="card-text">A crisp, clear lemon-lime soft drink with a refreshing and zesty
-                                    flavor.</p>
-                                <a href="#" class="btn btn-primary">Explore More</a>
-                            </div>
-                        </div>
-                    </div>
-                </Section>
             </div>
-        </section>
+
+            <div class="NigerianSub_section2">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/FriedRice.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Fried Rice - ₦15,000</h5>
+                        <p class="card-text">Flavorful fried rice cooked with fresh vegetables, savory spices,...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section3">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/MoiMoi.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Moi-Moi - ₦5,000</h5>
+                        <p class="card-text">Soft and delicious steamed bean pudding made from blended...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section4">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Veg.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Vegetable Soup - ₦20,000</h5>
+                        <p class="card-text">Delicious vegetable soup prepared with fresh leafy vegetables...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+        </Section>
+
+        <br>
+        <br>
+
+        <div class="Sec2">
+            <h2>Intercontinental Dishes</h2>
+            <h6>4 items . Home classics, served hot</h6>
+        </div>
+
+        <Section class="Nigeria_Head" id="Intercontinental">
+
+            <div class="NigerianSub_section1">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Caviar.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Caviar - ₦100,000</h5>
+                        <p class="card-text">Fresh salmon grilled to perfection, seasoned with herbs and spices...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section2">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Grilled Salmon.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Grilled Salmon - ₦15,000</h5>
+                        <p class="card-text">Fresh salmon grilled to perfection, seasoned with herbs and spices...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section3">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Beef Lasanga.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Beef Lasanga - ₦15,000</h5>
+                        <p class="card-text">Layers of pasta, seasoned minced beef, rich tomato sauce, and...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section4">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Chicken Alfredo.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Alfredo - ₦20,000</h5>
+                        <p class="card-text">Tender grilled chicken served with creamy Alfredo Sauce and...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+        </Section>
+
+        <br>
+        <br>
+
+        <div class="Sec3">
+            <h2>Desserts</h2>
+            <h6>4 items . Home classics, served cold</h6>
+        </div>
+
+        <Section class="Nigeria_Head" id="Desserts">
+
+            <div class="NigerianSub_section1">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/caramelCustard.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Caramel Custard - ₦10,000</h5>
+                        <p class="card-text">Smooth and creamy custard topped with rich golden caramel for a...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section2">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/BlueBerryPie.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">BlueBerryPie - ₦10,000</h5>
+                        <p class="card-text">A buttery, flaky crust filled with juicy blueberries ana a delicious...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section3">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/cheesecake.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Cheese cake - ₦20,000</h5>
+                        <p class="card-text">Creamy, smooth cheesecake with a buttery crust, offering a rich and...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section4">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/fruitParfait.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Fruit Parfait - ₦50,000</h5>
+                        <p class="card-text">Layers of fresh fruits, creamy yogurt, and crunchy toppings for...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+        </Section>
+
+        <br>
+        <br>
+
+        <div class="Sec4">
+            <h2>Local Drinks</h2>
+            <h6>4 items . Home classics, served cold</h6>
+        </div>
+
+        <Section class="Nigeria_Head" id="LocalDrinks">
+
+            <div class="NigerianSub_section1">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/FuraDaNono.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Fura Da Nono - ₦5,000</h5>
+                        <p class="card-text">A traditional Nigerian drink made from millet ball and fresh...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section2">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/KunuAya.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Kunu Aya - ₦2,000</h5>
+                        <p class="card-text">A smooth and refreshing drink made from tiger nuts, blended...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section3">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/MilletDrink.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Millet Drink - ₦7,000</h5>
+                        <p class="card-text">A refreshing traditional drink from millet and lightly sweetened...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section4">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/ZoboDrink.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Zobo Drink - ₦3,000</h5>
+                        <p class="card-text">A refreshing hibiscus-based drink infused with natural fruits...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+        </Section>
+
+        <br>
+        <br>
+
+        <div class="Sec5">
+            <h2>Fruit Drinks</h2>
+            <h6>4 items . Home classics, served cold</h6>
+        </div>
+
+        <Section class="Nigeria_Head" id="FruitDrinks">
+
+            <div class="NigerianSub_section1">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Guava.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Guava Juice - ₦5,000</h5>
+                        <p class="card-text">A refreshing drink made from ripe guava, offering a smooth texture...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section2">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/OrangeJuice.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Orange Juice - ₦7,000</h5>
+                        <p class="card-text">Freshly squeezed oranges blended into a refreshing, naturally...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section3">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Pineapple.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Pineapple Juice - ₦8,000</h5>
+                        <p class="card-text">A sweet and tangy deink made from fresh pineapple, perfect for a...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section4">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/waterMelon.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Watermelon Juice - ₦4,000</h5>
+                        <p class="card-text">Fresh watermelon blended into a light, naturally sweet, and...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+        </Section>
+
+        <br>
+        <br>
+
+        <div class="Sec6">
+            <h2>Soft Drinks</h2>
+            <h6>4 items . Home classics, served cold</h6>
+        </div>
+
+        <Section class="Nigeria_Head" id="SoftDrinks">
+
+            <div class="NigerianSub_section1">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Pepsi.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Pepsi - ₦5,000</h5>
+                        <p class="card-text">A refreshing carbonated cola drink with a bold, crisp, and sweet taste.</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section2">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/CocaCola.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Coca-Cola - ₦5,000</h5>
+                        <p class="card-text">A classic carbonated soft drink with a refreshing, sweet, and distictive...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section3">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Fanta.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Fanta - ₦4,000</h5>
+                        <p class="card-text">A refreshing orange-flavored carbonated drink with a sweet...</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="NigerianSub_section4">
+                <div class="card" style="width: 18rem;">
+                    <img src="../Images/Sprite.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Sprite - ₦4,000</h5>
+                        <p class="card-text">A crisp, clear lemon-lime soft drink with a refreshing and zesty flavor.</p>
+                        <a href="#" class="btn btn-primary">Explore More</a>
+                    </div>
+                </div>
+            </div>
+
+        </Section>
+
+    </div>
+</section>
 
         <!--table reservation-->
-        <section class="table_reservation">
+        <section id="Reservation1" class="table_reservation">
             <div class="reservation">
                 <h2>Reserve a Table</h2>
                 <p>Book your table in advance and enjoy a seamless dining experience at Taste Haven. Our easy-to-use
                     reservation system allows you to select your preferred date, time, and party size, ensuring that
                     your table is ready when you arrive. Whether it's a special occasion or a casual meal, reserving a
                     table guarantees you a spot at our restaurant.</p>
-                <button class="btn">Reserve Now</button>
+                <a href="#reservation"><button class="btn">Reserva Now</button></a>
+
             </div>
 
-            <div>
+            <div id="reservation" class="Reservation Section">
                 <h2>Table Reservation</h2>
                 <label for="Name">Full Name*</label>
                 <input type="text" placeholder="First name">
                 <input type="text" placeholder="Last name">
                 <br> <br>
-                <label for=Phone">Phone Number*</label>
+                <label for="Phone">Phone Number*</label>
                 <input type="number" placeholder="Whatsapp number">
                 <input type="number" placeholder="Contact number">
                 <br> <br>
