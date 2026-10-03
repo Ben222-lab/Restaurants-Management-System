@@ -24,7 +24,7 @@ body {
     z-index: 1000;
 }
 
-.Circle_image{
+.Circle_image {
     width: 400px;
     height: 400px;
     background: orange;
@@ -39,11 +39,11 @@ body {
     border: 1px solid orange;
 }
 
-.Circle_image img{
+.Circle_image img {
     transition: 1s;
 }
 
-.Circle_image:hover{
+.Circle_image:hover {
     position: relative;
     z-index: 10;
     transform: scale(1.1);
@@ -53,7 +53,7 @@ body {
     width: 80px;
 }
 
-.Nav-bar ul {
+.Nav-links {
     display: flex;
     gap: 35px;
     list-style: none;
@@ -91,26 +91,26 @@ body {
     font-weight: bold;
 }
 
+.Menu-button {
+    display: none;
+}
+
 .Home {
     height: 100vh;
     display: flex;
     align-items: center;
     padding-left: 80px;
     position: relative;
-    top: 40px;  
+    top: 40px;
     background:
-        radial-gradient(
-            circle at 75% 50%,
+        radial-gradient(circle at 75% 50%,
             rgba(255, 140, 0, 0.35),
-            transparent 35%
-        ),
-        linear-gradient(
-            120deg,
+            transparent 35%),
+        linear-gradient(120deg,
             black 50%,
             #1f0d00 75%,
-            #3d1c00 100%
-        );
-        overflow: hidden;
+            #3d1c00 100%);
+    overflow: hidden;
 }
 
 .Home-text {
@@ -161,3 +161,143 @@ body {
     background-color: white;
 }
 
+/* Large phones and tablets */
+@media (max-width: 768px) {
+
+    .Nav-bar {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .Logo {
+        width: 65px;
+    }
+
+    .Menu-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        color: #FF8C00;
+        padding: 0;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .Menu-button:hover {
+        background: none;
+        color: white;
+    }
+
+    .Nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .Nav-links.Show {
+        display: flex;
+    }
+
+    .Nav-bar li a {
+        font-size: 16px;
+    }
+
+    .GetStarted {
+        display: none;
+    }
+
+    .Home {
+        min-height: 100vh;
+        height: auto;
+        padding: 140px 25px 60px;
+        top: 0;
+        display: flex;
+        align-items: flex-start;
+        overflow: hidden;
+    }
+
+    .Home-text {
+        width: 100%;
+        max-width: 100%;
+        top: 0;
+    }
+
+    .Welcome {
+        font-size: 14px;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+    }
+
+    .Home h1 {
+        font-size: 42px;
+        line-height: 1.1;
+        margin-bottom: 18px;
+    }
+
+    .Description {
+        font-size: 16px;
+        line-height: 1.5;
+        max-width: 450px;
+        margin-bottom: 25px;
+    }
+
+    .Explore {
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+
+    .Circle_image {
+        width: 280px;
+        height: 280px;
+        left: auto;
+        top: auto;
+        margin: 50px auto 0;
+        position: relative;
+    }
+
+    .Circle_image img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Phone */
+@media (max-width: 480px) {
+
+    .Nav-bar {
+        justify-content: space-between;
+    }
+
+    .Nav-links {
+        width: 100%;
+        gap: 15px;
+    }
+
+    .Home {
+        padding: 180px 20px 50px;
+    }
+
+    .Home h1 {
+        font-size: 36px;
+    }
+
+    .Welcome {
+        font-size: 13px;
+    }
+
+    .Description {
+        font-size: 15px;
+    }
+
+    .Circle_image {
+        width: 230px;
+        height: 230px;
+        margin-top: 40px;
+    }
+}

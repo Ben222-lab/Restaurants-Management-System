@@ -95,3 +95,42 @@ button:hover {
     color: #FF8C00;
     font-size: 17px;
 }
+
+/* TABLET VIEW */
+@media (max-width: 768px) {
+
+    .Login {
+        width: 90%;
+        padding: 40px;
+    }
+
+}
+
+
+/* PHONE VIEW */
+@media (max-width: 480px) {
+
+    .Login {
+        width: 90%;
+        padding: 30px 20px;
+    }
+
+    .Login_1 h1 {
+        font-size: 28px;
+    }
+
+    .Login_1 p {
+        font-size: 14px;
+    }
+
+    input {
+        font-size: 14px;
+        padding: 11px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 13px;
+    }
+
+}
