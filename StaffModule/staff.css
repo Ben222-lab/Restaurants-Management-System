@@ -1,0 +1,85 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.sidebar{
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    background: #1b0b01;
+    transition: all 0.5s ease;
+}
+
+.nav-links li{
+    list-style: none;
+    text-align: left;
+    padding: 10px 20px;
+}
+
+.nav-links li a{
+    text-decoration: none;
+    color: #E57500;
+    display: block;
+    font-size: 17px;
+    letter-spacing: 1px;
+    line-height: 50px;
+    font-weight: 500;
+}
+
+.nav-links li a:hover{
+    color: #E57500;;
+    background: rgb(97, 95, 95);
+    border-radius: 12px;
+}
+
+.logout-btn{
+    background-color: #FF8C00;
+    color: black;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    padding: 5px 25px 7px;
+    position: relative;
+    top: -2px;
+    left: 20px;
+    padding: 10px 20px;
+    bottom: 80px;
+    
+}
+
+.logout-btn:hover{
+    background-color: #E57500;
+    color: black;
+}
+
+.nav-links h2{
+    color: rgb(216, 203, 203);
+    font-size: 29px;
+    font-weight: 600;
+    padding-left: 20px;
+    padding-top: 20px;
+    position: relative;
+    left: -15px;
+    top: -27px;
+}
+
+.main-content{
+  background-color: #F4F0E9;
+}
+
+.content{
+    margin-left: 250px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
+.Stats{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    position: relative;
+    left: 48px;
+}
