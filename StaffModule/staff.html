@@ -4,53 +4,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Taste Haven - Staff Dashboard</title>
 
     <link rel="stylesheet" href="./staff.css">
 </head>
 
 <body>
 
-    <!-- sidebar -->
+    <!-- Sidebar -->
     <sidebar class="sidebar">
+
         <div class="logo">
-            <img src="../images/logo.png" alt="img" width="100px" height="100px">
+            <img src="../images/logo.png" alt="Taste Haven Logo" width="100px" height="100px">
         </div>
+
         <ul class="nav-links">
+
             <h2>Staff Dashboard</h2>
-            <li><a href="#">🔔 New Orders</a></li>
-            <li><a href="#">🔔 Order Status</a></li>
-            <li><a href="#">☑️ Manage Tables</a></li>
-            <li><a href="#">🪑 Customer & Booking</a></li>
-            <li><a href="#">💳 Paymenets</a></li>
+
+            <li><a href="#NewOrders">🔔 New Orders</a></li>
+            <li><a href="#OrderStatus">📋 Order Status</a></li>
+            <li><a href="#ManageTables">☑️ Manage Tables</a></li>
+            <li><a href="#CustomerBooking">🪑 Customer & Booking</a></li>
+            <li><a href="#Payments">💳 Payments</a></li>
+
         </ul>
-        <button class="logout-btn">Logout</button>
+
+        <button class="logout-btn"> <a href="../HomeLoginSignup/Home.html"> Logout</a></button>
+
     </sidebar>
 
-    <!--Main Content-->
-    <section class="main-content">
+
+    <!-- Main Content -->
+    <section>
 
         <div class="content">
+
             <h1>Welcome to Staff Dashboard</h1>
-            <p>Here you can manage orders, tables, customers, and payments.</p>
+
+            <p>
+                Manage restaurant orders, tables, customers, bookings,
+                and payments from one place.
+            </p>
+
         </div>
 
-        <div class="stats">
-            <h1>12</h1>
-            <p>Active Orders</p>
+
+        <div class="content1" id="NewOrders">
+
+            <h2>🔔 Incoming Orders</h2>
+            <p style="position: relative; left: 700px; bottom: 30px;">Accept or reject orders</p>
+
+            <section class="Box">
+                <div class="Box1">
+                    <h2>#1043</h2>
+                    <p>Pending</p>
+                </div>
+
+                <div>
+                    <p>Table 4 . 2:18 PM</p>
+                    <h2>2 x Jollof Rice & Chicken <br> 1 x Chapman</h2>
+                </div>
+
+                <button style="background-color: #C8501E; color: white;">Accept</button>
+                <button style="background-color: white; border: 1px solid #E27F7F;">Reject</button>
+            </section>
+
+            <section class="Boxx">
+                <div class="Box2">
+                    <h2>#1044</h2>
+                    <p>Pending</p>
+                </div>
+
+                <div>
+                    <p>Takeaway. 2:20 PM</p>
+                    <h2>1 x Fried Rice & Turkey <br> 2 x Zobo</h2>
+                </div>
+
+                <button style="background-color: #C8501E; color: white;">Accept</button>
+                <button style="background-color: white; border: 1px solid #E27F7F;">Reject</button>
+            </section>
         </div>
 
-        <div class="stats">
-            <h1>6/14</h1>
-            <p>Tables occupied</p>
+        <!--Order Status-->
+        <div class="content1" id="OrderStatus">
+
+            <h2>🔄 Updated order status</h2>
+
+            <table class="Tables">
+                <thead>
+                    <tr>
+                        <th>ORDER</th>
+                        <th>LOCATION</th>
+                        <th>ITEMS</th>
+                        <th>STATUS</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>#1045</td>
+                        <td>Table 7</td>
+                        <td>5 items</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>#1044</td>
+                        <td>Table 2</td>
+                        <td>1 items</td>
+                        <td><span class="status accepted">Accepted</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>#1043</td>
+                        <td>Table 6</td>
+                        <td>9 items</td>
+                        <td><span class="status preparing">Preparing</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>#1042</td>
+                        <td>Delivery</td>
+                        <td>10 items</td>
+                        <td><span class="status ready">Ready</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>#1041</td>
+                        <td>Table 1</td>
+                        <td>3 items</td>
+                        <td><span class="status completed">Completed</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
         </div>
 
-        <div>
-            <h1>5</h1>
-            <p>Available Reservations</p>
+        <!--Manage Tables-->
+        <div class="content1" id="ManageTables">
+
+            <h2>☑️ Manage Tables</h2>
+
+            <!-- Table Overview Cards Grid -->
+            <div class="table-grid">
+
+                <!-- Table 1 -->
+                <div class="table-card available">
+                    <div class="table-header">
+                        <h3>Table 1</h3>
+                        <span class="status-badge available">Available</span>
+                    </div>
+                    <p>Capacity: 2 Seats</p>
+                    <div class="table-actions">
+                        <button class="action-btn">Occupy Table</button>
+                        <button class="action-btn outline">Reserve</button>
+                    </div>
+                </div>
+
+                <!-- Table 2 -->
+                <div class="table-card occupied">
+                    <div class="table-header">
+                        <h3>Table 2</h3>
+                        <span class="status-badge occupied">Occupied</span>
+                    </div>
+                    <p>Capacity: 4 Seats</p>
+                    <div class="table-actions">
+                        <button class="action-btn">Clear Table</button>
+                    </div>
+                </div>
+
+                <!-- Table 3 -->
+                <div class="table-card reserved">
+                    <div class="table-header">
+                        <h3>Table 3</h3>
+                        <span class="status-badge reserved">Reserved</span>
+                    </div>
+                    <p>Capacity: 6 Seats (7:00 PM)</p>
+                    <div class="table-actions">
+                        <button class="action-btn">Seat Customer</button>
+                        <button class="action-btn outline">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Table 4 -->
+                <div class="table-card available">
+                    <div class="table-header">
+                        <h3>Table 4</h3>
+                        <span class="status-badge available">Available</span>
+                    </div>
+                    <p>Capacity: 2 Seats</p>
+                    <div class="table-actions">
+                        <button class="action-btn">Occupy Table</button>
+                        <button class="action-btn outline">Reserve</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="content1" id="CustomerBooking">
+
+            <h2>🪑 Customer & Booking</h2>
+
+            <p>
+                View customer information and manage table reservations
+                and bookings.
+            </p>
+
+            <button class="view-btn">View Bookings</button>
+
+        </div>
+
+
+        <div class="content1" id="Payments">
+
+            <h2>💳 Payments</h2>
+
+            <p>
+                Check customer payments and keep track of completed
+                restaurant transactions.
+            </p>
+
+            <button class="view-btn">View Payments</button>
+
         </div>
 
     </section>
+
+
+
 </body>
 
 </html>
