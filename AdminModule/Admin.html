@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taste Haven - Admin Dashboard</title>
+    <link rel="stylesheet" href="Admin.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img src="../Images/logo.png" alt="img" width="120px" width="30px">
+        </div>
+
+        <nav style="position: relative; top: -80px; line-height: 0.8">
+            <a href="#Dashboard">Dashboard</a>
+            <a href="#MenuManagement">Menu Management</a>
+            <a href="#StaffManagement">Staff Management</a>
+            <a href="#CustomerManagement">Customer Management</a>
+            <a href="#TableManagement">Table Management</a>
+            <a href="#Reservations">Reservations</a>
+            <a href="#Orders">Orders</a>
+            <a href="#Reports">Reports</a>
+            <a href="#Settings">Settings</a>
+        </nav>
+
+        <div class="logout-btn">
+            <a href="../HomeLoginSignup/Home.html">Logout</a>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="admin-header">
+
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Welcome back, Admin</p>
+            </div>
+
+        </header>
+
+
+        <!-- Dashboard -->
+        <section id="Dashboard" class="dashboard-section">
+
+            <h2>Dashboard Overview</h2>
+
+            <div class="dashboard-cards">
+
+                <div class="dashboard-card">
+                    <h3>Today's Sales</h3>
+                    <p>₦250,000</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Total Orders</h3>
+                    <p>45</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Total Customers</h3>
+                    <p>32</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Active Reservations</h3>
+                    <p>12</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Menu Management -->
+        <section id="MenuManagement" class="admin-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Menu Management</h2>
+                    <p>Add, edit, or delete restaurant menu items.</p>
+                </div>
+
+                <button>Add Menu Item</button>
+            </div>
+
+            <div class="management-box">
+
+                <div class="menu-item">
+                    <div>
+                        <h3>Jollof Rice</h3>
+                        <p>₦10,000</p>
+                    </div>
+
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div>
+                        <h3>Fried Rice</h3>
+                        <p>₦15,000</p>
+                    </div>
+
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div>
+                        <h3>Moi-Moi</h3>
+                        <p>₦5,000</p>
+                    </div>
+
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Staff Management -->
+        <section id="StaffManagement" class="admin-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Staff Management</h2>
+                    <p>Manage staff accounts and roles.</p>
+                </div>
+
+                <button>Add Staff</button>
+            </div>
+
+            <div class="management-box">
+
+                <div class="staff-item">
+                    <div>
+                        <h3>Benjamin</h3>
+                        <p>Manager</p>
+                    </div>
+
+                    <span>Active</span>
+                </div>
+
+                <div class="staff-item">
+                    <div>
+                        <h3>John</h3>
+                        <p>Waiter</p>
+                    </div>
+
+                    <span>Active</span>
+                </div>
+
+                <div class="staff-item">
+                    <div>
+                        <h3>Mary</h3>
+                        <p>Cashier</p>
+                    </div>
+
+                    <span>Active</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Customer Management -->
+        <section id="CustomerManagement" class="admin-section">
+
+            <h2>Customer Management</h2>
+            <p>View and manage the customer database.</p>
+
+            <div class="management-box">
+
+                <div class="customer-item">
+                    <h3>Benjamin</h3>
+                    <p>benjamin@email.com</p>
+                    <p>Orders: 8</p>
+                </div>
+
+                <div class="customer-item">
+                    <h3>David</h3>
+                    <p>david@email.com</p>
+                    <p>Orders: 5</p>
+                </div>
+
+                <div class="customer-item">
+                    <h3>Sarah</h3>
+                    <p>sarah@email.com</p>
+                    <p>Orders: 10</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Table Management -->
+        <section id="TableManagement" class="admin-section">
+
+            <h2>Table Management</h2>
+            <p>Configure and monitor restaurant tables.</p>
+
+            <div class="table-container">
+
+                <div class="restaurant-table">
+                    <h3>Table 1</h3>
+                    <p>Available</p>
+                </div>
+
+                <div class="restaurant-table">
+                    <h3>Table 2</h3>
+                    <p>Occupied</p>
+                </div>
+
+                <div class="restaurant-table">
+                    <h3>Table 3</h3>
+                    <p>Reserved</p>
+                </div>
+
+                <div class="restaurant-table">
+                    <h3>Table 4</h3>
+                    <p>Available</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Reservations -->
+        <section id="Reservations" class="admin-section">
+
+            <h2>Reservations</h2>
+            <p>Manage table reservations.</p>
+
+            <div class="management-box">
+
+                <div class="reservation-item">
+                    <h3>Benjamin</h3>
+                    <p>Date: September 20</p>
+                    <p>Time: 7:00 PM</p>
+                    <p>Guests: 4</p>
+                    <span>Reserved</span>
+                </div>
+
+                <div class="reservation-item">
+                    <h3>Walk-in Guest</h3>
+                    <p>Date: September 20</p>
+                    <p>Time: 8:00 PM</p>
+                    <p>Guests: 2</p>
+                    <span>Reserved</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Orders -->
+        <section id="Orders" class="admin-section">
+
+            <h2>Orders</h2>
+            <p>Review active and historical orders.</p>
+
+            <div class="management-box">
+
+                <div class="order-item">
+                    <h3>Order #1025</h3>
+                    <p>Customer: Benjamin</p>
+                    <p>Total: ₦12,500</p>
+                    <span>Completed</span>
+                </div>
+
+                <div class="order-item">
+                    <h3>Order #1026</h3>
+                    <p>Customer: Sarah</p>
+                    <p>Total: ₦18,000</p>
+                    <span>Preparing</span>
+                </div>
+
+                <div class="order-item">
+                    <h3>Order #1027</h3>
+                    <p>Customer: David</p>
+                    <p>Total: ₦9,500</p>
+                    <span>Pending</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Reports -->
+        <section id="Reports" class="admin-section">
+
+            <h2>Reports & Analytics</h2>
+            <p>Analyze sales performance and restaurant activity.</p>
+
+            <div class="report-container">
+
+                <div class="report-card">
+                    <h3>Total Sales</h3>
+                    <p>₦250,000</p>
+                </div>
+
+                <div class="report-card">
+                    <h3>Total Orders</h3>
+                    <p>45</p>
+                </div>
+
+                <div class="report-card">
+                    <h3>Average Order</h3>
+                    <p>₦5,555</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Settings -->
+        <section id="Settings" class="admin-section">
+
+            <h2>Restaurant Settings</h2>
+            <p>Configure your restaurant settings.</p>
+
+            <div class="management-box">
+
+                <div class="setting-item">
+                    <h3>Restaurant Name</h3>
+                    <p>Taste Haven</p>
+                </div>
+
+                <div class="setting-item">
+                    <h3>Number of Tables</h3>
+                    <p>4 Tables</p>
+                </div>
+
+                <div class="setting-item">
+                    <h3>Restaurant Status</h3>
+                    <p>Open</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
