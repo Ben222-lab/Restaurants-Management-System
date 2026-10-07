@@ -1,0 +1,81 @@
+.Login_Choice {
+    width: 420px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.12);
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    position: relative;
+    bottom: -140px;
+}
+
+.Login_Choice h2 {
+    color: #FF8C00;
+    margin-bottom: 8px;
+}
+
+.Login_Choice>p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.Login_Options {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.Login_Box {
+    width: 110px;
+    padding: 18px 10px;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #222;
+    transition: 0.3s;
+}
+
+.Login_Box span {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.Login_Box h3 {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.Login_Box p {
+    font-size: 11px;
+    color: #777;
+    line-height: 1.4;
+}
+
+.Login_Box:hover {
+    border-color: #FF8C00;
+    transform: translateY(-4px);
+    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.2);
+}
+
+.Login_Box:hover h3 {
+    color: #FF8C00;
+}
+
+@media (max-width: 480px) {
+    .Login_Choice {
+        width: 90%;
+        padding: 25px 15px;
+    }
+
+    .Login_Options {
+        flex-direction: column;
+    }
+
+    .Login_Box {
+        width: 100%;
+    }
+}
