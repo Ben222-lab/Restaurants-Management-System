@@ -68,7 +68,7 @@ body {
 }
 
 .Input_Group input:focus {
-    border-color: #FF8C00;
+    border-color: black;
 }
 
 .Login_Options {
@@ -112,8 +112,18 @@ body {
     cursor: pointer;
 }
 
+#StaffLogin a {
+    text-decoration: none;
+    color: white;
+}
+
 #StaffLogin:hover {
-    background-color: black;
+    background-color: #FFF3E0;
+    
+}
+
+#StaffLogin:hover a {
+    color: #FF8C00;
 }
 
 .Back_Home {
@@ -148,4 +158,3 @@ body {
         gap: 12px;
     }
 }
-
