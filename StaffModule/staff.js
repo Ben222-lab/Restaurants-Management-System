@@ -1,8 +1,3 @@
-
-// =============================
-// INCOMING ORDERS
-// =============================
-
 const orderBoxes = document.querySelectorAll(".Box, .Boxx");
 
 orderBoxes.forEach(function (order) {

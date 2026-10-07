@@ -47,13 +47,39 @@
                 and payments from one place.
             </p>
 
+            <!-- Dashboard Overview Cards -->
+            <div class="dashboard-overview">
+
+                <div class="overview-card">
+                    <h4>Today's Sales</h4>
+                    <p class="overview-number">₦250,000</p>
+                </div>
+
+                <div class="overview-card">
+                    <h4>Total Orders</h4>
+                    <p class="overview-number">45</p>
+                </div>
+
+                <div class="overview-card">
+                    <h4>Total Customers</h4>
+                    <p class="overview-number">32</p>
+                </div>
+
+                <div class="overview-card">
+                    <h4>Active Reservations</h4>
+                    <p class="overview-number">12</p>
+                </div>
+
+            </div>
+
         </div>
 
 
+        <!-- Incoming Orders -->
         <div class="content1" id="NewOrders">
 
             <h2>🔔 Incoming Orders</h2>
-            <p style="position: relative; left: 700px; bottom: 30px;">Accept or reject orders</p>
+            <p>Accept or reject orders</p>
 
             <section class="Box">
                 <div class="Box1">
@@ -67,7 +93,7 @@
                 </div>
 
                 <button style="background-color: #C8501E; color: white;">Accept</button>
-                <button style="background-color: white; border: 1px solid #E27F7F;">Reject</button>
+                <button style="background-color: white; border: 1px solid #E27F7F; color: #C8501E;">Reject</button>
             </section>
 
             <section class="Boxx">
@@ -82,14 +108,14 @@
                 </div>
 
                 <button style="background-color: #C8501E; color: white;">Accept</button>
-                <button style="background-color: white; border: 1px solid #E27F7F;">Reject</button>
+                <button style="background-color: white; border: 1px solid #E27F7F; color: #C8501E;">Reject</button>
             </section>
         </div>
 
-        <!--Order Status-->
+        <!-- Order Status -->
         <div class="content1" id="OrderStatus">
 
-            <h2>🔄 Updated order status</h2>
+            <h2>📋 Updated order status</h2>
 
             <table class="Tables">
                 <thead>
@@ -99,7 +125,6 @@
                         <th>ITEMS</th>
                         <th>STATUS</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
@@ -137,13 +162,12 @@
                         <td>3 items</td>
                         <td><span class="status completed">Completed</span></td>
                     </tr>
-
                 </tbody>
             </table>
 
         </div>
 
-        <!--Manage Tables-->
+        <!-- Manage Tables -->
         <div class="content1" id="ManageTables">
 
             <h2>☑️ Manage Tables</h2>
@@ -206,12 +230,10 @@
 
         </div>
 
-
-        <!--Customer & Booking-->
+        <!-- Customer & Booking -->
         <div class="content1" id="CustomerBooking">
 
             <h2>🪑 Customer & Bookings</h2>
-
 
             <!-- Bookings Table -->
             <table class="Tables">
@@ -231,9 +253,9 @@
                         <td><strong>Amaka Okafor</strong></td>
                         <td>+234 801 234 5678</td>
                         <td>12/2/2023, 7:00 PM</td>
-                        <td>4 </td>
+                        <td>4</td>
                         <td>Table 3</td>
-                        <td><span class="status reserved">Completed</span></td>
+                        <td><span class="status ready">Completed</span></td>
                         <td><button class="action-btn">Seat Customer</button></td>
                     </tr>
                     <tr>
@@ -254,7 +276,7 @@
                         <td>25/10/2023, 2:00 PM</td>
                         <td>6</td>
                         <td>Table 8</td>
-                        <td><span class="status reserved">Confirmed</span></td>
+                        <td><span class="status accepted">Confirmed</span></td>
                         <td><button class="action-btn outline">Edit</button></td>
                     </tr>
                 </tbody>

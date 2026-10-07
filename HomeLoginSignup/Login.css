@@ -96,6 +96,23 @@ button:hover {
     font-size: 17px;
 }
 
+.Back_Home {
+    margin-top: 30px;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #eeeeee;
+}
+
+.Back_Home a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.Back_Home a:hover {
+    color: #FF8C00;
+}
+
 /* TABLET VIEW */
 @media (max-width: 768px) {
 
