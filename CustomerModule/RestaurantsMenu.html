@@ -578,7 +578,6 @@
                 <input type="text" id="LastName" placeholder="Last name">
             </div>
 
-
             <label for="WhatsappNumber">Phone Number*</label>
 
             <div class="Phone_inputs">
@@ -586,18 +585,14 @@
                 <input type="tel" id="ContactNumber" placeholder="Contact number">
             </div>
 
-
             <label for="Email">Email address*</label>
             <input type="email" id="Email" placeholder="you@example.com">
-
 
             <label for="Date">Date*</label>
             <input type="date" id="Date">
 
-
             <label for="Time">Time*</label>
-
-            <select name="time" id="Time" required>
+            <select name="time" id="Time">
                 <option value="">Select an option...</option>
                 <option value="8:00AM">8:00AM</option>
                 <option value="12:00PM">12:00PM</option>
@@ -608,14 +603,11 @@
                 <option value="9:30PM">9:30PM</option>
             </select>
 
-
             <label for="PartySize">Party size*</label>
-            <input type="number" id="PartySize" placeholder="Number of people">
-
+            <input type="number" id="PartySize" placeholder="Number of people" min="1">
 
             <label for="Occasion">Occasion</label>
-
-            <select name="occasion" id="Occasion" required>
+            <select name="occasion" id="Occasion">
                 <option value="">Select an option...</option>
                 <option value="Birthday celebration">Birthday celebration</option>
                 <option value="Get Together">Get Together</option>
@@ -624,30 +616,28 @@
                 <option value="More...">More...</option>
             </select>
 
-
             <label>Seating preference</label>
 
             <div class="Seating">
 
                 <div>
-                    <input type="radio" id="inside" name="tableType" value="inside">
+                    <input type="radio" id="inside" name="tableType" value="Table 1 (Indoor)">
                     <label for="inside">Table 1 (Indoor)</label>
                 </div>
 
                 <div>
-                    <input type="radio" id="outside" name="tableType" value="outside">
+                    <input type="radio" id="outside" name="tableType" value="Table 2 (Outdoor)">
                     <label for="outside">Table 2 (Outdoor)</label>
                 </div>
 
                 <div>
-                    <input type="radio" id="noPreference" name="tableType" value="no preference">
+                    <input type="radio" id="noPreference" name="tableType" value="Table 3 (VIP)">
                     <label for="noPreference">Table 3 (VIP)</label>
                 </div>
 
             </div>
 
-
-            <button id="SubmitReservation">
+            <button id="SubmitReservation" type="button">
                 Submit Reservation
             </button>
 
@@ -679,26 +669,18 @@
                         <div class="order-type-toggle">
 
                             <label class="toggle-option active" id="dine-in-option">
-
                                 <input type="radio" name="orderType" value="dine-in" checked>
-
-                                <span> Dine-In</span>
-
+                                <span>Dine-In</span>
                             </label>
 
-
                             <label class="toggle-option" id="takeaway-option">
-
                                 <input type="radio" name="orderType" value="takeaway">
-
-                                <span> Takeaway / Pick Up</span>
-
+                                <span>Takeaway / Pick Up</span>
                             </label>
 
                         </div>
 
                     </div>
-
 
                     <div id="dine-in-fields" class="dynamic-fields">
 
@@ -709,35 +691,28 @@
                             </label>
 
                             <select id="table-number" name="tableNumber">
-
-                                <option value="">
-                                    Select your table...
-                                </option>
-
-                                <option value="Table 1">
-                                    Table 1 (Indoor)
-                                </option>
-
-                                <option value="Table 2">
-                                    Table 2 (Indoor)
-                                </option>
-
-                                <option value="Table 3">
-                                    Table 3 (Outdoor)
-                                </option>
-
-                                <option value="Table 4">
-                                    Table 4 (VIP)
-                                </option>
-
+                                <option value="">Select your table...</option>
+                                <option value="Table 1">Table 1 (Indoor)</option>
+                                <option value="Table 2">Table 2 (Indoor)</option>
+                                <option value="Table 3">Table 3 (Outdoor)</option>
+                                <option value="Table 4">Table 4 (VIP)</option>
                             </select>
 
                         </div>
 
                     </div>
 
-
                     <div id="takeaway-fields" class="dynamic-fields hidden">
+
+                        <div class="form-group">
+
+                            <label for="pickup-name">
+                                Pickup Name*
+                            </label>
+
+                            <input type="text" id="pickup-name" placeholder="Name for pickup">
+
+                        </div>
 
                         <div class="form-group">
 
@@ -746,33 +721,16 @@
                             </label>
 
                             <select id="pickup-time" name="pickupTime">
-
-                                <option value="">
-                                    Select pickup time...
-                                </option>
-
-                                <option value="15 mins">
-                                    In 15 minutes
-                                </option>
-
-                                <option value="30 mins">
-                                    In 30 minutes
-                                </option>
-
-                                <option value="45 mins">
-                                    In 45 minutes
-                                </option>
-
-                                <option value="60 mins">
-                                    In 1 hour
-                                </option>
-
+                                <option value="">Select pickup time...</option>
+                                <option value="15 mins">In 15 minutes</option>
+                                <option value="30 mins">In 30 minutes</option>
+                                <option value="45 mins">In 45 minutes</option>
+                                <option value="60 mins">In 1 hour</option>
                             </select>
 
                         </div>
 
                     </div>
-
 
                     <div class="form-group">
 
@@ -784,7 +742,6 @@
 
                     </div>
 
-
                     <div class="form-group">
 
                         <label for="order-instructions">
@@ -795,7 +752,6 @@
                             placeholder="e.g. Extra pepper sauce, light salt..."></textarea>
 
                     </div>
-
 
                     <div class="form-group">
 
@@ -819,7 +775,6 @@
 
                     </div>
 
-
                     <button type="submit" class="btn btn-primary">
                         Confirm & Place Order
                     </button>
@@ -828,91 +783,29 @@
 
             </div>
 
-
             <div class="order-card order-summary-card">
 
                 <h2>Order Summary</h2>
 
-                <div id="cart-items-list" class="cart-list">
-
-                    <div class="cart-item">
-
-                        <div class="item-info">
-
-                            <h4>Jollof Rice & Fried Chicken</h4>
-
-                            <span class="item-price">
-                                ₦3,500
-                            </span>
-
-                        </div>
-
-                        <div class="item-qty">
-
-                            <button type="button" class="qty-btn">
-                                -
-                            </button>
-
-                            <span>2</span>
-
-                            <button type="button" class="qty-btn">
-                                +
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="cart-item">
-
-                        <div class="item-info">
-
-                            <h4>Puff Puff & Small Chops Combo</h4>
-
-                            <span class="item-price">
-                                ₦2,000
-                            </span>
-
-                        </div>
-
-                        <div class="item-qty">
-
-                            <button type="button" class="qty-btn">
-                                -
-                            </button>
-
-                            <span>1</span>
-
-                            <button type="button" class="qty-btn">
-                                +
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+                <div id="cart-items-list" class="cart-list"></div>
 
                 <hr class="divider">
-
 
                 <div class="summary-totals">
 
                     <div class="summary-row">
                         <span>Subtotal</span>
-                        <span>₦9,000</span>
+                        <span id="subtotal-amount">₦0</span>
                     </div>
 
                     <div class="summary-row">
                         <span>Service Fee (5%)</span>
-                        <span>₦450</span>
+                        <span id="service-fee-amount">₦0</span>
                     </div>
 
                     <div class="summary-row total-row">
                         <span>Grand Total</span>
-                        <span class="total-amount">₦9,450</span>
+                        <span class="total-amount" id="grand-total-amount">₦0</span>
                     </div>
 
                 </div>
@@ -1168,13 +1061,9 @@
         </div>
 
     </section>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous">
-    </script>
-
+        crossorigin="anonymous"></script>
     <script src="./RestaurantsMenu.js"></script>
 
 </body>

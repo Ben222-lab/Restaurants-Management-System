@@ -78,17 +78,13 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
     min-height: 100vh;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     color: white;
     text-align: center;
-
     padding: 100px 20px 40px;
 }
 
@@ -245,9 +241,6 @@ body {
     color: #FF8C00;
 }
 
-
-/* RESERVATION */
-
 .Reservation {
     background: linear-gradient(
         to bottom,
@@ -372,9 +365,6 @@ body {
     color: white;
 }
 
-
-/* ORDER */
-
 .order_section {
     background-color: #f8f9fa;
     padding: 80px 20px;
@@ -430,15 +420,22 @@ body {
     font-size: 14px;
 }
 
+.order-card input[type="text"],
 .order-card input[type="tel"],
+.order-card input[type="email"],
+.order-card input[type="number"],
+.order-card input[type="date"],
+.order-card input[type="time"],
 .order-card select,
 .order-card textarea {
     width: 100%;
-    padding: 11px 14px;
+    padding: 12px 14px;
     border: 1px solid #ccc;
     border-radius: 7px;
     font-size: 14px;
     outline: none;
+    background-color: white;
+    color: #333;
 }
 
 .order-card input:focus,
@@ -451,17 +448,20 @@ body {
 .order-type-toggle {
     display: flex;
     gap: 15px;
+    margin-bottom: 20px;
 }
 
 .toggle-option {
     flex: 1;
     border: 2px solid #ddd;
-    padding: 12px;
+    padding: 15px;
     border-radius: 8px;
     text-align: center;
     cursor: pointer;
     font-weight: bold;
     color: #555;
+    transition: 0.3s;
+    background-color: white;
 }
 
 .toggle-option input {
@@ -476,7 +476,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .radio-group.vertical {
@@ -494,17 +494,19 @@ body {
 .btn-primary {
     width: 100%;
     background-color: #FF8C00;
-    color: white;
+    color: black;
     border: none;
-    padding: 13px;
+    padding: 14px;
     border-radius: 7px;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .btn-primary:hover {
-    background-color: #e07b00;
+    background-color: #24201D;
+    color: white;
 }
 
 .cart-list {
@@ -515,8 +517,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
+    gap: 15px;
+    padding: 16px 0;
     border-bottom: 1px solid #eee;
+}
+
+.item-info {
+    flex: 1;
+    min-width: 0;
 }
 
 .item-info h4 {
@@ -534,16 +542,49 @@ body {
 .item-qty {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    background-color: #f7f7f7;
+    border-radius: 7px;
+    padding: 4px;
+}
+
+.item-qty span {
+    min-width: 25px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
 }
 
 .qty-btn {
-    background-color: #eee;
-    border: none;
-    width: 26px;
-    height: 26px;
-    border-radius: 4px;
+    background-color: white;
+    border: 1px solid #ddd;
+    color: #333;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.qty-btn:hover {
+    background-color: #FF8C00;
+    border-color: #FF8C00;
+    color: black;
+}
+
+.qty-btn:active {
+    transform: scale(0.92);
+}
+
+.empty-cart {
+    padding: 30px 10px;
+    text-align: center;
+    color: #777;
 }
 
 .divider {
@@ -575,10 +616,8 @@ body {
     margin-top: 15px;
     text-align: center;
     font-weight: bold;
+    min-height: 20px;
 }
-
-
-/* ORDER HISTORY */
 
 .order_tracking_section {
     background-color: #f8f9fa;
@@ -795,18 +834,12 @@ body {
     color: #dc3545;
 }
 
-
-/* NAVIGATION */
-
 #Menu1,
 #reservation,
 #Order1,
 #History1 {
     scroll-margin-top: 90px;
 }
-
-
-/* TABLET */
 
 @media (max-width: 992px) {
 
@@ -856,9 +889,6 @@ body {
         min-width: 100%;
     }
 }
-
-
-/* MOBILE */
 
 @media (max-width: 768px) {
 
@@ -950,7 +980,6 @@ body {
         font-size: 14px;
     }
 
-
     .Reservation {
         padding: 60px 15px;
     }
@@ -968,7 +997,6 @@ body {
         flex-direction: column;
         gap: 0;
     }
-
 
     .order_section,
     .order_tracking_section {
@@ -1015,9 +1043,6 @@ body {
         min-width: 100px;
     }
 }
-
-
-/* SMALL MOBILE */
 
 @media (max-width: 500px) {
 
@@ -1087,7 +1112,6 @@ body {
         line-height: 1.5;
     }
 
-
     .Reservation {
         padding: 40px 10px;
     }
@@ -1119,7 +1143,6 @@ body {
         font-size: 15px;
     }
 
-
     .order_section,
     .order_tracking_section {
         padding: 40px 10px;
@@ -1147,7 +1170,7 @@ body {
     }
 
     .cart-item {
-        align-items: flex-start;
+        align-items: center;
         gap: 10px;
     }
 
@@ -1161,7 +1184,12 @@ body {
     }
 
     .item-qty {
-        gap: 6px;
+        gap: 4px;
+    }
+
+    .qty-btn {
+        width: 28px;
+        height: 28px;
     }
 
     .summary-row {
