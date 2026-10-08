@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Taste Haven - Admin Login</title>
+
+    <link rel="stylesheet" href="./AdminLogin.css">
+</head>
+
+<body>
+
+    <div class="Staff_Login">
+
+        <div class="Login_Logo">
+            <img src="../Images/logo.png" alt="Taste Haven Logo">
+        </div>
+
+        <div class="Login_Content">
+
+            <h1>Admin Login</h1>
+
+            <p>Login to access your Admin dashboard</p>
+
+            <form>
+
+                <div class="Input_Group">
+                    <label for="Username">Username</label>
+                    <input type="text" id="Username" placeholder="Enter your username">
+                </div>
+
+                <div class="Input_Group">
+                    <label for="Password">Password</label>
+                    <input type="password" id="Password" placeholder="Enter your password">
+                </div>
+
+                <div class="Login_Options">
+
+                    <label class="Show_Password">
+                        <input type="checkbox" id="ShowPassword">
+                        <span>Show Password</span>
+                    </label>
+
+                    <a href="#">Forgot Password?</a>
+
+                </div>
+
+                <button type="submit" id="StaffLogin" class="btn">
+                    <a href="../AdminModule/Admin.html" style="color: black; text-decoration: none;">Login</a>
+                </button>
+
+            </form>
+
+            <div class="Back_Home">
+                <a href="../HomeLoginSignup/Home.html">
+                    ← Back to Home
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="./AdminLogin.js"></script>
+</body>
+
+</html>
+
