@@ -9,21 +9,78 @@ const PartySize = document.getElementById("PartySize");
 const Occasion = document.getElementById("Occasion");
 const SubmitReservation = document.getElementById("SubmitReservation");
 
-SubmitReservation.addEventListener("click", function () {
 
-    if (
-        FirstName.value === "" ||
-        LastName.value === "" ||
-        WhatsappNumber.value === "" ||
-        ContactNumber.value === "" ||
-        Email.value === "" ||
-        Date.value === "" ||
-        Time.value === "" ||
-        PartySize.value === ""
-    ) {
-        alert("Please fill in all required fields.");
+// Table Reservation
+SubmitReservation.addEventListener("click", function (event) {
+
+    event.preventDefault();
+
+    const firstName = FirstName.value.trim();
+    const lastName = LastName.value.trim();
+    const whatsappNumber = WhatsappNumber.value.trim();
+    const contactNumber = ContactNumber.value.trim();
+    const email = Email.value.trim();
+    const date = Date.value;
+    const time = Time.value;
+    const partySize = PartySize.value;
+    const occasion = Occasion.value;
+
+
+    if (firstName === "") {
+        alert("Please enter your first name.");
+        FirstName.focus();
         return;
     }
+
+
+    if (lastName === "") {
+        alert("Please enter your last name.");
+        LastName.focus();
+        return;
+    }
+
+
+    if (whatsappNumber === "") {
+        alert("Please enter your WhatsApp number.");
+        WhatsappNumber.focus();
+        return;
+    }
+
+
+    if (contactNumber === "") {
+        alert("Please enter your contact number.");
+        ContactNumber.focus();
+        return;
+    }
+
+
+    if (email === "") {
+        alert("Please enter your email address.");
+        Email.focus();
+        return;
+    }
+
+
+    if (date === "") {
+        alert("Please select a date.");
+        Date.focus();
+        return;
+    }
+
+
+    if (time === "") {
+        alert("Please select a time.");
+        Time.focus();
+        return;
+    }
+
+
+    if (partySize === "") {
+        alert("Please enter the party size.");
+        PartySize.focus();
+        return;
+    }
+
 
     alert("Your table reservation was submitted successfully!");
 

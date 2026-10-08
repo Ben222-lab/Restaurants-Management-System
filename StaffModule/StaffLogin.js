@@ -15,7 +15,6 @@ ShowPassword.addEventListener("change", function () {
 
 });
 
-
 // Staff Login
 StaffLogin.addEventListener("click", function (event) {
 

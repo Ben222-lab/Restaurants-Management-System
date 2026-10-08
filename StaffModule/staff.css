@@ -15,9 +15,6 @@ body {
     color: black;
 }
 
-/* ==========================================
-   SIDEBAR
-   ========================================== */
 
 .sidebar {
     position: fixed;
@@ -44,7 +41,8 @@ body {
     right: 25px;
 }
 
-/* Navigation */
+
+
 .nav-links {
     list-style: none;
 }
@@ -77,7 +75,7 @@ body {
     background-color: #E57500;
 }
 
-/* Logout Button */
+
 .logout-btn {
     background-color: #FF8C00;
     color: black;
@@ -97,9 +95,6 @@ body {
     color: #1b0b01;
 }
 
-/* ==========================================
-   MAIN WELCOME & OVERVIEW SECTION
-   ========================================== */
 
 .content {
     margin-left: 250px;
@@ -118,7 +113,8 @@ body {
     font-size: 16px;
 }
 
-/* Dashboard Overview Cards */
+
+
 .dashboard-overview {
     display: flex;
     gap: 20px;
@@ -151,9 +147,7 @@ body {
     color: #FF8C00;
 }
 
-/* ==========================================
-   MAIN DASHBOARD CONTAINERS
-   ========================================== */
+
 
 .content1 {
     margin-left: 280px;
@@ -173,15 +167,13 @@ body {
     margin-bottom: 10px;
 }
 
-.content1 > p {
+.content1>p {
     color: #666;
     font-size: 15px;
     margin-bottom: 15px;
 }
 
-/* ==========================================
-   INCOMING ORDER BOXES
-   ========================================== */
+
 
 .Box,
 .Boxx {
@@ -215,20 +207,20 @@ body {
     font-weight: 600;
 }
 
-.Box > div:nth-child(2),
-.Boxx > div:nth-child(2) {
+.Box>div:nth-child(2),
+.Boxx>div:nth-child(2) {
     flex: 1;
 }
 
-.Box > div:nth-child(2) p,
-.Boxx > div:nth-child(2) p {
+.Box>div:nth-child(2) p,
+.Boxx>div:nth-child(2) p {
     color: #666;
     font-size: 14px;
     margin-bottom: 5px;
 }
 
-.Box > div:nth-child(2) h2,
-.Boxx > div:nth-child(2) h2 {
+.Box>div:nth-child(2) h2,
+.Boxx>div:nth-child(2) h2 {
     color: #1b0b01;
     font-size: 17px;
 }
@@ -255,7 +247,7 @@ body {
 }
 
 /* ==========================================
-   TABLES & BADGES
+   TABLES
    ========================================== */
 
 .Tables {
@@ -271,20 +263,24 @@ body {
     font-size: 13px;
     font-weight: 700;
     color: #777777;
-    padding: 16px 20px;
+    padding: 16px 15px;
     border-bottom: 1px solid #eeeeee;
+    white-space: nowrap;
 }
 
 .Tables td {
-    padding: 20px 20px;
+    padding: 18px 15px;
     font-size: 15px;
     color: #333333;
     border-bottom: 1px solid #f2f2f2;
+    vertical-align: middle;
 }
 
 .Tables tbody tr:hover {
     background-color: #fafafa;
 }
+
+
 
 .status {
     display: inline-block;
@@ -293,6 +289,7 @@ body {
     font-size: 13px;
     font-weight: 600;
     text-align: center;
+    white-space: nowrap;
 }
 
 .status.pending,
@@ -316,12 +313,61 @@ body {
     color: #666666;
 }
 
+
+
+#CustomerBooking .Tables th:last-child {
+    width: 180px;
+}
+
+#CustomerBooking .Tables td:last-child {
+    min-width: 180px;
+}
+
+#CustomerBooking .Tables td:last-child .action-btn {
+    display: inline-block;
+    width: auto;
+    min-width: 75px;
+    margin: 3px 5px 3px 0;
+    vertical-align: middle;
+}
+
+
+
+.action-btn {
+    background-color: #C8501E;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.action-btn.outline {
+    background-color: transparent;
+    color: #555555;
+    border: 1px solid #ccc;
+}
+
+.action-btn.outline:hover {
+    background-color: #fdeee9;
+    color: #C8501E;
+}
+
 /* Action buttons within tables */
+
 .Tables td .action-btn {
-    padding: 6px 12px;
+    padding: 7px 12px;
     font-size: 12px;
     border-radius: 6px;
-    margin-right: 4px;
 }
 
 .Tables td .action-btn.outline {
@@ -334,9 +380,7 @@ body {
     background-color: #fdeee9;
 }
 
-/* ==========================================
-   MANAGE TABLES CARDS
-   ========================================== */
+
 
 .table-grid {
     display: grid;
@@ -366,6 +410,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    gap: 10px;
 }
 
 .table-header h3 {
@@ -380,9 +425,17 @@ body {
     margin: 5px 0 15px 0;
 }
 
-.table-card.available { border-top: 4px solid #28a745; }
-.table-card.occupied { border-top: 4px solid #d9531e; }
-.table-card.reserved { border-top: 4px solid #3b71ca; }
+.table-card.available {
+    border-top: 4px solid #28a745;
+}
+
+.table-card.occupied {
+    border-top: 4px solid #d9531e;
+}
+
+.table-card.reserved {
+    border-top: 4px solid #3b71ca;
+}
 
 .status-badge {
     display: inline-block;
@@ -390,42 +443,35 @@ body {
     border-radius: 12px;
     font-size: 12px;
     font-weight: 600;
+    white-space: nowrap;
 }
 
-.status-badge.available { background-color: #e8f7ee; color: #28a745; }
-.status-badge.occupied { background-color: #fdeee9; color: #d9531e; }
-.status-badge.reserved { background-color: #e8f0fe; color: #3b71ca; }
+.status-badge.available {
+    background-color: #e8f7ee;
+    color: #28a745;
+}
+
+.status-badge.occupied {
+    background-color: #fdeee9;
+    color: #d9531e;
+}
+
+.status-badge.reserved {
+    background-color: #e8f0fe;
+    color: #3b71ca;
+}
 
 .table-actions {
     display: flex;
     gap: 8px;
 }
 
-.action-btn {
-    background-color: #C8501E;
-    color: #ffffff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
+.table-actions .action-btn {
     flex: 1;
 }
 
-.action-btn.outline {
-    background-color: transparent;
-    color: #555555;
-    border: 1px solid #ccc;
-}
 
-.action-btn:hover {
-    opacity: 0.9;
-}
 
-/* ==========================================
-   PAYMENTS STATS
-   ========================================== */
 
 .payment-stats {
     display: flex;
@@ -459,65 +505,285 @@ body {
 
 .stat-card .amount.pending {
     color: #d9531e;
-}
 
-/* ==========================================
-   RESPONSIVENESS
-   ========================================== */
+    /* RESPONSIVENESS - 1000px */
 
-@media screen and (max-width: 1000px) {
-    .sidebar { width: 210px; }
-    .logo img { width: 130px; height: 110px; right: 10px; }
-    .nav-links h2 { font-size: 19px; padding-left: 15px; }
-    .nav-links li { padding: 3px 10px; }
-    .nav-links li a { font-size: 14px; padding: 12px 8px; }
-    .logout-btn { margin-left: 15px; padding: 9px 25px; }
-    
-    .content { margin-left: 210px; padding: 30px 25px 20px; }
-    .content h1 { font-size: 26px; }
-    
-    .content1 { margin-left: 235px; margin-right: 20px; padding: 25px; }
-    
-    .Tables { display: block; overflow-x: auto; white-space: nowrap; }
-    .table-grid { grid-template-columns: repeat(2, 1fr); }
-    .payment-stats { gap: 15px; }
-}
 
-@media screen and (max-width: 768px) {
-    .sidebar { width: 190px; }
-    .logo img { width: 120px; height: 100px; right: 5px; }
-    .nav-links h2 { font-size: 18px; padding: 10px 15px 15px; }
-    .nav-links li a { font-size: 13px; padding: 11px 8px; }
-    
-    .content { margin-left: 190px; padding: 25px 20px; }
-    .content1 { margin-left: 210px; margin-right: 15px; padding: 20px; }
-    
-    .dashboard-overview { grid-template-columns: repeat(2, 1fr); }
-    
-    .Box, .Boxx { flex-wrap: wrap; gap: 12px; }
-    .Tables { display: block; width: 100%; overflow-x: auto; white-space: nowrap; }
-    
-    .table-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-    .table-actions { flex-direction: column; }
-    .payment-stats { display: grid; grid-template-columns: 1fr 1fr; }
-}
+    @media screen and (max-width: 1000px) {
 
-@media screen and (max-width: 600px) {
-    .sidebar { position: relative; width: 100%; height: auto; padding: 15px 10px; }
-    .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
-    
-    .content { margin-left: 0; padding: 25px 15px 10px; }
-    .content1 { margin-left: 0; margin-right: 0; margin-top: 15px; padding: 18px 15px; }
-    
-    .dashboard-overview { grid-template-columns: 1fr; }
-    .Box, .Boxx { flex-direction: column; align-items: stretch; }
-    
-    .table-grid { grid-template-columns: 1fr; }
-    .payment-stats { grid-template-columns: 1fr; }
-}
+        .sidebar {
+            width: 210px;
+        }
 
-@media screen and (max-width: 400px) {
-    .content { padding: 20px 12px 10px; }
-    .content h1 { font-size: 21px; }
-    .content1 { padding: 15px 12px; }
-}
+        .logo img {
+            width: 130px;
+            height: 110px;
+            right: 10px;
+        }
+
+        .nav-links h2 {
+            font-size: 19px;
+            padding-left: 15px;
+        }
+
+        .nav-links li {
+            padding: 3px 10px;
+        }
+
+        .nav-links li a {
+            font-size: 14px;
+            padding: 12px 8px;
+        }
+
+        .logout-btn {
+            margin-left: 15px;
+            padding: 9px 25px;
+        }
+
+        .content {
+            margin-left: 210px;
+            padding: 30px 25px 20px;
+        }
+
+        .content h1 {
+            font-size: 26px;
+        }
+
+        .content1 {
+            margin-left: 235px;
+            margin-right: 20px;
+            padding: 25px;
+        }
+
+        .Tables {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .table-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .payment-stats {
+            gap: 15px;
+        }
+
+        #CustomerBooking .Tables td:last-child {
+            min-width: 190px;
+        }
+    }
+
+
+    /* RESPONSIVENESS - 768px */
+
+
+    @media screen and (max-width: 768px) {
+
+        .sidebar {
+            width: 190px;
+        }
+
+        .logo img {
+            width: 120px;
+            height: 100px;
+            right: 5px;
+        }
+
+        .nav-links h2 {
+            font-size: 18px;
+            padding: 10px 15px 15px;
+        }
+
+        .nav-links li a {
+            font-size: 13px;
+            padding: 11px 8px;
+        }
+
+        .content {
+            margin-left: 190px;
+            padding: 25px 20px;
+        }
+
+        .content1 {
+            margin-left: 210px;
+            margin-right: 15px;
+            padding: 20px;
+        }
+
+        .dashboard-overview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .Box,
+        .Boxx {
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .Tables {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .table-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .table-actions {
+            flex-direction: column;
+        }
+
+        .payment-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Customer & Booking */
+
+        #CustomerBooking .Tables td:last-child {
+            min-width: 200px;
+            white-space: normal;
+        }
+
+        #CustomerBooking .Tables td:last-child .action-btn {
+            margin: 4px 5px 4px 0;
+        }
+
+        /* 
+   RESPONSIVENESS - 600px */
+
+
+        @media screen and (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 15px 10px;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            .logo img {
+                position: static;
+                width: 120px;
+                height: 100px;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            .nav-links h2 {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links li {
+                padding: 3px;
+            }
+
+            .nav-links li a {
+                padding: 9px 10px;
+            }
+
+            .logout-btn {
+                display: block;
+                margin: 15px auto 5px;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 25px 15px 10px;
+            }
+
+            .content1 {
+                margin-left: 0;
+                margin-right: 0;
+                margin-top: 15px;
+                padding: 18px 15px;
+            }
+
+            .dashboard-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .Box,
+            .Boxx {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .Box button,
+            .Boxx button {
+                width: 100%;
+            }
+
+            .table-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-stats {
+                grid-template-columns: 1fr;
+            }
+
+            /* Customer & Booking */
+
+            #CustomerBooking .Tables {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            #CustomerBooking .Tables td:last-child {
+                min-width: 210px;
+                white-space: normal;
+            }
+
+            #CustomerBooking .Tables td:last-child .action-btn {
+                display: inline-block;
+                margin: 4px 5px 4px 0;
+            }
+        }
+
+
+        /* RESPONSIVENESS - 400px */
+
+
+        @media screen and (max-width: 400px) {
+
+            .content {
+                padding: 20px 12px 10px;
+            }
+
+            .content h1 {
+                font-size: 21px;
+            }
+
+            .content1 {
+                padding: 15px 12px;
+            }
+
+            .content1 h2 {
+                font-size: 19px;
+            }
+
+            #CustomerBooking .Tables td:last-child {
+                min-width: 220px;
+            }
+
+            #CustomerBooking .Tables td:last-child .action-btn {
+                width: 100%;
+                margin: 4px 0;
+            }
+        }
