@@ -1,42 +1,168 @@
-const orderBoxes = document.querySelectorAll(".Box, .Boxx");
+const incomingOrders = document.getElementById("staff-incoming-orders");
+const orderStatusBody = document.querySelector("#OrderStatus tbody");
 
-orderBoxes.forEach(function (order) {
+function renderStaffOrders() {
+    let orders;
 
-    const acceptButton = order.querySelector("button:first-of-type");
-    const rejectButton = order.querySelector("button:last-of-type");
-    const status = order.querySelector(".Box1 p, .Box2 p");
+    try {
+        orders = OrderStorage.getAll();
+    } catch (error) {
+        console.error("Unable to load orders for staff:", error);
+        incomingOrders.replaceChildren();
+        const errorMessage = document.createElement("p");
+        errorMessage.className = "empty-orders";
+        errorMessage.textContent = "Unable to load incoming orders.";
+        incomingOrders.appendChild(errorMessage);
+        orderStatusBody.replaceChildren();
+        const statusError = orderStatusBody.insertRow().insertCell();
+        statusError.colSpan = 4;
+        statusError.textContent = "Unable to load order statuses.";
+        return;
+    }
 
-    acceptButton.addEventListener("click", function () {
-
-        status.innerText = "Accepted";
-
-        status.style.color = "#28a745";
-
-        acceptButton.innerText = "Accepted";
-
-        acceptButton.style.backgroundColor = "#28a745";
-
-        acceptButton.disabled = true;
-
-        rejectButton.disabled = true;
-
-        alert("Order has been accepted.");
+    incomingOrders.replaceChildren();
+    const awaitingStaff = orders.filter(function (order) {
+        return order.status === "Approved";
     });
 
+    if (awaitingStaff.length === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.className = "empty-orders";
+        emptyMessage.textContent = "No orders are awaiting staff acceptance.";
+        incomingOrders.appendChild(emptyMessage);
+    }
 
-    rejectButton.addEventListener("click", function () {
+    awaitingStaff.slice().reverse().forEach(function (order) {
+        const card = document.createElement("article");
+        card.className = "incoming-order-card";
 
-        const confirmReject = confirm("Are you sure you want to reject this order?");
+        const heading = document.createElement("h3");
+        heading.textContent = "Order " + order.id;
+        card.appendChild(heading);
 
-        if (confirmReject) {
+        const customer = document.createElement("p");
+        customer.textContent = "Customer: " + (order.customerName || order.customerEmail || "Customer");
+        card.appendChild(customer);
 
-            order.style.display = "none";
+        const summary = document.createElement("p");
+        summary.textContent = (order.items || []).map(function (item) {
+            return item.quantity + " × " + item.name;
+        }).join(", ");
+        card.appendChild(summary);
 
-            alert("Order has been rejected.");
-        }
+        const orderDetails = order.customerDetails || {};
+        [
+            ["Table", orderDetails.tableNumber],
+            ["Pickup name", orderDetails.pickupName],
+            ["Address / pickup location", orderDetails.address],
+            ["Pickup time", orderDetails.pickupTime],
+            ["Contact", orderDetails.phone],
+            ["Instructions", orderDetails.instructions]
+        ].forEach(function (detail) {
+            if (!detail[1]) {
+                return;
+            }
+            const paragraph = document.createElement("p");
+            paragraph.textContent = detail[0] + ": " + detail[1];
+            card.appendChild(paragraph);
+        });
+
+        const total = document.createElement("p");
+        total.textContent = "Total: ₦" + Number(order.total || 0).toLocaleString();
+        card.appendChild(total);
+
+        const message = document.createElement("p");
+        message.className = "staff-order-approved-message";
+        message.textContent = "Approved by admin — accept this order to begin preparation.";
+        card.appendChild(message);
+
+        const actions = document.createElement("div");
+        actions.className = "staff-order-actions";
+        [
+            ["Accept order", "Accepted", "accept-order"],
+            ["Decline", "Declined", "decline-order"]
+        ].forEach(function (action) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.dataset.orderId = order.id;
+            button.dataset.orderStatus = action[1];
+            button.className = action[2];
+            button.textContent = action[0];
+            actions.appendChild(button);
+        });
+        card.appendChild(actions);
+        incomingOrders.appendChild(card);
     });
 
+    orderStatusBody.replaceChildren();
+    const trackedOrders = orders.filter(function (order) {
+        return order.status !== "Declined";
+    }).slice().reverse();
+
+    if (trackedOrders.length === 0) {
+        const emptyRow = orderStatusBody.insertRow();
+        const emptyCell = emptyRow.insertCell();
+        emptyCell.colSpan = 4;
+        emptyCell.className = "empty-orders";
+        emptyCell.textContent = "No customer orders yet.";
+        return;
+    }
+
+    trackedOrders.forEach(function (order) {
+        const row = orderStatusBody.insertRow();
+        const orderCell = row.insertCell();
+        orderCell.textContent = order.id;
+        const locationCell = row.insertCell();
+        locationCell.textContent = order.orderType || "—";
+        const itemsCell = row.insertCell();
+        itemsCell.textContent = (order.items || []).reduce(function (count, item) {
+            return count + Number(item.quantity || 0);
+        }, 0) + " items";
+        const statusCell = row.insertCell();
+        const badge = document.createElement("span");
+        badge.className = "status " + ({
+            Pending: "pending",
+            Approved: "accepted",
+            Accepted: "preparing",
+            Preparing: "preparing",
+            Completed: "completed"
+        }[order.status] || "pending");
+        badge.textContent = order.status || "Pending";
+        statusCell.appendChild(badge);
+    });
+}
+
+incomingOrders.addEventListener("click", function (event) {
+    const button = event.target.closest("button[data-order-status]");
+    if (!button) {
+        return;
+    }
+
+    const status = button.dataset.orderStatus;
+    if (status === "Declined" && !confirm("Decline this order? The customer will be notified.")) {
+        return;
+    }
+
+    try {
+        OrderStorage.updateStatus(button.dataset.orderId, status);
+        renderStaffOrders();
+        AppFeedback.notify(
+            status === "Accepted" ? "Order accepted. The customer has been updated." : "Order declined.",
+            status === "Accepted" ? "success" : "info"
+        );
+    } catch (error) {
+        console.error("Unable to update order status:", error);
+        AppFeedback.notify("The order status could not be updated.", "error");
+    }
 });
+
+window.addEventListener("storage", function (event) {
+    if (event.key === "Orders" || event.key === null) {
+        renderStaffOrders();
+    }
+});
+
+renderStaffOrders();
 
 
 // =============================
@@ -69,7 +195,7 @@ tableCards.forEach(function (table) {
 
                 button.innerText = "Clear Table";
 
-                alert("Table is now occupied.");
+                AppFeedback.notify("Table is now occupied.");
             }
 
 
@@ -86,7 +212,7 @@ tableCards.forEach(function (table) {
 
                 button.innerText = "Occupy Table";
 
-                alert("Table is now available.");
+                AppFeedback.notify("Table is now available.");
             }
 
 
@@ -101,7 +227,7 @@ tableCards.forEach(function (table) {
                 statusBadge.classList.remove("available", "occupied");
                 statusBadge.classList.add("reserved");
 
-                alert("Table has been reserved.");
+                AppFeedback.notify("Table has been reserved.");
             }
 
 
@@ -116,7 +242,7 @@ tableCards.forEach(function (table) {
                 statusBadge.classList.remove("reserved", "available");
                 statusBadge.classList.add("occupied");
 
-                alert("Customer has been seated.");
+                AppFeedback.notify("Customer has been seated.");
             }
 
 
@@ -131,7 +257,7 @@ tableCards.forEach(function (table) {
                 statusBadge.classList.remove("reserved", "occupied");
                 statusBadge.classList.add("available");
 
-                alert("Reservation has been cancelled.");
+                AppFeedback.notify("Reservation has been cancelled.");
             }
 
         });
@@ -148,87 +274,136 @@ tableCards.forEach(function (table) {
 const bookingTable = document.querySelector("#CustomerBooking .Tables");
 
 if (bookingTable) {
+    const bookingBody = bookingTable.querySelector("tbody");
+    const reservationsCount = document.getElementById("active-reservations-count");
 
-    const bookingRows = bookingTable.querySelectorAll("tbody tr");
+    function createCell(value, strong) {
+        const cell = document.createElement("td");
+        const text = document.createElement(strong ? "strong" : "span");
+        text.textContent = value || "—";
+        cell.appendChild(text);
+        return cell;
+    }
 
-    bookingRows.forEach(function (row) {
+    function renderReservations() {
+        let reservations;
 
-        const buttons = row.querySelectorAll(".action-btn");
+        try {
+            reservations = ReservationStorage.getAll();
+        } catch (error) {
+            console.error("Unable to load reservations:", error);
+            bookingBody.replaceChildren();
+            const row = bookingBody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 8;
+            cell.className = "empty-reservations";
+            cell.textContent = "Unable to load reservations. Please check the saved reservation data.";
+            reservationsCount.textContent = "—";
+            return;
+        }
 
-        buttons.forEach(function (button) {
+        bookingBody.replaceChildren();
+        reservationsCount.textContent = String(reservations.filter(function (reservation) {
+            return reservation.status !== "Cancelled" &&
+                reservation.status !== "Seated" &&
+                reservation.status !== "Declined";
+        }).length);
 
-            button.addEventListener("click", function () {
-
-                const buttonText = button.innerText;
-
-                const status = row.querySelector(".status");
-
-
-                // Confirm Booking
-                if (buttonText === "Confirm") {
-
-                    status.innerText = "Confirmed";
-
-                    status.classList.remove("pending");
-                    status.classList.add("completed");
-
-                    button.innerText = "Confirmed";
-
-                    button.disabled = true;
-
-                    alert("Booking has been confirmed.");
-                }
-
-
-                // Cancel Booking
-                else if (buttonText === "Cancel") {
-
-                    const confirmCancel = confirm(
-                        "Are you sure you want to cancel this booking?"
-                    );
-
-                    if (confirmCancel) {
-
-                        status.innerText = "Cancelled";
-
-                        status.classList.remove("pending", "completed", "reserved");
-                        status.classList.add("preparing");
-
-                        button.disabled = true;
-
-                        alert("Booking has been cancelled.");
-                    }
-                }
-
-
-                // Seat Customer
-                else if (buttonText === "Seat Customer") {
-
-                    status.innerText = "Seated";
-
-                    status.classList.remove("reserved", "pending");
-                    status.classList.add("completed");
-
-                    button.innerText = "Seated";
-
-                    button.disabled = true;
-
-                    alert("Customer has been seated.");
-                }
-
-
-                // Edit Booking
-                else if (buttonText === "Edit") {
-
-                    alert("Edit booking feature will be added next.");
-                }
-
-            });
-
+        const staffReservations = reservations.filter(function (reservation) {
+            return reservation.status !== "Declined";
         });
 
+        if (staffReservations.length === 0) {
+            const row = bookingBody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 8;
+            cell.className = "empty-reservations";
+            cell.textContent = reservations.length === 0
+                ? "No reservations have been submitted yet."
+                : "No active reservations.";
+            return;
+        }
+
+        staffReservations.forEach(function (reservation) {
+            const row = bookingBody.insertRow();
+            row.dataset.reservationId = reservation.id || "";
+            const customerName = [reservation.firstName, reservation.lastName].filter(Boolean).join(" ");
+            const phone = [
+                reservation.contactNumber && "Contact: " + reservation.contactNumber,
+                reservation.whatsappNumber && "WhatsApp: " + reservation.whatsappNumber
+            ].filter(Boolean).join(" | ");
+            const occasionAndSeating = [
+                reservation.occasion,
+                reservation.seatingPreference
+            ].filter(Boolean).join(" / ");
+
+            row.appendChild(createCell(customerName, true));
+            row.appendChild(createCell(phone));
+            row.appendChild(createCell(reservation.email));
+            row.appendChild(createCell([reservation.date, reservation.time].filter(Boolean).join(", ")));
+            row.appendChild(createCell(reservation.partySize));
+            row.appendChild(createCell(occasionAndSeating));
+
+            const statusCell = row.insertCell();
+            const statusBadge = document.createElement("span");
+            statusBadge.className = "status " + ({
+                Pending: "pending",
+                Approved: "accepted",
+                Confirmed: "accepted",
+                Seated: "completed",
+                Cancelled: "preparing"
+            }[reservation.status] || "pending");
+            statusBadge.textContent = reservation.status || "Pending";
+            statusCell.appendChild(statusBadge);
+
+            const actionsCell = row.insertCell();
+            if (reservation.status === "Pending") {
+                actionsCell.textContent = "Awaiting admin approval";
+            } else if (reservation.status === "Approved" || reservation.status === "Confirmed") {
+                actionsCell.appendChild(createActionButton("Seat Customer", "Seated"));
+                actionsCell.appendChild(createActionButton("Cancel", "Cancelled", true));
+            }
+        });
+    }
+
+    function createActionButton(label, status, outline) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "action-btn" + (outline ? " outline" : "");
+        button.dataset.reservationStatus = status;
+        button.textContent = label;
+        return button;
+    }
+
+    bookingTable.addEventListener("click", function (event) {
+        const button = event.target.closest("button[data-reservation-status]");
+        if (!button) {
+            return;
+        }
+
+        const row = button.closest("tr");
+        const newStatus = button.dataset.reservationStatus;
+        const nextStatus = newStatus;
+        if (nextStatus === "Cancelled" && !confirm("Are you sure you want to cancel this reservation?")) {
+            return;
+        }
+
+        try {
+            ReservationStorage.updateStatus(row.dataset.reservationId, nextStatus);
+            renderReservations();
+        } catch (error) {
+            console.error("Unable to update reservation:", error);
+            AppFeedback.notify("The reservation status could not be updated. Please try again.");
+        }
     });
 
+    window.addEventListener("storage", function (event) {
+        if (event.key === "Reservations" || event.key === null) {
+            renderReservations();
+        }
+    });
+
+    renderReservations();
 }
 
 
@@ -267,7 +442,7 @@ if (paymentTable) {
 
                     button.disabled = true;
 
-                    alert("Payment has been confirmed.");
+                    AppFeedback.notify("Payment has been confirmed.");
                 }
 
 
@@ -276,7 +451,7 @@ if (paymentTable) {
 
                     const orderNumber = row.querySelector("td").innerText;
 
-                    alert(
+                    AppFeedback.notify(
                         "Receipt for " + orderNumber + "\n\n" +
                         "Payment has already been completed."
                     );
@@ -313,25 +488,73 @@ navLinks.forEach(function (link) {
 
 });
 
+const customerLoginNotification = document.getElementById("customer-login-notification");
+
+function showCustomerLoginNotification() {
+    try {
+        const notification = CustomerSession.getLatestLoginNotification();
+        if (!notification) {
+            customerLoginNotification.hidden = true;
+            return;
+        }
+
+        customerLoginNotification.textContent =
+            notification.name + " logged in as a customer at " + notification.loggedInAt + ".";
+        customerLoginNotification.hidden = false;
+    } catch (error) {
+        console.error("Unable to load customer login notification:", error);
+        customerLoginNotification.textContent = "Unable to load the latest customer login notification.";
+        customerLoginNotification.hidden = false;
+    }
+}
+
+window.addEventListener("storage", function (event) {
+    if (event.key === CustomerSession.notificationKey || event.key === null) {
+        showCustomerLoginNotification();
+    }
+});
+
+showCustomerLoginNotification();
+
+const reservationApprovalNotification = document.getElementById("reservation-approval-notification");
+
+function showReservationApprovalNotification() {
+    try {
+        const latestApproval = ReservationStorage.getAll()
+            .filter(function (reservation) {
+                return reservation.status === "Approved" || reservation.status === "Confirmed";
+            })
+            .sort(function (first, second) {
+                return (second.statusUpdatedAt || "").localeCompare(first.statusUpdatedAt || "");
+            })[0];
+
+        if (!latestApproval) {
+            reservationApprovalNotification.hidden = true;
+            return;
+        }
+
+        const customerName = [latestApproval.firstName, latestApproval.lastName].filter(Boolean).join(" ");
+        reservationApprovalNotification.textContent =
+            "Reservation approved for " + (customerName || latestApproval.email) +
+            (latestApproval.date ? " on " + latestApproval.date : "") +
+            (latestApproval.time ? " at " + latestApproval.time : "") + ".";
+        reservationApprovalNotification.hidden = false;
+    } catch (error) {
+        console.error("Unable to load reservation approval notice:", error);
+        reservationApprovalNotification.textContent = "Unable to load reservation approval notices.";
+        reservationApprovalNotification.hidden = false;
+    }
+}
+
+window.addEventListener("storage", function (event) {
+    if (event.key === "Reservations" || event.key === null) {
+        showReservationApprovalNotification();
+    }
+});
+
+showReservationApprovalNotification();
+
 
 // =============================
 // LOGOUT
 // =============================
-
-const logoutButton = document.querySelector(".logout-btn");
-
-if (logoutButton) {
-
-    logoutButton.addEventListener("click", function (event) {
-
-        const confirmLogout = confirm(
-            "Are you sure you want to logout?"
-        );
-
-        if (!confirmLogout) {
-            event.preventDefault();
-        }
-
-    });
-
-}

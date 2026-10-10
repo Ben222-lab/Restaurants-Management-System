@@ -1,39 +1,53 @@
 const Email = document.getElementById("Email");
 const Password = document.getElementById("Password");
-const LoginButton = document.getElementById("LoginButton");
+const LoginForm = document.getElementById("customer-login-form");
 
-
-// Customer Login
-LoginButton.addEventListener("click", function (event) {
-
+LoginForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const email = Email.value.trim();
-    const password = Password.value.trim();
+    const identifier = Email.value.trim();
+    const password = Password.value;
 
-
-    if (email === "") {
-        alert("Please enter your email.");
-        Email.focus();
+    if (identifier === "") {
+        AppFeedback.warning("Please enter your email address or username.");
         return;
     }
-
 
     if (password === "") {
-        alert("Please enter your password.");
-        Password.focus();
+        AppFeedback.warning("Please enter your password.");
         return;
     }
 
+    const submitButton = document.getElementById("LoginButton");
+    submitButton.disabled = true;
 
-    if (email === "benjaminajao02@gmail.com" && password === "12345") {
+    try {
+        let customer = await CustomerAccounts.authenticate(identifier, password);
 
-        window.open("../CustomerModule/RestaurantsMenu.html", "_blank");
+        if (!customer &&
+            identifier.toLowerCase() === "benjaminajao02@gmail.com" &&
+            password === "12345") {
+            customer = {
+                name: "Benjamin Ajao",
+                email: "benjaminajao02@gmail.com"
+            };
+        }
 
-    } else {
+        if (!customer) {
+            AppFeedback.error("The email/username or password is incorrect.");
+            return;
+        }
 
-        alert("Invalid email or password.");
-
+        CustomerSession.recordLogin(customer);
+        window.location.href = "../CustomerModule/RestaurantsMenu.html";
+    } catch (error) {
+        console.error("Unable to complete customer login:", error);
+        AppFeedback.error("Login could not be completed. Please try again.");
+    } finally {
+        submitButton.disabled = false;
     }
-
 });
+
+if (new URLSearchParams(window.location.search).get("accountCreated") === "1") {
+    AppFeedback.success("Account created. Log in with your username or email and password.");
+}

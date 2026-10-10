@@ -12,6 +12,7 @@
         crossorigin="anonymous">
 
     <link rel="stylesheet" href="./RestaurantsMenu.css">
+    <link rel="stylesheet" href="../shared/appFeedback.css">
 </head>
 
 <body>
@@ -24,11 +25,13 @@
             <li><a href="#Menu1">Menu</a></li>
             <li><a href="#reservation">Reservation</a></li>
             <li><a href="#Order1">Order</a></li>
+            <li><a href="#MyOrders">My Orders</a></li>
+            <li><a href="#MyReservations">My Reservations</a></li>
             <li><a href="#History1">History</a></li>
 
-            <button class="btn">
-                <a href="../HomeLoginSignup/Home.html">Logout</a>
-            </button>
+            <span id="customer-welcome" class="customer-welcome" aria-live="polite"></span>
+
+            <a class="btn" id="customer-logout" href="../HomeLoginSignup/index.html" data-confirm-logout>Logout</a>
 
         </nav>
     </header>
@@ -682,6 +685,13 @@
 
                     </div>
 
+                    <div class="form-group food-picker">
+                        <label class="section-label">Choose the food you want</label>
+                        <div id="order-menu-categories" class="order-menu-categories" role="group"
+                            aria-label="Menu categories"></div>
+                        <div id="order-menu-items" class="order-menu-items" aria-live="polite"></div>
+                    </div>
+
                     <div id="dine-in-fields" class="dynamic-fields">
 
                         <div class="form-group">
@@ -690,7 +700,7 @@
                                 Table Number*
                             </label>
 
-                            <select id="table-number" name="tableNumber">
+                            <select id="table-number" name="tableNumber" required>
                                 <option value="">Select your table...</option>
                                 <option value="Table 1">Table 1 (Indoor)</option>
                                 <option value="Table 2">Table 2 (Indoor)</option>
@@ -710,8 +720,14 @@
                                 Pickup Name*
                             </label>
 
-                            <input type="text" id="pickup-name" placeholder="Name for pickup">
+                            <input type="text" id="pickup-name" name="pickupName" placeholder="Name for pickup">
 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickup-address">Delivery / pickup address*</label>
+                            <textarea id="pickup-address" name="address" rows="2"
+                                placeholder="Enter your address or pickup location"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -720,7 +736,7 @@
                                 Estimated Pickup Time*
                             </label>
 
-                            <select id="pickup-time" name="pickupTime">
+                            <select id="pickup-time" name="pickupTime" required>
                                 <option value="">Select pickup time...</option>
                                 <option value="15 mins">In 15 minutes</option>
                                 <option value="30 mins">In 30 minutes</option>
@@ -738,7 +754,7 @@
                             Contact Phone Number*
                         </label>
 
-                        <input type="tel" id="customer-phone" placeholder="e.g. 08012345678" required>
+                        <input type="tel" id="customer-phone" name="phone" placeholder="e.g. 08012345678" required>
 
                     </div>
 
@@ -748,30 +764,8 @@
                             Special Instructions / Cooking Preferences
                         </label>
 
-                        <textarea id="order-instructions" rows="3"
+                        <textarea id="order-instructions" name="instructions" rows="3"
                             placeholder="e.g. Extra pepper sauce, light salt..."></textarea>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label class="section-label">
-                            Payment Method*
-                        </label>
-
-                        <div class="radio-group vertical">
-
-                            <label class="radio-item">
-                                <input type="radio" name="paymentMethod" value="card" checked>
-                                Pay with Card / Transfer (Online)
-                            </label>
-
-                            <label class="radio-item">
-                                <input type="radio" name="paymentMethod" value="counter">
-                                Pay at Counter / Table
-                            </label>
-
-                        </div>
 
                     </div>
 
@@ -823,240 +817,33 @@
 
         <div class="tracking-container">
 
-
-            <div class="tracking-card live-tracker-card">
-
+            <section id="MyOrders" class="tracking-card customer-orders-card">
                 <div class="card-header">
-
-                    <h2>Live Order Tracker</h2>
-
-                    <span class="order-id-badge">
-                        Order #TH-8042
-                    </span>
-
+                    <h2>My Orders</h2>
                 </div>
-
-
-                <div class="active-order-info">
-
-                    <p>
-                        <strong>Type:</strong>
-                        Takeaway / Pick Up
-                    </p>
-
-                    <p>
-                        <strong>Estimated Ready Time:</strong>
-                        <span class="highlight-time">
-                            25 Mins
-                        </span>
-                    </p>
-
+                <p class="reservation-dashboard-description">Follow your order from admin review to staff preparation.</p>
+                <div id="customer-orders" class="customer-orders" aria-live="polite">
+                    <p class="empty-reservations">No orders found for your account.</p>
                 </div>
+            </section>
 
-
-                <div class="progress-stepper">
-
-                    <div class="step completed">
-
-                        <div class="step-icon">
-                            
-                        </div>
-
-                        <span class="step-label">
-                            Order Placed
-                        </span>
-
-                    </div>
-
-
-                    <div class="step active">
-
-                        <div class="step-icon">
-                            
-                        </div>
-
-                        <span class="step-label">
-                            Preparing
-                        </span>
-
-                    </div>
-
-
-                    <div class="step">
-
-                        <div class="step-icon">
-                            
-                        </div>
-
-                        <span class="step-label">
-                            Ready for Pickup
-                        </span>
-
-                    </div>
-
-
-                    <div class="step">
-
-                        <div class="step-icon">
-                            
-                        </div>
-
-                        <span class="step-label">
-                            Completed
-                        </span>
-
-                    </div>
-
+            <section id="MyReservations" class="tracking-card customer-reservations-card">
+                <div class="card-header">
+                    <h2>My Reservations</h2>
                 </div>
-
-
-                <div class="live-items-summary">
-
-                    <h4>
-                        Items in this order:
-                    </h4>
-
-                    <ul>
-                        <li>1x Jollof Rice & Fried Chicken</li>
-                        <li>2x Puff Puff & Small Chops Combo</li>
-                    </ul>
-
+                <p class="reservation-dashboard-description">Check your reservation status and updates from the restaurant.</p>
+                <div id="customer-reservations" class="customer-reservations" aria-live="polite">
+                    <p class="empty-reservations">No reservations found for your account.</p>
                 </div>
+            </section>
 
-            </div>
-
-
-            <div class="tracking-card history-card">
-
-                <h2>
-                    Order History
-                </h2>
-
-                <p class="history-desc">
-                    View your previous orders and check their details.
-                </p>
-
-
-                <div class="history-list">
-
-
-                    <div class="history-item">
-
-                        <div class="history-main-info">
-
-                            <div>
-
-                                <h4>
-                                    Order #TH-7921
-                                </h4>
-
-                                <span class="history-date">
-                                    Oct 1, 2026 • 2:30 PM
-                                </span>
-
-                            </div>
-
-                            <span class="status-badge badge-success">
-                                Completed
-                            </span>
-
-                        </div>
-
-
-                        <div class="history-details">
-
-                            <p>
-                                 Dine-In (Table 3) • 2 Items
-                            </p>
-
-                            <span class="history-price">
-                                ₦5,500
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="history-item">
-
-                        <div class="history-main-info">
-
-                            <div>
-
-                                <h4>
-                                    Order #TH-7605
-                                </h4>
-
-                                <span class="history-date">
-                                    Sep 28, 2026 • 7:15 PM
-                                </span>
-
-                            </div>
-
-                            <span class="status-badge badge-success">
-                                Completed
-                            </span>
-
-                        </div>
-
-
-                        <div class="history-details">
-
-                            <p>
-                                 Takeaway • 4 Items
-                            </p>
-
-                            <span class="history-price">
-                                ₦12,400
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="history-item">
-
-                        <div class="history-main-info">
-
-                            <div>
-
-                                <h4>
-                                    Order #TH-7110
-                                </h4>
-
-                                <span class="history-date">
-                                    Sep 20, 2026 • 1:10 PM
-                                </span>
-
-                            </div>
-
-                            <span class="status-badge badge-danger">
-                                Cancelled
-                            </span>
-
-                        </div>
-
-
-                        <div class="history-details">
-
-                            <p>
-                                 Dine-In (Table 1) • 1 Item
-                            </p>
-
-                            <span class="history-price">
-                                ₦3,500
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
+            <section class="tracking-card history-card" aria-labelledby="order-history-title">
+                <h2 id="order-history-title">Order History</h2>
+                <p class="history-desc">Your submitted orders, requested items, totals, and latest statuses.</p>
+                <div id="customer-order-history" class="history-list" aria-live="polite">
+                    <p class="empty-reservations">Your order history will appear here.</p>
                 </div>
-
-            </div>
+            </section>
 
         </div>
 
@@ -1064,7 +851,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script src="../shared/appFeedback.js"></script>
+    <script src="../shared/orderStorage.js"></script>
+    <script src="../shared/customerSession.js"></script>
+    <script src="../shared/reservationStorage.js"></script>
     <script src="./RestaurantsMenu.js"></script>
+    <script src="../shared/logoutConfirmation.js"></script>
 
 </body>
 

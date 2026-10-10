@@ -35,6 +35,43 @@ body {
     margin-bottom: 25px;
 }
 
+.Account_Creation form {
+    display: grid;
+    gap: 9px;
+    text-align: left;
+}
+
+.Account_Creation form label {
+    margin-top: 5px;
+    color: #454545;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.Account_Creation form button {
+    margin-top: 10px;
+}
+
+.Account_Creation form button:disabled,
+.Login button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.Account_Creation .account-storage-note {
+    color: #777;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.Account_Creation form input {
+    margin-bottom: 4px;
+}
+
+.Account_Creation form button {
+    margin-bottom: 4px;
+}
+
 
 .Account_Creation input {
     width: 100%;

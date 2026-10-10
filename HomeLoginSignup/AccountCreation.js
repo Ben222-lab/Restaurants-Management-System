@@ -3,42 +3,54 @@ const Username = document.getElementById("Username");
 const Email = document.getElementById("Email");
 const Password = document.getElementById("Password");
 const ConfirmPassword = document.getElementById("ConfirmPassword");
-const CreateAccount = document.getElementById("CreateAccount");
+const AccountCreationForm = document.getElementById("account-creation-form");
 
-CreateAccount.addEventListener("click", function () {
+AccountCreationForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-    if (FullName.value === "") {
-        alert("Please enter your full name");
+    const name = FullName.value.trim();
+    const username = Username.value.trim();
+    const email = Email.value.trim();
+    const password = Password.value;
+
+    if (!name || !username || !email || !password || !ConfirmPassword.value) {
+        AppFeedback.warning("Please complete all account fields.");
         return;
     }
 
-    if (Username.value === ""){
-        alert("Enter your username");
+    if (!Email.validity.valid) {
+        AppFeedback.warning("Enter a valid email address.");
+        Email.focus();
         return;
     }
 
-    if (Email.value === ""){
-        alert("Enter your email");
+    if (password.length < 8) {
+        AppFeedback.warning("Choose a password with at least 8 characters.");
+        Password.focus();
         return;
     }
 
-    if (!Email.value.includes("@")){
-        alert("Please enter a valid email");
+    if (password !== ConfirmPassword.value) {
+        AppFeedback.error("The passwords do not match.");
+        ConfirmPassword.focus();
         return;
     }
 
-    if (Password.value === ""){
-        alert("Enter your passsword");
-        return;
-    }
+    const submitButton = document.getElementById("CreateAccount");
+    submitButton.disabled = true;
 
-    if (ConfirmPassword.value === ""){
-        alert("Please confirm your password");
-        return;
-    }
-
-    if (Password.value !== ConfirmPassword.value){
-        alert("Password does not match");
-        return;
+    try {
+        await CustomerAccounts.create({
+            name: name,
+            username: username,
+            email: email,
+            password: password
+        });
+        window.location.href = "./Login.html?accountCreated=1";
+    } catch (error) {
+        console.error("Unable to create customer account:", error);
+        AppFeedback.error(error.message || "Account creation failed. Please try again.");
+    } finally {
+        submitButton.disabled = false;
     }
 });

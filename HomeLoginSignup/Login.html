@@ -8,6 +8,7 @@
     <title>Login Page</title>
 
     <link rel="stylesheet" href="./Login.css">
+    <link rel="stylesheet" href="../shared/appFeedback.css">
 </head>
 
 <body>
@@ -23,38 +24,32 @@
         </div>
 
 
-        <input type="email" id="Email" placeholder="Email address">
+        <form id="customer-login-form">
+            <input type="text" id="Email" placeholder="Email address or username" autocomplete="username" required>
+            <br><br>
+            <input type="password" id="Password" placeholder="Password" autocomplete="current-password" required>
+            <br><br>
 
-        <br><br>
-
-        <input type="password" id="Password" placeholder="Password">
-
-
-        <br><br>
-
-        <a class="Forget_password" href="">
-            Forgot password?
-        </a>
-
-
-        <button id="LoginButton">
-            Login
-        </button>
+            <button id="LoginButton" type="submit">Login</button>
+        </form>
 
 
         <p>
             Don't have an account?
-            <a href="./AccountCreation.html" target="_blank">Sign up</a>
+            <a href="./AccountCreation.html">Sign up</a>
         </p>
 
 
         <div class="Back_Home">
-            <a href="../HomeLoginSignup/Home.html">← Back to Home</a>
+            <a href="../HomeLoginSignup/index.html">← Back to Home</a>
         </div>
 
     </div>
 
 
+    <script src="../shared/appFeedback.js"></script>
+    <script src="../shared/customerAccounts.js"></script>
+    <script src="../shared/customerSession.js"></script>
     <script src="./Login.js"></script>
 
 </body>

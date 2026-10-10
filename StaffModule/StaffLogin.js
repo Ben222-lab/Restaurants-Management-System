@@ -15,7 +15,6 @@ ShowPassword.addEventListener("change", function () {
 
 });
 
-// Staff Login
 StaffLogin.addEventListener("click", function (event) {
 
     event.preventDefault();
@@ -25,14 +24,14 @@ StaffLogin.addEventListener("click", function (event) {
 
 
     if (username === "") {
-        alert("Please enter your username.");
+        AppFeedback.notify("Please enter your username.");
         Username.focus();
         return;
     }
 
 
     if (password === "") {
-        alert("Please enter your password.");
+        AppFeedback.notify("Please enter your password.");
         Password.focus();
         return;
     }
@@ -44,7 +43,7 @@ StaffLogin.addEventListener("click", function (event) {
 
     } else {
 
-        alert("Invalid username or password.");
+        AppFeedback.notify("Invalid username or password.");
 
     }
 

@@ -8,6 +8,7 @@
     <title>Create Account</title>
 
     <link rel="stylesheet" href="./AccountCreation.css">
+    <link rel="stylesheet" href="../shared/appFeedback.css">
 </head>
 
 <body>
@@ -18,37 +19,36 @@
 
         <h1>Create Account</h1>
 
-        <input type="text" id="FullName" placeholder="Full Name">
+        <form id="account-creation-form">
+            <label for="FullName">Full name</label>
+            <input type="text" id="FullName" placeholder="Full Name" autocomplete="name" required>
 
-        <br><br>
+            <label for="Username">Username</label>
+            <input type="text" id="Username" placeholder="Username" autocomplete="username" required>
 
-        <input type="text" id="Username" placeholder="Username">
+            <label for="Email">Email address</label>
+            <input type="email" id="Email" placeholder="Email" autocomplete="email" required>
 
-        <br><br>
+            <label for="Password">Password</label>
+            <input type="password" id="Password" placeholder="Password" autocomplete="new-password" minlength="8" required>
 
-        <input type="email" id="Email" placeholder="Email">
+            <label for="ConfirmPassword">Confirm password</label>
+            <input type="password" id="ConfirmPassword" placeholder="Confirm Password" autocomplete="new-password" minlength="8" required>
 
-        <br><br>
-
-        <input type="password" id="Password" placeholder="Password">
-
-        <br><br>
-
-        <input type="password" id="ConfirmPassword" placeholder="Confirm Password">
-
-        <br><br>
-
-        <button class="Sign_In" id="CreateAccount" >Create Account</button>
+            <button class="Sign_In" id="CreateAccount" type="submit">Create Account</button>
+        </form>
 
         <p>
             Already have an account?
-            <a href=""> <a target="_blank" href="./Login.html">Login</a></a>
+            <a href="./Login.html">Login</a>
         </p>
+        <p class="account-storage-note">Demo accounts are saved in this browser only. Do not use a password you use elsewhere.</p>
 
     </div>
 
+    <script src="../shared/appFeedback.js"></script>
+    <script src="../shared/customerAccounts.js"></script>
     <script src="./AccountCreation.js"></script>
 </body>
 
 </html>
-

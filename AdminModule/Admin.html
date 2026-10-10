@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taste Haven - Admin Dashboard</title>
     <link rel="stylesheet" href="Admin.css">
+    <link rel="stylesheet" href="../shared/appFeedback.css">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
         </nav>
 
         <div class="logout-btn">
-            <a href="../HomeLoginSignup/Home.html">Logout</a>
+            <a href="../HomeLoginSignup/index.html" data-confirm-logout>Logout</a>
         </div>
 
     </aside>
@@ -48,6 +49,8 @@
             </div>
 
         </header>
+
+        <div id="customer-login-notification" class="customer-login-notification" role="status" aria-live="polite" hidden></div>
 
 
         <!-- Dashboard -->
@@ -69,12 +72,12 @@
 
                 <div class="dashboard-card">
                     <h3>Total Customers</h3>
-                    <p>32</p>
+                    <p id="total-customers-count">0</p>
                 </div>
 
                 <div class="dashboard-card">
                     <h3>Active Reservations</h3>
-                    <p>12</p>
+                    <p id="active-reservations-count">0</p>
                 </div>
 
             </div>
@@ -91,48 +94,10 @@
                     <p>Add, edit, or delete restaurant menu items.</p>
                 </div>
 
-                <button>Add Menu Item</button>
+                <button type="button" id="add-menu-item-button">Add Menu Item</button>
             </div>
 
-            <div class="management-box">
-
-                <div class="menu-item">
-                    <div>
-                        <h3>Jollof Rice</h3>
-                        <p>₦10,000</p>
-                    </div>
-
-                    <div>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div>
-                        <h3>Fried Rice</h3>
-                        <p>₦15,000</p>
-                    </div>
-
-                    <div>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div>
-                        <h3>Moi-Moi</h3>
-                        <p>₦5,000</p>
-                    </div>
-
-                    <div>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </div>
-                </div>
-
-            </div>
+            <div class="management-box"></div>
 
         </section>
 
@@ -146,39 +111,10 @@
                     <p>Manage staff accounts and roles.</p>
                 </div>
 
-                <button>Add Staff</button>
+                <button type="button" id="add-staff-button">Add Staff</button>
             </div>
 
-            <div class="management-box">
-
-                <div class="staff-item">
-                    <div>
-                        <h3>Benjamin</h3>
-                        <p>Manager</p>
-                    </div>
-
-                    <span>Active</span>
-                </div>
-
-                <div class="staff-item">
-                    <div>
-                        <h3>John</h3>
-                        <p>Waiter</p>
-                    </div>
-
-                    <span>Active</span>
-                </div>
-
-                <div class="staff-item">
-                    <div>
-                        <h3>Mary</h3>
-                        <p>Cashier</p>
-                    </div>
-
-                    <span>Active</span>
-                </div>
-
-            </div>
+            <div class="management-box" id="staff-management-box"></div>
 
         </section>
 
@@ -186,30 +122,15 @@
         <!-- Customer Management -->
         <section id="CustomerManagement" class="admin-section">
 
-            <h2>Customer Management</h2>
-            <p>View and manage the customer database.</p>
-
-            <div class="management-box">
-
-                <div class="customer-item">
-                    <h3>Benjamin</h3>
-                    <p>benjamin@email.com</p>
-                    <p>Orders: 8</p>
+            <div class="section-heading">
+                <div>
+                    <h2>Customer Management</h2>
+                    <p>View and manage customer accounts.</p>
                 </div>
-
-                <div class="customer-item">
-                    <h3>David</h3>
-                    <p>david@email.com</p>
-                    <p>Orders: 5</p>
-                </div>
-
-                <div class="customer-item">
-                    <h3>Sarah</h3>
-                    <p>sarah@email.com</p>
-                    <p>Orders: 10</p>
-                </div>
-
+                <button type="button" id="add-customer-button">Add Customer</button>
             </div>
+
+            <div class="management-box" id="customer-management-box"></div>
 
         </section>
 
@@ -217,32 +138,15 @@
         <!-- Table Management -->
         <section id="TableManagement" class="admin-section">
 
-            <h2>Table Management</h2>
-            <p>Configure and monitor restaurant tables.</p>
-
-            <div class="table-container">
-
-                <div class="restaurant-table">
-                    <h3>Table 1</h3>
-                    <p>Available</p>
+            <div class="section-heading">
+                <div>
+                    <h2>Table Management</h2>
+                    <p>Configure and monitor restaurant tables.</p>
                 </div>
-
-                <div class="restaurant-table">
-                    <h3>Table 2</h3>
-                    <p>Occupied</p>
-                </div>
-
-                <div class="restaurant-table">
-                    <h3>Table 3</h3>
-                    <p>Reserved</p>
-                </div>
-
-                <div class="restaurant-table">
-                    <h3>Table 4</h3>
-                    <p>Available</p>
-                </div>
-
+                <button type="button" id="add-table-button">Add Table</button>
             </div>
+
+            <div class="table-container" id="table-management-grid"></div>
 
         </section>
 
@@ -254,23 +158,7 @@
             <p>Manage table reservations.</p>
 
             <div class="management-box">
-
-                <div class="reservation-item">
-                    <h3>Benjamin</h3>
-                    <p>Date: September 20</p>
-                    <p>Time: 7:00 PM</p>
-                    <p>Guests: 4</p>
-                    <span>Reserved</span>
-                </div>
-
-                <div class="reservation-item">
-                    <h3>Walk-in Guest</h3>
-                    <p>Date: September 20</p>
-                    <p>Time: 8:00 PM</p>
-                    <p>Guests: 2</p>
-                    <span>Reserved</span>
-                </div>
-
+                <p class="empty-reservations">No reservations have been submitted yet.</p>
             </div>
 
         </section>
@@ -280,31 +168,10 @@
         <section id="Orders" class="admin-section">
 
             <h2>Orders</h2>
-            <p>Review active and historical orders.</p>
+            <p>Approve or decline customer orders before they are sent to staff.</p>
 
             <div class="management-box">
-
-                <div class="order-item">
-                    <h3>Order #1025</h3>
-                    <p>Customer: Benjamin</p>
-                    <p>Total: ₦12,500</p>
-                    <span>Completed</span>
-                </div>
-
-                <div class="order-item">
-                    <h3>Order #1026</h3>
-                    <p>Customer: Sarah</p>
-                    <p>Total: ₦18,000</p>
-                    <span>Preparing</span>
-                </div>
-
-                <div class="order-item">
-                    <h3>Order #1027</h3>
-                    <p>Customer: David</p>
-                    <p>Total: ₦9,500</p>
-                    <span>Pending</span>
-                </div>
-
+                <p class="empty-orders">No customer orders have been submitted yet.</p>
             </div>
 
         </section>
@@ -341,33 +208,27 @@
         <!-- Settings -->
         <section id="Settings" class="admin-section">
 
-            <h2>Restaurant Settings</h2>
-            <p>Configure your restaurant settings.</p>
-
-            <div class="management-box">
-
-                <div class="setting-item">
-                    <h3>Restaurant Name</h3>
-                    <p>Taste Haven</p>
+            <div class="section-heading">
+                <div>
+                    <h2>Restaurant Settings</h2>
+                    <p>Configure your restaurant name, operating status, and details.</p>
                 </div>
-
-                <div class="setting-item">
-                    <h3>Number of Tables</h3>
-                    <p>4 Tables</p>
-                </div>
-
-                <div class="setting-item">
-                    <h3>Restaurant Status</h3>
-                    <p>Open</p>
-                </div>
-
+                <button type="button" id="edit-restaurant-settings">Edit Settings</button>
             </div>
+
+            <div class="management-box" id="restaurant-settings-box"></div>
 
         </section>
 
     </main>
 
+    <script src="../shared/appFeedback.js"></script>
+    <script src="../shared/orderStorage.js"></script>
+    <script src="../shared/customerSession.js"></script>
+    <script src="../shared/reservationStorage.js"></script>
+    <script src="../shared/customerAccounts.js"></script>
     <script src="Admin.js"></script>
+    <script src="../shared/logoutConfirmation.js"></script>
 
 </body>
 

@@ -1,7 +1,7 @@
 const Username = document.getElementById("Username");
 const Password = document.getElementById("Password");
 const ShowPassword = document.getElementById("ShowPassword");
-const StaffLogin = document.getElementById("StaffLogin");
+const AdminLogin = document.getElementById("StaffLogin");
 
 
 // Show Password
@@ -16,8 +16,7 @@ ShowPassword.addEventListener("change", function () {
 });
 
 
-// Staff Login
-StaffLogin.addEventListener("click", function (event) {
+AdminLogin.addEventListener("click", function (event) {
 
     event.preventDefault();
 
@@ -26,14 +25,14 @@ StaffLogin.addEventListener("click", function (event) {
 
 
     if (username === "") {
-        alert("Please enter your username.");
+        AppFeedback.notify("Please enter your username.");
         Username.focus();
         return;
     }
 
 
     if (password === "") {
-        alert("Please enter your password.");
+        AppFeedback.notify("Please enter your password.");
         Password.focus();
         return;
     }
@@ -41,11 +40,11 @@ StaffLogin.addEventListener("click", function (event) {
 
     if (username === "Benjamin" && password === "12345") {
 
-        window.location.href = "../StaffModule/staff.html";
+        window.location.href = "./Admin.html";
 
     } else {
 
-        alert("Invalid username or password.");
+        AppFeedback.notify("Invalid username or password.");
 
     }
 

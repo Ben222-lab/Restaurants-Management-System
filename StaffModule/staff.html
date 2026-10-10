@@ -7,6 +7,7 @@
     <title>Taste Haven - Staff Dashboard</title>
 
     <link rel="stylesheet" href="./staff.css">
+    <link rel="stylesheet" href="../shared/appFeedback.css">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
 
         </ul>
 
-        <button class="logout-btn"> <a href="../HomeLoginSignup/Home.html"> Logout</a></button>
+        <a class="logout-btn" href="../HomeLoginSignup/index.html" data-confirm-logout>Logout</a>
 
     </sidebar>
 
@@ -46,6 +47,9 @@
                 Manage restaurant orders, tables, customers, bookings,
                 and payments from one place.
             </p>
+
+            <div id="customer-login-notification" class="customer-login-notification" role="status" aria-live="polite" hidden></div>
+            <div id="reservation-approval-notification" class="reservation-approval-notification" role="status" aria-live="polite" hidden></div>
 
             <!-- Dashboard Overview Cards -->
             <div class="dashboard-overview">
@@ -67,7 +71,7 @@
 
                 <div class="overview-card">
                     <h4>Active Reservations</h4>
-                    <p class="overview-number">12</p>
+                    <p class="overview-number" id="active-reservations-count">0</p>
                 </div>
 
             </div>
@@ -79,37 +83,10 @@
         <div class="content1" id="NewOrders">
 
             <h2>🔔 Incoming Orders</h2>
-            <p>Accept or reject orders</p>
-
-            <section class="Box">
-                <div class="Box1">
-                    <h2>#1043</h2>
-                    <p>Pending</p>
-                </div>
-
-                <div>
-                    <p>Table 4 . 2:18 PM</p>
-                    <h2>2 x Jollof Rice & Chicken <br> 1 x Chapman</h2>
-                </div>
-
-                <button style="background-color: #C8501E; color: white;">Accept</button>
-                <button style="background-color: white; border: 1px solid #E27F7F; color: #C8501E;">Reject</button>
-            </section>
-
-            <section class="Boxx">
-                <div class="Box2">
-                    <h2>#1044</h2>
-                    <p>Pending</p>
-                </div>
-
-                <div>
-                    <p>Takeaway. 2:20 PM</p>
-                    <h2>1 x Fried Rice & Turkey <br> 2 x Zobo</h2>
-                </div>
-
-                <button style="background-color: #C8501E; color: white;">Accept</button>
-                <button style="background-color: white; border: 1px solid #E27F7F; color: #C8501E;">Reject</button>
-            </section>
+            <p>Admin-approved orders will appear here for staff acceptance.</p>
+            <div id="staff-incoming-orders" class="staff-incoming-orders">
+                <p class="empty-orders">No orders are awaiting staff acceptance.</p>
+            </div>
         </div>
 
         <!-- Order Status -->
@@ -128,40 +105,7 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>#1045</td>
-                        <td>Table 7</td>
-                        <td>5 items</td>
-                        <td><span class="status pending">Pending</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>#1044</td>
-                        <td>Table 2</td>
-                        <td>1 items</td>
-                        <td><span class="status accepted">Accepted</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>#1043</td>
-                        <td>Table 6</td>
-                        <td>9 items</td>
-                        <td><span class="status preparing">Preparing</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>#1042</td>
-                        <td>Delivery</td>
-                        <td>10 items</td>
-                        <td><span class="status ready">Ready</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>#1041</td>
-                        <td>Table 1</td>
-                        <td>3 items</td>
-                        <td><span class="status completed">Completed</span></td>
-                    </tr>
+                    <tr><td colspan="4" class="empty-orders">No customer orders yet.</td></tr>
                 </tbody>
             </table>
 
@@ -241,44 +185,16 @@
                     <tr>
                         <th>CUSTOMER</th>
                         <th>PHONE</th>
+                        <th>EMAIL</th>
                         <th>DATE & TIME</th>
                         <th>GUESTS</th>
-                        <th>TABLE</th>
+                        <th>OCCASION / SEATING</th>
                         <th>STATUS</th>
                         <th>ACTION</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Amaka Okafor</strong></td>
-                        <td>+234 801 234 5678</td>
-                        <td>12/2/2023, 7:00 PM</td>
-                        <td>4</td>
-                        <td>Table 3</td>
-                        <td><span class="status ready">Completed</span></td>
-                        <td><button class="action-btn">Seat Customer</button></td>
-                    </tr>
-                    <tr>
-                        <td><strong>David Adeleke</strong></td>
-                        <td>+234 802 987 6543</td>
-                        <td>15/2/2023, 8:30 PM</td>
-                        <td>2</td>
-                        <td>Table 5</td>
-                        <td><span class="status pending">Pending</span></td>
-                        <td>
-                            <button class="action-btn">Confirm</button>
-                            <button class="action-btn outline">Cancel</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Blessing Emeka</strong></td>
-                        <td>+234 803 456 7890</td>
-                        <td>25/10/2023, 2:00 PM</td>
-                        <td>6</td>
-                        <td>Table 8</td>
-                        <td><span class="status accepted">Confirmed</span></td>
-                        <td><button class="action-btn outline">Edit</button></td>
-                    </tr>
+                    <tr><td colspan="8" class="empty-reservations">No reservations have been submitted yet.</td></tr>
                 </tbody>
             </table>
 
@@ -357,7 +273,12 @@
 
     </section>
 
+    <script src="../shared/appFeedback.js"></script>
+    <script src="../shared/orderStorage.js"></script>
+    <script src="../shared/customerSession.js"></script>
+    <script src="../shared/reservationStorage.js"></script>
     <script src="./staff.js"></script>
+    <script src="../shared/logoutConfirmation.js"></script>
 </body>
 
 </html>
