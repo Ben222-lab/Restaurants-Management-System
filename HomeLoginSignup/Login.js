@@ -1,6 +1,11 @@
 const Email = document.getElementById("Email");
 const Password = document.getElementById("Password");
 const LoginForm = document.getElementById("customer-login-form");
+const ShowPassword = document.getElementById("ShowPassword");
+
+ShowPassword.addEventListener("change", function () {
+    Password.type = ShowPassword.checked ? "text" : "password";
+});
 
 LoginForm.addEventListener("submit", async function (event) {
     event.preventDefault();

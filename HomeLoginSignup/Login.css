@@ -36,6 +36,11 @@ body {
     margin-bottom: 25px;
 }
 
+#customer-login-form {
+    display: grid;
+    gap: 14px;
+}
+
 .Login button a{
     text-decoration: none;
     color: white;
@@ -57,6 +62,24 @@ input {
 
 input:focus {
     border: 1px solid #FF8C00;
+}
+
+.show-password-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: start;
+    color: #5c5959;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.show-password-control input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #FF8C00;
+    cursor: pointer;
 }
 
 .Forget_password {

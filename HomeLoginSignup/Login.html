@@ -26,9 +26,11 @@
 
         <form id="customer-login-form">
             <input type="text" id="Email" placeholder="Email address or username" autocomplete="username" required>
-            <br><br>
             <input type="password" id="Password" placeholder="Password" autocomplete="current-password" required>
-            <br><br>
+            <label class="show-password-control" for="ShowPassword">
+                <input type="checkbox" id="ShowPassword">
+                <span>Show password</span>
+            </label>
 
             <button id="LoginButton" type="submit">Login</button>
         </form>
