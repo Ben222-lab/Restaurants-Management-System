@@ -12,13 +12,17 @@
 <body>
 
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" data-responsive-navigation>
 
-        <div class="logo">
+        <div class="logo admin-logo">
             <img src="../Images/logo.png" alt="img" width="130px" width="30px">
+            <button class="dashboard-menu-toggle" type="button" aria-label="Open navigation menu"
+                aria-controls="admin-navigation" aria-expanded="false" data-navigation-toggle>
+                <span aria-hidden="true">☰</span>
+            </button>
         </div>
 
-        <nav style="position: relative; top: -80px; line-height: 0.8">
+        <nav id="admin-navigation" style="position: relative; top: -80px; line-height: 0.8">
             <a href="#Dashboard">Dashboard</a>
             <a href="#MenuManagement">Menu Management</a>
             <a href="#StaffManagement">Staff Management</a>
@@ -227,6 +231,7 @@
     <script src="../shared/customerSession.js"></script>
     <script src="../shared/reservationStorage.js"></script>
     <script src="../shared/customerAccounts.js"></script>
+    <script src="../shared/responsiveNavigation.js"></script>
     <script src="Admin.js"></script>
     <script src="../shared/logoutConfirmation.js"></script>
 

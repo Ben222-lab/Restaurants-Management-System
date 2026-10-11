@@ -13,13 +13,17 @@
 <body>
                 
     <!-- Sidebar -->
-    <sidebar class="sidebar">
+    <sidebar class="sidebar" data-responsive-navigation>
 
-        <div class="logo">
+        <div class="logo staff-logo">
             <img src="../images/logo.png" alt="Taste Haven Logo" width="100px" height="100px">
+            <button class="dashboard-menu-toggle" type="button" aria-label="Open navigation menu"
+                aria-controls="staff-navigation" aria-expanded="false" data-navigation-toggle>
+                <span aria-hidden="true">☰</span>
+            </button>
         </div>
 
-        <ul class="nav-links">
+        <ul class="nav-links" id="staff-navigation">
 
             <h2>Staff Dashboard</h2>
 
@@ -277,6 +281,7 @@
     <script src="../shared/orderStorage.js"></script>
     <script src="../shared/customerSession.js"></script>
     <script src="../shared/reservationStorage.js"></script>
+    <script src="../shared/responsiveNavigation.js"></script>
     <script src="./staff.js"></script>
     <script src="../shared/logoutConfirmation.js"></script>
 </body>

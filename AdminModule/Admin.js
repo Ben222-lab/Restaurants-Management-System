@@ -158,7 +158,7 @@ function showAdminForm(title, fields, initialValues) {
     });
 }
 
-function confirmAdminAction(title, message) {
+function confirmAdminAction(title, message, confirmLabel, confirmClass) {
     return new Promise(function (resolve) {
         const dialog = document.createElement("dialog");
         dialog.className = "admin-management-dialog admin-confirm-dialog";
@@ -173,11 +173,15 @@ function confirmAdminAction(title, message) {
             dialog.remove();
             resolve(false);
         });
-        const confirmButton = makeButton("Yes, continue", "admin-dialog-delete", function () {
-            dialog.close();
-            dialog.remove();
-            resolve(true);
-        });
+        const confirmButton = makeButton(
+            confirmLabel || "Yes, continue",
+            confirmClass || "admin-dialog-delete",
+            function () {
+                dialog.close();
+                dialog.remove();
+                resolve(true);
+            }
+        );
         actions.append(cancelButton, confirmButton);
         dialog.append(heading, description, actions);
         document.body.appendChild(dialog);
@@ -746,15 +750,20 @@ function renderReservations() {
     });
 }
 
-reservationsBox.addEventListener("click", function (event) {
+reservationsBox.addEventListener("click", async function (event) {
     const button = event.target.closest("button[data-reservation-status]");
     if (!button) {
         return;
     }
 
     const status = button.dataset.reservationStatus;
-    const action = status === "Approved" ? "approve" : "decline";
-    if (!confirm("Are you sure you want to " + action + " this reservation?")) {
+    const action = status === "Approved" ? "Approve" : "Decline";
+    if (!await confirmAdminAction(
+        action + " reservation?",
+        action + " this customer's reservation?",
+        action,
+        status === "Approved" ? "admin-dialog-confirm" : "admin-dialog-delete"
+    )) {
         return;
     }
 
@@ -899,14 +908,20 @@ function renderOrders() {
     });
 }
 
-ordersBox.addEventListener("click", function (event) {
+ordersBox.addEventListener("click", async function (event) {
     const button = event.target.closest("button[data-order-status]");
     if (!button) {
         return;
     }
 
     const status = button.dataset.orderStatus;
-    if (!confirm("Are you sure you want to " + status.toLowerCase() + " this order?")) {
+    const action = status === "Approved" ? "Approve" : "Decline";
+    if (!await confirmAdminAction(
+        action + " order?",
+        action + " this customer's order?",
+        action,
+        status === "Approved" ? "admin-dialog-confirm" : "admin-dialog-delete"
+    )) {
         return;
     }
 
