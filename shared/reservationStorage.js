@@ -42,9 +42,42 @@
         return reservation;
     }
 
+    function updateDetails(id, details) {
+        const reservations = getAll();
+        const reservation = reservations.find(function (item) {
+            return item.id === id;
+        });
+
+        if (!reservation) {
+            throw new Error("The reservation could not be found.");
+        }
+
+        Object.assign(reservation, details, {
+            statusUpdatedAt: new Date().toISOString()
+        });
+        saveAll(reservations);
+
+        return reservation;
+    }
+
+    function remove(id) {
+        const reservations = getAll();
+        const remainingReservations = reservations.filter(function (item) {
+            return item.id !== id;
+        });
+
+        if (remainingReservations.length === reservations.length) {
+            throw new Error("The reservation could not be found.");
+        }
+
+        saveAll(remainingReservations);
+    }
+
     window.ReservationStorage = Object.freeze({
         getAll: getAll,
         saveAll: saveAll,
-        updateStatus: updateStatus
+        updateStatus: updateStatus,
+        updateDetails: updateDetails,
+        remove: remove
     });
 })();

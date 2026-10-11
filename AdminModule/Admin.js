@@ -105,6 +105,9 @@ function showAdminForm(title, fields, initialValues) {
                     input.min = field.min || "0";
                     input.step = field.step || "1";
                 }
+                if (field.minLength) {
+                    input.minLength = field.minLength;
+                }
             }
 
             input.id = label.htmlFor;
@@ -140,7 +143,10 @@ function showAdminForm(title, fields, initialValues) {
             }
             const result = {};
             fields.forEach(function (field) {
-                result[field.name] = form.elements[field.name].value.trim();
+                const input = form.elements[field.name];
+                result[field.name] = input.type === "password"
+                    ? input.value
+                    : input.value.trim();
             });
             dialog.close();
             dialog.remove();
@@ -203,24 +209,79 @@ let managedStaff = loadManagedList(MANAGEMENT_KEYS.staff, [
     { id: "STAFF-3", name: "Mary", role: "Cashier", email: "" }
 ]);
 let managedTables = loadManagedList(MANAGEMENT_KEYS.tables, [
-    { id: "TABLE-1", name: "Table 1", status: "Available" },
-    { id: "TABLE-2", name: "Table 2", status: "Occupied" },
-    { id: "TABLE-3", name: "Table 3", status: "Reserved" },
-    { id: "TABLE-4", name: "Table 4", status: "Available" }
+    { id: "TABLE-1", name: "Table 1", capacity: 2, status: "Available" },
+    { id: "TABLE-2", name: "Table 2", capacity: 4, status: "Occupied" },
+    { id: "TABLE-3", name: "Table 3", capacity: 6, status: "Reserved" },
+    { id: "TABLE-4", name: "Table 4", capacity: 2, status: "Available" }
 ]);
+managedTables.forEach(function (table) {
+    if (!Number(table.capacity)) {
+        table.capacity = ({ "TABLE-1": 2, "TABLE-2": 4, "TABLE-3": 6, "TABLE-4": 2 })[table.id] || 2;
+    }
+});
 let restaurantSettings = JSON.parse(localStorage.getItem(MANAGEMENT_KEYS.settings) ||
     '{"name":"Taste Haven","status":"Open","phone":"","address":"","openingHours":""}');
 
-function persistAndRender(key, items, render) {
+function renderAdminMetrics() {
     try {
+        const orders = OrderStorage.getAll();
+        const paidOrders = orders.filter(function (order) {
+            return order.paymentStatus === "Paid";
+        });
+        const totalRevenue = paidOrders.reduce(function (total, order) {
+            return total + (Number(order.total) || 0);
+        }, 0);
+        const todayRevenue = paidOrders.reduce(function (total, order) {
+            return total + (order.paymentUpdatedAt &&
+                new Date(order.paymentUpdatedAt).toDateString() === new Date().toDateString()
+                ? Number(order.total) || 0
+                : 0);
+        }, 0);
+        document.getElementById("admin-today-sales").textContent =
+            "₦" + todayRevenue.toLocaleString();
+        document.getElementById("admin-total-orders").textContent = String(orders.length);
+        document.getElementById("admin-report-sales").textContent =
+            "₦" + totalRevenue.toLocaleString();
+        document.getElementById("admin-report-orders").textContent = String(orders.length);
+        document.getElementById("admin-average-order").textContent =
+            "₦" + (orders.length ? Math.round(
+                orders.reduce(function (total, order) {
+                    return total + (Number(order.total) || 0);
+                }, 0) / orders.length
+            ).toLocaleString() : "0");
+    } catch (error) {
+        console.error("Unable to calculate dashboard metrics:", error);
+        AppFeedback.error("Dashboard reports could not be loaded.");
+    }
+}
+
+function persistAndRender(key, items, render) {
+    let previousValue;
+    try {
+        previousValue = localStorage.getItem(key);
         saveManagedList(key, items);
-        render();
-        return true;
     } catch (error) {
         console.error("Unable to save management changes:", error);
+        try {
+            if (previousValue !== null) {
+                const previousItems = JSON.parse(previousValue);
+                if (key === MANAGEMENT_KEYS.menu) {
+                    managedMenuItems = previousItems;
+                } else if (key === MANAGEMENT_KEYS.staff) {
+                    managedStaff = previousItems;
+                } else if (key === MANAGEMENT_KEYS.tables) {
+                    managedTables = previousItems;
+                }
+                render();
+            }
+        } catch (restoreError) {
+            console.error("Unable to restore management data after save failure:", restoreError);
+        }
         AppFeedback.error("Changes could not be saved. Please check browser storage.");
         return false;
     }
+    render();
+    return true;
 }
 
 function renderMenuItems() {
@@ -292,12 +353,27 @@ async function editMenuItem(id) {
         return;
     }
 
+    const previousName = item.name;
+    const renameLegacyOrders = !managedMenuItems.some(function (menu) {
+        return menu.id !== item.id && menu.name === previousName;
+    });
     Object.assign(item, {
         name: values.name,
         category: values.category,
         price: Number(values.price)
     });
     if (persistAndRender(MANAGEMENT_KEYS.menu, managedMenuItems, renderMenuItems)) {
+        if (previousName !== item.name) {
+            try {
+                OrderStorage.renameMenuItem(item.id, previousName, item.name, renameLegacyOrders);
+            } catch (error) {
+                console.error("Unable to update product names in existing orders:", error);
+                AppFeedback.warning(
+                    "The menu item was updated, but existing order names could not be refreshed."
+                );
+                return;
+            }
+        }
         AppFeedback.success("Menu item updated.");
     }
 }
@@ -331,7 +407,9 @@ function renderStaff() {
         const name = document.createElement("h3");
         name.textContent = staff.name;
         const role = document.createElement("p");
-        role.textContent = staff.role + (staff.email ? " · " + staff.email : "");
+        role.textContent = staff.role +
+            " · Username: " + (staff.username || staff.name) +
+            (staff.email ? " · " + staff.email : "");
         details.append(name, role);
         const actions = document.createElement("div");
         actions.className = "management-actions";
@@ -359,16 +437,35 @@ async function addStaff() {
     const values = await showAdminForm("Add staff member", [
         { name: "name", label: "Full name" },
         { name: "role", label: "Role" },
+        { name: "username", label: "Username" },
+        { name: "password", label: "Temporary password (at least 8 characters)", type: "password", minLength: 8 },
         { name: "email", label: "Email address", type: "email", required: false }
     ]);
     if (!values) {
+        return;
+    }
+    if (managedStaff.some(function (member) {
+        return (member.username || member.name).toLowerCase() === values.username.toLowerCase();
+    })) {
+        AppFeedback.warning("That staff username is already in use.");
+        return;
+    }
+    let credentials;
+    try {
+        credentials = await StaffAccounts.createCredentials(values.password);
+    } catch (error) {
+        console.error("Unable to prepare staff credentials:", error);
+        AppFeedback.error(error.message || "Staff login credentials could not be created.");
         return;
     }
     managedStaff.push({
         id: "STAFF-" + Date.now(),
         name: values.name,
         role: values.role,
-        email: values.email
+        username: values.username,
+        email: values.email,
+        passwordSalt: credentials.passwordSalt,
+        passwordHash: credentials.passwordHash
     });
     if (persistAndRender(MANAGEMENT_KEYS.staff, managedStaff, renderStaff)) {
         AppFeedback.success("Staff member added.");
@@ -385,14 +482,46 @@ async function editStaff(id) {
     const values = await showAdminForm("Edit staff member", [
         { name: "name", label: "Full name" },
         { name: "role", label: "Role" },
+        { name: "username", label: "Username" },
+        { name: "password", label: "New password (leave blank to keep current password)", type: "password", required: false, minLength: 8 },
         { name: "email", label: "Email address", type: "email", required: false }
-    ], staff);
+    ], Object.assign({}, staff, { username: staff.username || staff.name }));
     if (!values) {
         return;
     }
-    Object.assign(staff, values);
+    if (managedStaff.some(function (member) {
+        return member.id !== id &&
+            (member.username || member.name).toLowerCase() === values.username.toLowerCase();
+    })) {
+        AppFeedback.warning("That staff username is already in use.");
+        return;
+    }
+    const updatedStaff = Object.assign({}, staff, {
+        name: values.name,
+        role: values.role,
+        username: values.username,
+        email: values.email
+    });
+    if (values.password) {
+        try {
+            const credentials = await StaffAccounts.createCredentials(values.password);
+            updatedStaff.passwordSalt = credentials.passwordSalt;
+            updatedStaff.passwordHash = credentials.passwordHash;
+        } catch (error) {
+            console.error("Unable to update staff credentials:", error);
+            AppFeedback.error(error.message || "Staff login credentials could not be updated.");
+            return;
+        }
+    }
+    const originalStaff = managedStaff;
+    managedStaff = managedStaff.map(function (member) {
+        return member.id === id ? updatedStaff : member;
+    });
     if (persistAndRender(MANAGEMENT_KEYS.staff, managedStaff, renderStaff)) {
         AppFeedback.success("Staff member updated.");
+    } else {
+        managedStaff = originalStaff;
+        renderStaff();
     }
 }
 
@@ -522,6 +651,8 @@ function renderTables() {
         card.className = "restaurant-table";
         const name = document.createElement("h3");
         name.textContent = table.name;
+        const capacity = document.createElement("p");
+        capacity.textContent = table.capacity ? "Capacity: " + table.capacity + " seats" : "Capacity not set";
         const status = document.createElement("p");
         status.textContent = table.status;
         const actions = document.createElement("div");
@@ -542,7 +673,7 @@ function renderTables() {
                 deleteTable(table.id);
             })
         );
-        card.append(name, status, actions);
+        card.append(name, capacity, status, actions);
         box.appendChild(card);
     });
 }
@@ -550,6 +681,7 @@ function renderTables() {
 async function addTable() {
     const values = await showAdminForm("Add table", [
         { name: "name", label: "Table name" },
+        { name: "capacity", label: "Capacity (seats)", type: "number", min: "1", step: "1" },
         { name: "status", label: "Status", type: "select", options: ["Available", "Occupied", "Reserved"] }
     ]);
     if (!values) {
@@ -558,6 +690,7 @@ async function addTable() {
     managedTables.push({
         id: "TABLE-" + Date.now(),
         name: values.name,
+        capacity: Number(values.capacity),
         status: values.status
     });
     if (persistAndRender(MANAGEMENT_KEYS.tables, managedTables, function () {
@@ -577,12 +710,17 @@ async function editTable(id) {
     }
     const values = await showAdminForm("Edit table", [
         { name: "name", label: "Table name" },
+        { name: "capacity", label: "Capacity (seats)", type: "number", min: "1", step: "1" },
         { name: "status", label: "Status", type: "select", options: ["Available", "Occupied", "Reserved"] }
     ], table);
     if (!values) {
         return;
     }
-    Object.assign(table, values);
+    Object.assign(table, {
+        name: values.name,
+        capacity: Number(values.capacity),
+        status: values.status
+    });
     if (persistAndRender(MANAGEMENT_KEYS.tables, managedTables, function () {
         renderTables();
         renderSettings();
@@ -645,8 +783,8 @@ document.getElementById("edit-restaurant-settings").addEventListener("click", as
         return;
     }
     try {
+        localStorage.setItem(MANAGEMENT_KEYS.settings, JSON.stringify(values));
         restaurantSettings = values;
-        localStorage.setItem(MANAGEMENT_KEYS.settings, JSON.stringify(restaurantSettings));
         renderSettings();
         AppFeedback.success("Restaurant settings updated.");
     } catch (error) {
@@ -726,10 +864,9 @@ function renderReservations() {
         status.textContent = reservation.status || "Pending";
         item.appendChild(status);
 
+        const actions = document.createElement("div");
+        actions.className = "reservation-actions";
         if (reservation.status === "Pending") {
-            const actions = document.createElement("div");
-            actions.className = "reservation-actions";
-
             [
                 ["Approve", "Approved", "approve-reservation"],
                 ["Decline", "Declined", "decline-reservation"]
@@ -742,17 +879,92 @@ function renderReservations() {
                 button.textContent = action[0];
                 actions.appendChild(button);
             });
-
-            item.appendChild(actions);
         }
+        const editButton = makeButton("Edit", "edit-reservation", function () {
+            editReservation(reservation.id);
+        });
+        const deleteButton = makeButton("Delete", "delete-reservation", function () {
+            deleteReservation(reservation.id);
+        });
+        actions.append(editButton, deleteButton);
+        item.appendChild(actions);
 
         reservationsBox.appendChild(item);
     });
 }
 
+async function editReservation(id) {
+    let reservation;
+    try {
+        reservation = ReservationStorage.getAll().find(function (item) {
+            return item.id === id;
+        });
+    } catch (error) {
+        console.error("Unable to load reservation for editing:", error);
+        AppFeedback.error("The reservation could not be loaded for editing.");
+        return;
+    }
+    if (!reservation) {
+        AppFeedback.warning("This reservation is no longer available.");
+        return;
+    }
+
+    const values = await showAdminForm("Edit reservation", [
+        { name: "firstName", label: "First name" },
+        { name: "lastName", label: "Last name" },
+        { name: "contactNumber", label: "Contact number" },
+        { name: "whatsappNumber", label: "WhatsApp number", required: false },
+        { name: "email", label: "Email address", type: "email" },
+        { name: "date", label: "Reservation date", type: "date" },
+        { name: "time", label: "Reservation time" },
+        { name: "partySize", label: "Number of guests", type: "number", min: "1", step: "1" },
+        { name: "occasion", label: "Occasion", required: false },
+        { name: "seatingPreference", label: "Seating preference", required: false }
+    ], reservation);
+    if (!values) {
+        return;
+    }
+
+    try {
+        ReservationStorage.updateDetails(id, Object.assign({}, values, {
+            customerEmail: values.email,
+            partySize: Number(values.partySize)
+        }));
+        renderReservations();
+        AppFeedback.success("Reservation updated.");
+    } catch (error) {
+        console.error("Unable to update reservation:", error);
+        AppFeedback.error("The reservation could not be updated. Please try again.");
+    }
+}
+
+async function deleteReservation(id) {
+    if (!await confirmAdminAction("Delete reservation?", "This permanently removes the reservation.")) {
+        return;
+    }
+    try {
+        ReservationStorage.remove(id);
+        renderReservations();
+        AppFeedback.success("Reservation deleted.");
+    } catch (error) {
+        console.error("Unable to delete reservation:", error);
+        AppFeedback.error("The reservation could not be deleted. Please try again.");
+    }
+}
+
 reservationsBox.addEventListener("click", async function (event) {
-    const button = event.target.closest("button[data-reservation-status]");
+    const button = event.target.closest("button[data-reservation-action], button[data-reservation-status]");
     if (!button) {
+        return;
+    }
+
+    const id = button.dataset.reservationId;
+    if (button.dataset.reservationAction === "edit") {
+        await editReservation(id);
+        return;
+    }
+    if (button.dataset.reservationAction === "delete") {
+        await deleteReservation(id);
         return;
     }
 
@@ -768,11 +980,11 @@ reservationsBox.addEventListener("click", async function (event) {
     }
 
     try {
-        ReservationStorage.updateStatus(button.dataset.reservationId, status);
+        ReservationStorage.updateStatus(id, status);
         renderReservations();
     } catch (error) {
         console.error("Unable to update reservation:", error);
-        AppFeedback.notify("The reservation could not be updated. Please try again.");
+        AppFeedback.error("The reservation could not be updated. Please try again.");
     }
 });
 
@@ -880,6 +1092,9 @@ function renderOrders() {
         const total = document.createElement("p");
         total.textContent = "Total: ₦" + Number(order.total || 0).toLocaleString();
         card.appendChild(total);
+        const payment = document.createElement("p");
+        payment.textContent = "Payment: " + (order.paymentStatus || "Pending");
+        card.appendChild(payment);
 
         const status = document.createElement("span");
         status.className = "order-status order-status-" + (order.status || "Pending").toLowerCase();
@@ -943,7 +1158,39 @@ ordersBox.addEventListener("click", async function (event) {
 window.addEventListener("storage", function (event) {
     if (event.key === "Orders" || event.key === null) {
         renderOrders();
+        renderAdminMetrics();
     }
 });
 
 renderOrders();
+renderAdminMetrics();
+
+window.addEventListener("storage", function (event) {
+    const changedKeys = event.key === null ? Object.values(MANAGEMENT_KEYS) : [event.key];
+    try {
+        if (changedKeys.includes(MANAGEMENT_KEYS.menu)) {
+            managedMenuItems = JSON.parse(localStorage.getItem(MANAGEMENT_KEYS.menu) || "[]");
+            renderMenuItems();
+        }
+        if (changedKeys.includes(MANAGEMENT_KEYS.staff)) {
+            managedStaff = JSON.parse(localStorage.getItem(MANAGEMENT_KEYS.staff) || "[]");
+            renderStaff();
+        }
+        if (changedKeys.includes(MANAGEMENT_KEYS.tables)) {
+            managedTables = JSON.parse(localStorage.getItem(MANAGEMENT_KEYS.tables) || "[]");
+            renderTables();
+            renderSettings();
+        }
+        if (changedKeys.includes(MANAGEMENT_KEYS.settings)) {
+            restaurantSettings = JSON.parse(localStorage.getItem(MANAGEMENT_KEYS.settings) ||
+                '{"name":"Taste Haven","status":"Open","phone":"","address":"","openingHours":""}');
+            renderSettings();
+        }
+        if (event.key === null || event.key === "CustomerAccounts") {
+            renderCustomers();
+        }
+    } catch (error) {
+        console.error("Unable to refresh admin data from shared storage:", error);
+        AppFeedback.error("Dashboard data could not be refreshed. Please reload the page.");
+    }
+});

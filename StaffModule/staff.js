@@ -70,6 +70,9 @@ function renderStaffOrders() {
         const total = document.createElement("p");
         total.textContent = "Total: ₦" + Number(order.total || 0).toLocaleString();
         card.appendChild(total);
+        const payment = document.createElement("p");
+        payment.textContent = "Payment: " + (order.paymentStatus || "Pending");
+        card.appendChild(payment);
 
         const message = document.createElement("p");
         message.className = "staff-order-approved-message";
@@ -159,6 +162,7 @@ incomingOrders.addEventListener("click", function (event) {
 window.addEventListener("storage", function (event) {
     if (event.key === "Orders" || event.key === null) {
         renderStaffOrders();
+        renderPayments();
     }
 });
 
@@ -169,102 +173,126 @@ renderStaffOrders();
 // MANAGE TABLES
 // =============================
 
-const tableCards = document.querySelectorAll(".table-card");
+const managedTablesKey = "ManagedTables";
+const staffTableGrid = document.getElementById("staff-table-grid");
+const defaultStaffTables = [
+    { id: "TABLE-1", name: "Table 1", capacity: 2, status: "Available" },
+    { id: "TABLE-2", name: "Table 2", capacity: 4, status: "Occupied" },
+    { id: "TABLE-3", name: "Table 3", capacity: 6, status: "Reserved" },
+    { id: "TABLE-4", name: "Table 4", capacity: 2, status: "Available" }
+];
 
-tableCards.forEach(function (table) {
-
-    const statusBadge = table.querySelector(".status-badge");
-    const buttons = table.querySelectorAll(".action-btn");
-
-    buttons.forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            const buttonText = button.innerText;
-
-            // Occupy Table
-            if (buttonText === "Occupy Table") {
-
-                table.classList.remove("available", "reserved");
-                table.classList.add("occupied");
-
-                statusBadge.innerText = "Occupied";
-
-                statusBadge.classList.remove("available", "reserved");
-                statusBadge.classList.add("occupied");
-
-                button.innerText = "Clear Table";
-
-                AppFeedback.notify("Table is now occupied.");
-            }
-
-
-            // Clear Table
-            else if (buttonText === "Clear Table") {
-
-                table.classList.remove("occupied", "reserved");
-                table.classList.add("available");
-
-                statusBadge.innerText = "Available";
-
-                statusBadge.classList.remove("occupied", "reserved");
-                statusBadge.classList.add("available");
-
-                button.innerText = "Occupy Table";
-
-                AppFeedback.notify("Table is now available.");
-            }
-
-
-            // Reserve
-            else if (buttonText === "Reserve") {
-
-                table.classList.remove("available", "occupied");
-                table.classList.add("reserved");
-
-                statusBadge.innerText = "Reserved";
-
-                statusBadge.classList.remove("available", "occupied");
-                statusBadge.classList.add("reserved");
-
-                AppFeedback.notify("Table has been reserved.");
-            }
-
-
-            // Seat Customer
-            else if (buttonText === "Seat Customer") {
-
-                table.classList.remove("reserved", "available");
-                table.classList.add("occupied");
-
-                statusBadge.innerText = "Occupied";
-
-                statusBadge.classList.remove("reserved", "available");
-                statusBadge.classList.add("occupied");
-
-                AppFeedback.notify("Customer has been seated.");
-            }
-
-
-            // Cancel Reservation
-            else if (buttonText === "Cancel") {
-
-                table.classList.remove("reserved", "occupied");
-                table.classList.add("available");
-
-                statusBadge.innerText = "Available";
-
-                statusBadge.classList.remove("reserved", "occupied");
-                statusBadge.classList.add("available");
-
-                AppFeedback.notify("Reservation has been cancelled.");
-            }
-
+function getManagedTables() {
+    const savedTables = localStorage.getItem(managedTablesKey);
+    if (savedTables === null) {
+        localStorage.setItem(managedTablesKey, JSON.stringify(defaultStaffTables));
+        return defaultStaffTables.map(function (table) {
+            return Object.assign({}, table);
         });
+    }
 
+    const tables = JSON.parse(savedTables);
+    if (!Array.isArray(tables)) {
+        throw new Error("Saved restaurant tables must be a list.");
+    }
+    return tables.map(function (table) {
+        const legacyCapacity = ({ "TABLE-1": 2, "TABLE-2": 4, "TABLE-3": 6, "TABLE-4": 2 })[table.id];
+        return Object.assign({}, table, {
+            capacity: Number(table.capacity) || legacyCapacity || 0
+        });
     });
+}
 
+function renderManagedTables() {
+    staffTableGrid.replaceChildren();
+    try {
+        getManagedTables().forEach(function (table) {
+            const status = table.status;
+            if (!table.id || !table.name || !["Available", "Occupied", "Reserved"].includes(status)) {
+                throw new Error("A restaurant table has invalid saved details.");
+            }
+
+            const card = document.createElement("article");
+            card.className = "table-card " + status.toLowerCase();
+            const header = document.createElement("div");
+            header.className = "table-header";
+            const heading = document.createElement("h3");
+            heading.textContent = table.name;
+            const badge = document.createElement("span");
+            badge.className = "status-badge " + status.toLowerCase();
+            badge.textContent = status;
+            header.append(heading, badge);
+
+            const capacity = document.createElement("p");
+            capacity.textContent = Number(table.capacity) > 0
+                ? "Capacity: " + table.capacity + " Seats"
+                : "Capacity not set";
+            const actions = document.createElement("div");
+            actions.className = "table-actions";
+
+            const nextActions = {
+                Available: [["Occupy Table", "Occupied"], ["Reserve", "Reserved"]],
+                Occupied: [["Clear Table", "Available"]],
+                Reserved: [["Seat Customer", "Occupied"], ["Cancel", "Available"]]
+            }[status];
+            nextActions.forEach(function (action, index) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "action-btn" + (index > 0 ? " outline" : "");
+                button.dataset.tableId = table.id;
+                button.dataset.tableStatus = action[1];
+                button.textContent = action[0];
+                actions.appendChild(button);
+            });
+
+            card.append(header, capacity, actions);
+            staffTableGrid.appendChild(card);
+        });
+    } catch (error) {
+        console.error("Unable to load managed tables:", error);
+        staffTableGrid.replaceChildren();
+        const errorMessage = document.createElement("p");
+        errorMessage.className = "empty-orders";
+        errorMessage.textContent = "Unable to load restaurant tables. Please check the saved table data.";
+        staffTableGrid.appendChild(errorMessage);
+    }
+}
+
+staffTableGrid.addEventListener("click", function (event) {
+    const button = event.target.closest("button[data-table-id]");
+    if (!button) {
+        return;
+    }
+
+    try {
+        const tables = getManagedTables();
+        const table = tables.find(function (item) {
+            return item.id === button.dataset.tableId;
+        });
+        if (!table) {
+            renderManagedTables();
+            AppFeedback.warning("This table was changed in the admin dashboard. Please try again.");
+            return;
+        }
+
+        table.status = button.dataset.tableStatus;
+        table.statusUpdatedAt = new Date().toISOString();
+        localStorage.setItem(managedTablesKey, JSON.stringify(tables));
+        renderManagedTables();
+        AppFeedback.success(table.name + " is now " + table.status.toLowerCase() + ".");
+    } catch (error) {
+        console.error("Unable to update table status:", error);
+        AppFeedback.error("The table status could not be saved. Please try again.");
+    }
 });
+
+window.addEventListener("storage", function (event) {
+    if (event.key === managedTablesKey || event.key === null) {
+        renderManagedTables();
+    }
+});
+
+renderManagedTables();
 
 
 // =============================
@@ -400,6 +428,7 @@ if (bookingTable) {
     window.addEventListener("storage", function (event) {
         if (event.key === "Reservations" || event.key === null) {
             renderReservations();
+            showReservationApprovalNotification();
         }
     });
 
@@ -412,58 +441,241 @@ if (bookingTable) {
 // =============================
 
 const paymentTable = document.querySelector("#Payments .Tables");
+const paymentRows = document.getElementById("staff-payment-rows");
+const todayRevenue = document.getElementById("staff-today-revenue");
+const paidOrderCount = document.getElementById("staff-paid-orders");
+const pendingPaymentTotal = document.getElementById("staff-pending-payments");
+const todaySales = document.getElementById("staff-today-sales");
+const totalOrderCount = document.getElementById("staff-total-orders");
+const totalCustomerCount = document.getElementById("staff-total-customers");
 
-if (paymentTable) {
+function renderPayments() {
+    let orders;
+    try {
+        orders = OrderStorage.getAll();
+    } catch (error) {
+        console.error("Unable to load payments:", error);
+        paymentRows.replaceChildren();
+        const row = paymentRows.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 6;
+        cell.textContent = "Unable to load payment records.";
+        return;
+    }
 
-    const paymentRows = paymentTable.querySelectorAll("tbody tr");
+    paymentRows.replaceChildren();
+    const payableOrders = orders.filter(function (order) {
+        return order.status !== "Declined";
+    });
+    let revenue = 0;
+    let paidCount = 0;
+    let pending = 0;
 
-    paymentRows.forEach(function (row) {
+    payableOrders.forEach(function (order) {
+        const paymentStatus = order.paymentStatus || "Pending";
+        const amount = Number(order.total) || 0;
+        if (paymentStatus === "Paid") {
+            paidCount += 1;
+            if (order.paymentUpdatedAt &&
+                new Date(order.paymentUpdatedAt).toDateString() === new Date().toDateString()) {
+                revenue += amount;
+            }
+        } else {
+            pending += amount;
+        }
 
-        const buttons = row.querySelectorAll(".action-btn");
-
-        buttons.forEach(function (button) {
-
-            button.addEventListener("click", function () {
-
-                const buttonText = button.innerText;
-
-                const status = row.querySelector(".status");
-
-
-                // Confirm Payment
-                if (buttonText === "Confirm Payment") {
-
-                    status.innerText = "Paid";
-
-                    status.classList.remove("pending");
-                    status.classList.add("completed");
-
-                    button.innerText = "Paid";
-
-                    button.disabled = true;
-
-                    AppFeedback.notify("Payment has been confirmed.");
-                }
-
-
-                // Receipt
-                else if (buttonText === "Receipt") {
-
-                    const orderNumber = row.querySelector("td").innerText;
-
-                    AppFeedback.notify(
-                        "Receipt for " + orderNumber + "\n\n" +
-                        "Payment has already been completed."
-                    );
-                }
-
-            });
-
-        });
-
+        const row = paymentRows.insertRow();
+        row.dataset.orderId = order.id;
+        const orderCell = row.insertCell();
+        orderCell.textContent = order.id;
+        const customerCell = row.insertCell();
+        customerCell.textContent = order.customerName || order.customerEmail || "Customer";
+        const methodCell = row.insertCell();
+        methodCell.textContent = order.paymentMethod || "Not recorded";
+        const amountCell = row.insertCell();
+        const amountStrong = document.createElement("strong");
+        amountStrong.textContent = "₦" + amount.toLocaleString();
+        amountCell.appendChild(amountStrong);
+        const statusCell = row.insertCell();
+        const badge = document.createElement("span");
+        badge.className = "status " + (paymentStatus === "Paid" ? "completed" : "pending");
+        badge.textContent = paymentStatus;
+        statusCell.appendChild(badge);
+        const actionsCell = row.insertCell();
+        if (paymentStatus === "Paid") {
+            const receiptButton = document.createElement("button");
+            receiptButton.type = "button";
+            receiptButton.className = "action-btn outline";
+            receiptButton.dataset.paymentAction = "receipt";
+            receiptButton.textContent = "Receipt";
+            actionsCell.appendChild(receiptButton);
+        } else {
+            const confirmButton = document.createElement("button");
+            confirmButton.type = "button";
+            confirmButton.className = "action-btn";
+            confirmButton.dataset.paymentAction = "confirm";
+            confirmButton.textContent = "Confirm Payment";
+            actionsCell.appendChild(confirmButton);
+        }
     });
 
+    if (payableOrders.length === 0) {
+        const row = paymentRows.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 6;
+        cell.className = "empty-orders";
+        cell.textContent = "No payments to display.";
+    }
+
+    todayRevenue.textContent = "₦" + revenue.toLocaleString();
+    paidOrderCount.textContent = String(paidCount);
+    pendingPaymentTotal.textContent = "₦" + pending.toLocaleString();
+    todaySales.textContent = "₦" + revenue.toLocaleString();
+    totalOrderCount.textContent = String(orders.length);
 }
+
+function renderStaffOverview() {
+    try {
+        totalCustomerCount.textContent = String(CustomerAccounts.getAll().length);
+    } catch (error) {
+        console.error("Unable to load customer count:", error);
+        totalCustomerCount.textContent = "—";
+    }
+}
+
+function showPaymentMethodDialog() {
+    return new Promise(function (resolve) {
+        const dialog = document.createElement("dialog");
+        dialog.className = "payment-receipt-dialog";
+        const form = document.createElement("form");
+        const heading = document.createElement("h2");
+        heading.textContent = "Confirm payment";
+        const label = document.createElement("label");
+        label.htmlFor = "staff-payment-method";
+        label.textContent = "Payment method";
+        const select = document.createElement("select");
+        select.id = label.htmlFor;
+        select.required = true;
+        [
+            ["", "Select a payment method..."],
+            ["Cash", "Cash"],
+            ["POS Card", "POS card"],
+            ["Bank Transfer", "Bank transfer"],
+            ["Online Transfer", "Online transfer"]
+        ].forEach(function (option) {
+            select.add(new Option(option[1], option[0]));
+        });
+        const actions = document.createElement("div");
+        actions.className = "staff-payment-dialog-actions";
+        const cancelButton = document.createElement("button");
+        cancelButton.type = "button";
+        cancelButton.textContent = "Cancel";
+        cancelButton.addEventListener("click", function () {
+            dialog.close();
+            dialog.remove();
+            resolve(null);
+        });
+        const confirmButton = document.createElement("button");
+        confirmButton.type = "submit";
+        confirmButton.textContent = "Confirm payment";
+        actions.append(cancelButton, confirmButton);
+        form.append(heading, label, select, actions);
+        dialog.appendChild(form);
+        document.body.appendChild(dialog);
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            if (!form.reportValidity()) {
+                return;
+            }
+            const method = select.value;
+            dialog.close();
+            dialog.remove();
+            resolve(method);
+        });
+        dialog.addEventListener("cancel", function (event) {
+            event.preventDefault();
+            dialog.close();
+            dialog.remove();
+            resolve(null);
+        });
+        dialog.showModal();
+        select.focus();
+    });
+}
+
+function showPaymentReceipt(order) {
+    const dialog = document.createElement("dialog");
+    dialog.className = "payment-receipt-dialog";
+    const heading = document.createElement("h2");
+    heading.textContent = "Payment receipt";
+    const orderId = document.createElement("p");
+    orderId.textContent = "Order: " + order.id;
+    const customer = document.createElement("p");
+    customer.textContent = "Customer: " + (order.customerName || order.customerEmail || "Customer");
+    const date = document.createElement("p");
+    date.textContent = "Paid: " + (order.paymentUpdatedAt || "Date not recorded");
+    const method = document.createElement("p");
+    method.textContent = "Payment method: " + (order.paymentMethod || "Not recorded");
+    const items = document.createElement("p");
+    items.textContent = "Items: " + (order.items || []).map(function (item) {
+        return Number(item.quantity) + " × " + item.name;
+    }).join(", ");
+    const total = document.createElement("p");
+    total.className = "payment-receipt-total";
+    total.textContent = "Total paid: ₦" + (Number(order.total) || 0).toLocaleString();
+    const closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.textContent = "Close";
+    closeButton.addEventListener("click", function () {
+        dialog.close();
+        dialog.remove();
+    });
+    dialog.append(heading, orderId, customer, date, method, items, total, closeButton);
+    document.body.appendChild(dialog);
+    dialog.addEventListener("close", function () {
+        dialog.remove();
+    }, { once: true });
+    dialog.showModal();
+    closeButton.focus();
+}
+
+paymentTable.addEventListener("click", async function (event) {
+    const button = event.target.closest("button[data-payment-action]");
+    if (!button) {
+        return;
+    }
+
+    const row = button.closest("tr");
+    try {
+        const order = OrderStorage.getAll().find(function (item) {
+            return item.id === row.dataset.orderId;
+        });
+        if (!order) {
+            renderPayments();
+            AppFeedback.warning("This order is no longer available.");
+            return;
+        }
+        if (button.dataset.paymentAction === "receipt") {
+            showPaymentReceipt(order);
+            return;
+        }
+
+        const method = await showPaymentMethodDialog();
+        if (!method) {
+            return;
+        }
+        OrderStorage.updatePaymentStatus(order.id, "Paid", method);
+        renderPayments();
+        AppFeedback.success("Payment confirmed and saved.");
+    } catch (error) {
+        console.error("Unable to update payment:", error);
+        AppFeedback.error("The payment could not be updated. Please try again.");
+    }
+});
+
+renderPayments();
+renderStaffOverview();
 
 
 // =============================
@@ -553,6 +765,12 @@ window.addEventListener("storage", function (event) {
 });
 
 showReservationApprovalNotification();
+
+window.addEventListener("storage", function (event) {
+    if (event.key === "CustomerAccounts" || event.key === null) {
+        renderStaffOverview();
+    }
+});
 
 
 // =============================

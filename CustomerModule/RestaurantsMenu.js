@@ -163,6 +163,9 @@ function renderCustomerOrders() {
             const total = document.createElement("p");
             total.textContent = "Total: ₦" + Number(order.total || 0).toLocaleString();
             card.appendChild(total);
+            const payment = document.createElement("p");
+            payment.textContent = "Payment: " + (order.paymentStatus || "Pending");
+            card.appendChild(payment);
 
             const status = order.status || "Pending";
             const badge = document.createElement("span");
@@ -418,6 +421,7 @@ function readMenuItems() {
                 groupedItems.set(item.category, []);
             }
             groupedItems.get(item.category).push({
+                menuItemId: item.id,
                 name: item.name,
                 price: Number(item.price)
             });
@@ -454,7 +458,7 @@ function readMenuItems() {
     });
 }
 
-const menuCategories = readMenuItems();
+let menuCategories = readMenuItems();
 
 const savedRestaurantSettings = localStorage.getItem("RestaurantSettings");
 const acceptingOrders = !savedRestaurantSettings ||
@@ -475,13 +479,18 @@ if (savedRestaurantSettings) {
     }
 }
 
-const savedTables = localStorage.getItem("ManagedTables");
-if (savedTables !== null) {
+const tableSelect = document.getElementById("table-number");
+
+function renderAvailableTables() {
+    const savedTables = localStorage.getItem("ManagedTables");
+    if (savedTables === null) {
+        return;
+    }
+
     const tableList = JSON.parse(savedTables);
     if (!Array.isArray(tableList)) {
         throw new Error("Saved restaurant tables are invalid.");
     }
-    const tableSelect = document.getElementById("table-number");
     tableSelect.replaceChildren(new Option("Select your table...", ""));
     tableList.filter(function (table) {
         return table.status === "Available";
@@ -489,6 +498,18 @@ if (savedTables !== null) {
         tableSelect.add(new Option(table.name, table.name));
     });
 }
+
+renderAvailableTables();
+window.addEventListener("storage", function (event) {
+    if (event.key === "ManagedTables" || event.key === null) {
+        try {
+            renderAvailableTables();
+        } catch (error) {
+            console.error("Unable to refresh available tables:", error);
+            AppFeedback.error("Available tables could not be refreshed.");
+        }
+    }
+});
 if (!acceptingOrders) {
     document.querySelectorAll("#place-order-form input, #place-order-form select, " +
         "#place-order-form textarea, #place-order-form button").forEach(function (control) {
@@ -543,11 +564,15 @@ function renderMenuItems() {
         button.className = "add-order-item";
         button.disabled = !acceptingOrders;
         button.textContent = cart.some(function (item) {
-            return item.name === menuItem.name;
+            return menuItem.menuItemId
+                ? item.menuItemId === menuItem.menuItemId
+                : item.name === menuItem.name;
         }) ? "Add another" : "Add";
         button.addEventListener("click", function () {
             const existing = cart.find(function (item) {
-                return item.name === menuItem.name;
+                return menuItem.menuItemId
+                    ? item.menuItemId === menuItem.menuItemId
+                    : item.name === menuItem.name;
             });
             if (existing) {
                 existing.quantity += 1;
@@ -556,6 +581,7 @@ function renderMenuItems() {
                     id: cart.length ? Math.max.apply(null, cart.map(function (item) {
                         return item.id;
                     })) + 1 : 1,
+                    menuItemId: menuItem.menuItemId,
                     name: menuItem.name,
                     price: menuItem.price,
                     quantity: 1
@@ -573,6 +599,36 @@ function renderMenuItems() {
 activeMenuCategory = menuCategories.length ? menuCategories[0].category : "";
 renderMenuCategoryButtons();
 renderMenuItems();
+
+window.addEventListener("storage", function (event) {
+    if (event.key === "ManagedMenuItems" || event.key === null) {
+        try {
+            menuCategories = readMenuItems();
+            menuCategories.forEach(function (category) {
+                category.items.forEach(function (menuItem) {
+                    const cartItem = cart.find(function (item) {
+                        return menuItem.menuItemId &&
+                            item.menuItemId === menuItem.menuItemId;
+                    });
+                    if (cartItem) {
+                        cartItem.name = menuItem.name;
+                    }
+                });
+            });
+            if (!menuCategories.some(function (category) {
+                return category.category === activeMenuCategory;
+            })) {
+                activeMenuCategory = menuCategories.length ? menuCategories[0].category : "";
+            }
+            renderMenuCategoryButtons();
+            renderMenuItems();
+            displayCart();
+        } catch (error) {
+            console.error("Unable to refresh the customer menu:", error);
+            AppFeedback.error("The menu could not be refreshed.");
+        }
+    }
+});
 
 
 const cartList = document.querySelector(".cart-list");

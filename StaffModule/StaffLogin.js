@@ -15,13 +15,11 @@ ShowPassword.addEventListener("change", function () {
 
 });
 
-StaffLogin.addEventListener("click", function (event) {
-
+StaffLogin.closest("form").addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const username = Username.value.trim();
-    const password = Password.value.trim();
-
+    const password = Password.value;
 
     if (username === "") {
         AppFeedback.notify("Please enter your username.");
@@ -36,15 +34,15 @@ StaffLogin.addEventListener("click", function (event) {
         return;
     }
 
-
-    if (username === "Benjamin" && password === "12345") {
-
-        window.location.href = "../StaffModule/staff.html";
-
-    } else {
-
+    try {
+        const staff = await StaffAccounts.authenticate(username, password);
+        if (staff) {
+            window.location.href = "../StaffModule/staff.html";
+            return;
+        }
         AppFeedback.notify("Invalid username or password.");
-
+    } catch (error) {
+        console.error("Unable to authenticate staff member:", error);
+        AppFeedback.error(error.message || "Staff login could not be completed.");
     }
-
 });

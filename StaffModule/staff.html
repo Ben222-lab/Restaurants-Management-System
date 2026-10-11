@@ -60,17 +60,17 @@
 
                 <div class="overview-card">
                     <h4>Today's Sales</h4>
-                    <p class="overview-number">₦250,000</p>
+                    <p class="overview-number" id="staff-today-sales">₦0</p>
                 </div>
 
                 <div class="overview-card">
                     <h4>Total Orders</h4>
-                    <p class="overview-number">45</p>
+                    <p class="overview-number" id="staff-total-orders">0</p>
                 </div>
 
                 <div class="overview-card">
                     <h4>Total Customers</h4>
-                    <p class="overview-number">32</p>
+                    <p class="overview-number" id="staff-total-customers">0</p>
                 </div>
 
                 <div class="overview-card">
@@ -120,61 +120,7 @@
 
             <h2>☑️ Manage Tables</h2>
 
-            <!-- Table Overview Cards Grid -->
-            <div class="table-grid">
-
-                <!-- Table 1 -->
-                <div class="table-card available">
-                    <div class="table-header">
-                        <h3>Table 1</h3>
-                        <span class="status-badge available">Available</span>
-                    </div>
-                    <p>Capacity: 2 Seats</p>
-                    <div class="table-actions">
-                        <button class="action-btn">Occupy Table</button>
-                        <button class="action-btn outline">Reserve</button>
-                    </div>
-                </div>
-
-                <!-- Table 2 -->
-                <div class="table-card occupied">
-                    <div class="table-header">
-                        <h3>Table 2</h3>
-                        <span class="status-badge occupied">Occupied</span>
-                    </div>
-                    <p>Capacity: 4 Seats</p>
-                    <div class="table-actions">
-                        <button class="action-btn">Clear Table</button>
-                    </div>
-                </div>
-
-                <!-- Table 3 -->
-                <div class="table-card reserved">
-                    <div class="table-header">
-                        <h3>Table 3</h3>
-                        <span class="status-badge reserved">Reserved</span>
-                    </div>
-                    <p>Capacity: 6 Seats (7:00 PM)</p>
-                    <div class="table-actions">
-                        <button class="action-btn">Seat Customer</button>
-                        <button class="action-btn outline">Cancel</button>
-                    </div>
-                </div>
-
-                <!-- Table 4 -->
-                <div class="table-card available">
-                    <div class="table-header">
-                        <h3>Table 4</h3>
-                        <span class="status-badge available">Available</span>
-                    </div>
-                    <p>Capacity: 2 Seats</p>
-                    <div class="table-actions">
-                        <button class="action-btn">Occupy Table</button>
-                        <button class="action-btn outline">Reserve</button>
-                    </div>
-                </div>
-
-            </div>
+            <div class="table-grid" id="staff-table-grid"></div>
 
         </div>
 
@@ -213,15 +159,15 @@
             <div class="payment-stats">
                 <div class="stat-card">
                     <h4>Total Revenue Today</h4>
-                    <p class="amount">₦145,500</p>
+                    <p class="amount" id="staff-today-revenue">₦0</p>
                 </div>
                 <div class="stat-card">
                     <h4>Paid Orders</h4>
-                    <p class="amount">18</p>
+                    <p class="amount" id="staff-paid-orders">0</p>
                 </div>
                 <div class="stat-card">
                     <h4>Pending Payments</h4>
-                    <p class="amount pending">₦12,000</p>
+                    <p class="amount pending" id="staff-pending-payments">₦0</p>
                 </div>
             </div>
 
@@ -237,40 +183,7 @@
                         <th>ACTION</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>#1045</td>
-                        <td>Table 7</td>
-                        <td>POS Card</td>
-                        <td><strong>₦15,500</strong></td>
-                        <td><span class="status completed">Paid</span></td>
-                        <td><button class="action-btn outline">Receipt</button></td>
-                    </tr>
-                    <tr>
-                        <td>#1044</td>
-                        <td>Table 2</td>
-                        <td>Cash</td>
-                        <td><strong>₦4,200</strong></td>
-                        <td><span class="status completed">Paid</span></td>
-                        <td><button class="action-btn outline">Receipt</button></td>
-                    </tr>
-                    <tr>
-                        <td>#1043</td>
-                        <td>Table 6</td>
-                        <td>Bank Transfer</td>
-                        <td><strong>₦22,000</strong></td>
-                        <td><span class="status completed">Paid</span></td>
-                        <td><button class="action-btn outline">Receipt</button></td>
-                    </tr>
-                    <tr>
-                        <td>#1042</td>
-                        <td>Delivery</td>
-                        <td>Online Transfer</td>
-                        <td><strong>₦12,000</strong></td>
-                        <td><span class="status pending">Pending</span></td>
-                        <td><button class="action-btn">Confirm Payment</button></td>
-                    </tr>
-                </tbody>
+                <tbody id="staff-payment-rows"></tbody>
             </table>
 
         </div>
@@ -280,6 +193,7 @@
     <script src="../shared/appFeedback.js"></script>
     <script src="../shared/orderStorage.js"></script>
     <script src="../shared/customerSession.js"></script>
+    <script src="../shared/customerAccounts.js"></script>
     <script src="../shared/reservationStorage.js"></script>
     <script src="../shared/responsiveNavigation.js"></script>
     <script src="./staff.js"></script>
