@@ -4,6 +4,13 @@ const Email = document.getElementById("Email");
 const Password = document.getElementById("Password");
 const ConfirmPassword = document.getElementById("ConfirmPassword");
 const AccountCreationForm = document.getElementById("account-creation-form");
+const ShowPassword = document.getElementById("ShowPassword");
+
+ShowPassword.addEventListener("change", function () {
+    const type = ShowPassword.checked ? "text" : "password";
+    Password.type = type;
+    ConfirmPassword.type = type;
+});
 
 AccountCreationForm.addEventListener("submit", async function (event) {
     event.preventDefault();

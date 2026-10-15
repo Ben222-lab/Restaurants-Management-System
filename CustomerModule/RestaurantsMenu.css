@@ -376,6 +376,12 @@ body {
     outline-offset: 2px;
 }
 
+.menu-category-links a[hidden],
+.First_section > div[class^="Sec"][hidden],
+.First_section .Nigeria_Head[hidden] {
+    display: none !important;
+}
+
 .Sec1 h2,
 .Sec2 h2,
 .Sec3 h2,
@@ -402,6 +408,12 @@ body {
     align-items: stretch;
     gap: 20px;
     margin-top: 25px;
+}
+
+.menu-product-card {
+    display: flex;
+    flex: 1 1 260px;
+    max-width: 320px;
 }
 
 .NigerianSub_section1,

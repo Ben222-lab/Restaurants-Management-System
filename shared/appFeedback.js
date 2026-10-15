@@ -2,73 +2,74 @@
     let toastRegion;
 
     function getToastRegion() {
-        if (toastRegion && toastRegion.isConnected) {
-            return toastRegion;
+        if (!toastRegion || !toastRegion.isConnected) {
+            toastRegion = document.createElement("div");
+            toastRegion.className = "app-toast-region";
+            toastRegion.setAttribute("aria-live", "polite");
+            toastRegion.setAttribute("aria-atomic", "false");
+            document.body.appendChild(toastRegion);
         }
-
-        toastRegion = document.createElement("div");
-        toastRegion.className = "app-toast-region";
-        toastRegion.setAttribute("aria-live", "polite");
-        toastRegion.setAttribute("aria-atomic", "false");
-        document.body.appendChild(toastRegion);
 
         return toastRegion;
     }
 
-    function notify(message, type) {
-        const toast = document.createElement("div");
-        const notificationType = type || "info";
-        toast.className = "app-toast app-toast-" + notificationType;
-        toast.setAttribute("role", notificationType === "error" ? "alert" : "status");
-
-        const icon = document.createElement("span");
-        icon.className = "app-toast-icon";
-        icon.setAttribute("aria-hidden", "true");
-        icon.textContent = {
+    function showMessage(message, type) {
+        const icons = {
             success: "✓",
             error: "!",
             warning: "!",
             info: "i"
-        }[notificationType] || "i";
+        };
+
+        const toast = document.createElement("div");
+        toast.className = "app-toast app-toast-" + type;
+        toast.setAttribute("role", type === "error" ? "alert" : "status");
+
+        const icon = document.createElement("span");
+        icon.className = "app-toast-icon";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = icons[type] || icons.info;
 
         const text = document.createElement("p");
         text.className = "app-toast-message";
         text.textContent = String(message);
 
-        const dismiss = document.createElement("button");
-        dismiss.className = "app-toast-dismiss";
-        dismiss.type = "button";
-        dismiss.setAttribute("aria-label", "Dismiss notification");
-        dismiss.textContent = "×";
+        const closeButton = document.createElement("button");
+        closeButton.className = "app-toast-dismiss";
+        closeButton.type = "button";
+        closeButton.setAttribute("aria-label", "Dismiss notification");
+        closeButton.textContent = "×";
 
-        toast.append(icon, text, dismiss);
+        toast.append(icon, text, closeButton);
         getToastRegion().appendChild(toast);
 
-        let timeoutId = window.setTimeout(removeToast, 5500);
-        dismiss.addEventListener("click", removeToast);
+        function removeMessage() {
+            if (toast.classList.contains("app-toast-leaving")) {
+                return;
+            }
 
-        function removeToast() {
-            window.clearTimeout(timeoutId);
             toast.classList.add("app-toast-leaving");
-            toast.addEventListener("transitionend", function () {
-                toast.remove();
-            }, { once: true });
             window.setTimeout(function () {
                 toast.remove();
-            }, 250);
+            }, 200);
         }
+
+        closeButton.addEventListener("click", removeMessage);
+        window.setTimeout(removeMessage, 5500);
     }
 
-    window.AppFeedback = Object.freeze({
-        notify: notify,
+    window.AppFeedback = {
+        notify: function (message, type) {
+            showMessage(message, type || "info");
+        },
         success: function (message) {
-            notify(message, "success");
+            showMessage(message, "success");
         },
         error: function (message) {
-            notify(message, "error");
+            showMessage(message, "error");
         },
         warning: function (message) {
-            notify(message, "warning");
+            showMessage(message, "warning");
         }
-    });
+    };
 })();

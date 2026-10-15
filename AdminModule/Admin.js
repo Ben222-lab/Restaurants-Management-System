@@ -468,7 +468,13 @@ async function addStaff() {
         passwordHash: credentials.passwordHash
     });
     if (persistAndRender(MANAGEMENT_KEYS.staff, managedStaff, renderStaff)) {
-        AppFeedback.success("Staff member added.");
+        try {
+            StaffAccounts.clearRemoved(values.username);
+            AppFeedback.success("Staff member added.");
+        } catch (error) {
+            console.error("Unable to clear a previous staff removal record:", error);
+            AppFeedback.warning("Staff member added, but a previous removal notice could not be cleared.");
+        }
     }
 }
 
@@ -518,7 +524,16 @@ async function editStaff(id) {
         return member.id === id ? updatedStaff : member;
     });
     if (persistAndRender(MANAGEMENT_KEYS.staff, managedStaff, renderStaff)) {
-        AppFeedback.success("Staff member updated.");
+        try {
+            StaffAccounts.clearRemoved(updatedStaff.username);
+            if ((staff.username || staff.name).toLowerCase() !== values.username.toLowerCase()) {
+                StaffAccounts.markRemoved(staff.username || staff.name);
+            }
+            AppFeedback.success("Staff member updated.");
+        } catch (error) {
+            console.error("Unable to update removed staff login records:", error);
+            AppFeedback.warning("Staff member updated, but a previous login notice could not be updated.");
+        }
     } else {
         managedStaff = originalStaff;
         renderStaff();
@@ -529,11 +544,23 @@ async function deleteStaff(id) {
     if (!await confirmAdminAction("Delete staff member?", "This removes the staff member from the roster.")) {
         return;
     }
+    const removedStaff = managedStaff.find(function (staff) {
+        return staff.id === id;
+    });
+    if (!removedStaff) {
+        return;
+    }
     managedStaff = managedStaff.filter(function (staff) {
         return staff.id !== id;
     });
     if (persistAndRender(MANAGEMENT_KEYS.staff, managedStaff, renderStaff)) {
-        AppFeedback.success("Staff member deleted.");
+        try {
+            StaffAccounts.markRemoved(removedStaff.username || removedStaff.name);
+            AppFeedback.success("Staff member deleted.");
+        } catch (error) {
+            console.error("Unable to record the removed staff username:", error);
+            AppFeedback.warning("Staff member deleted, but the login notice could not be saved.");
+        }
     }
 }
 

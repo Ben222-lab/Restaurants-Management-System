@@ -1,5 +1,6 @@
 (function () {
     const STORAGE_KEY = "ManagedStaff";
+    const REMOVED_STORAGE_KEY = "RemovedStaffUsernames";
     const HASH_ITERATIONS = 120000;
 
     function encodeBase64(bytes) {
@@ -53,6 +54,47 @@
         return staff;
     }
 
+    function getRemovedStaffUsernames() {
+        const saved = localStorage.getItem(REMOVED_STORAGE_KEY);
+        if (saved === null) {
+            return [];
+        }
+
+        const usernames = JSON.parse(saved);
+        if (!Array.isArray(usernames) ||
+            usernames.some(function (username) {
+                return typeof username !== "string";
+            })) {
+            throw new Error("Saved removed staff usernames are invalid.");
+        }
+        return usernames;
+    }
+
+    function markRemoved(username) {
+        const identifier = String(username || "").trim().toLowerCase();
+        if (!identifier) {
+            throw new TypeError("A username is required to mark a staff account as removed.");
+        }
+
+        const usernames = getRemovedStaffUsernames();
+        if (!usernames.includes(identifier)) {
+            usernames.push(identifier);
+            localStorage.setItem(REMOVED_STORAGE_KEY, JSON.stringify(usernames));
+        }
+    }
+
+    function clearRemoved(username) {
+        const identifier = String(username || "").trim().toLowerCase();
+        if (!identifier) {
+            throw new TypeError("A username is required to clear a removed staff account.");
+        }
+
+        const usernames = getRemovedStaffUsernames().filter(function (item) {
+            return item !== identifier;
+        });
+        localStorage.setItem(REMOVED_STORAGE_KEY, JSON.stringify(usernames));
+    }
+
     async function createCredentials(password) {
         return derivePasswordHash(password);
     }
@@ -63,13 +105,13 @@
             return (member.username || member.name || "").trim().toLowerCase() === identifier;
         });
         if (!staff) {
-            return null;
+            return getRemovedStaffUsernames().includes(identifier)
+                ? { removed: true }
+                : null;
         }
 
         if (!staff.passwordHash || !staff.passwordSalt) {
-            return staff.name === "Benjamin" && identifier === "benjamin" && password === "12345"
-                ? { id: staff.id, name: staff.name, role: staff.role || "Manager" }
-                : null;
+            return null;
         }
 
         const credentials = await derivePasswordHash(password, staff.passwordSalt);
@@ -81,6 +123,8 @@
 
     window.StaffAccounts = Object.freeze({
         createCredentials: createCredentials,
-        authenticate: authenticate
+        authenticate: authenticate,
+        markRemoved: markRemoved,
+        clearRemoved: clearRemoved
     });
 })();

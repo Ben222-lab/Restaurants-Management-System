@@ -36,6 +36,10 @@ StaffLogin.closest("form").addEventListener("submit", async function (event) {
 
     try {
         const staff = await StaffAccounts.authenticate(username, password);
+        if (staff && staff.removed) {
+            AppFeedback.notify("You are no longer a staff member. Please contact the administrator.");
+            return;
+        }
         if (staff) {
             window.location.href = "../StaffModule/staff.html";
             return;

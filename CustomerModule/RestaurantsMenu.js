@@ -460,6 +460,129 @@ function readMenuItems() {
 
 let menuCategories = readMenuItems();
 
+const menuShowcaseSectionIds = {
+    "Nigerian Dishes": "Nigeria",
+    "Intercontinental Dishes": "Intercontinental",
+    "Desserts": "Desserts",
+    "Local Drinks": "LocalDrinks",
+    "Fruit Drinks": "FruitDrinks",
+    "Soft Drinks": "SoftDrinks"
+};
+const menuShowcaseSections = {};
+const menuShowcaseTemplatesById = {};
+const menuShowcaseTemplatesByName = new Map();
+const menuShowcaseTemplatesByCategory = {};
+const menuShowcaseIdsByName = new Map();
+
+Object.keys(menuShowcaseSectionIds).forEach(function (category) {
+    const section = document.getElementById(menuShowcaseSectionIds[category]);
+    if (!section) {
+        return;
+    }
+
+    menuShowcaseSections[category] = section;
+    const cards = Array.from(section.querySelectorAll(".card"));
+    if (cards.length) {
+        menuShowcaseTemplatesByCategory[category] = cards[0].cloneNode(true);
+    }
+    cards.forEach(function (card) {
+        const title = card.querySelector(".card-title");
+        if (!title) {
+            return;
+        }
+        const name = title.textContent.split(" - ₦")[0].trim().toLowerCase();
+        menuShowcaseTemplatesByName.set(name, card.cloneNode(true));
+    });
+});
+
+document.querySelectorAll(".First_section .Nigeria_Head .card").forEach(function (card, index) {
+    const menuItemId = "MENU-" + (index + 1);
+    menuShowcaseTemplatesById[menuItemId] = card.cloneNode(true);
+    const title = card.querySelector(".card-title");
+    if (title) {
+        const name = title.textContent.split(" - ₦")[0].trim().toLowerCase();
+        menuShowcaseIdsByName.set(name, menuItemId);
+    }
+});
+
+function renderMenuShowcase() {
+    const savedMenu = localStorage.getItem("ManagedMenuItems");
+    if (savedMenu === null) {
+        return;
+    }
+
+    const items = JSON.parse(savedMenu);
+    if (!Array.isArray(items)) {
+        throw new Error("Saved restaurant menu is invalid.");
+    }
+
+    const headings = Array.from(document.querySelectorAll(".First_section > div[class^='Sec']"));
+    Object.keys(menuShowcaseSectionIds).forEach(function (category) {
+        const section = menuShowcaseSections[category];
+        if (!section) {
+            return;
+        }
+
+        const categoryItems = items.filter(function (item) {
+            return item.category === category && item.name &&
+                Number.isFinite(Number(item.price)) && Number(item.price) > 0;
+        });
+        const heading = headings.find(function (element) {
+            const title = element.querySelector("h2");
+            return title && title.textContent.trim() === category;
+        });
+        const count = heading && heading.querySelector("h6");
+        if (count) {
+            count.textContent = categoryItems.length
+                ? categoryItems.length + (categoryItems.length === 1 ? " menu item" : " menu items")
+                : "No menu items available";
+        }
+        if (heading) {
+            heading.hidden = categoryItems.length === 0;
+        }
+        section.hidden = categoryItems.length === 0;
+
+        const categoryLink = document.querySelector(
+            '.menu-category-links a[href="#' + section.id + '"]'
+        );
+        if (categoryLink) {
+            categoryLink.hidden = categoryItems.length === 0;
+        }
+
+        section.replaceChildren();
+        categoryItems.forEach(function (item) {
+            const template = menuShowcaseTemplatesById[item.id] ||
+                menuShowcaseTemplatesByName.get(item.name.toLowerCase()) ||
+                menuShowcaseTemplatesByCategory[category];
+            if (!template) {
+                throw new Error("A menu card template is missing for " + category + ".");
+            }
+
+            const card = template.cloneNode(true);
+            const title = card.querySelector(".card-title");
+            title.textContent = item.name + " - ₦" + Number(item.price).toLocaleString();
+            const image = card.querySelector("img");
+            if (image) {
+                image.alt = item.name;
+            }
+            if (!menuShowcaseTemplatesById[item.id] &&
+                !menuShowcaseTemplatesByName.has(item.name.toLowerCase())) {
+                const description = card.querySelector(".card-text");
+                if (description) {
+                    description.textContent = "Freshly prepared and ready to enjoy.";
+                }
+            }
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "menu-product-card";
+            wrapper.appendChild(card);
+            section.appendChild(wrapper);
+        });
+    });
+}
+
+renderMenuShowcase();
+
 const savedRestaurantSettings = localStorage.getItem("RestaurantSettings");
 const acceptingOrders = !savedRestaurantSettings ||
     JSON.parse(savedRestaurantSettings).status === "Open";
@@ -604,16 +727,35 @@ window.addEventListener("storage", function (event) {
     if (event.key === "ManagedMenuItems" || event.key === null) {
         try {
             menuCategories = readMenuItems();
+            renderMenuShowcase();
+            const availableMenuItems = new Map();
+            const availableMenuItemsByName = new Map();
             menuCategories.forEach(function (category) {
                 category.items.forEach(function (menuItem) {
-                    const cartItem = cart.find(function (item) {
-                        return menuItem.menuItemId &&
-                            item.menuItemId === menuItem.menuItemId;
-                    });
-                    if (cartItem) {
-                        cartItem.name = menuItem.name;
-                    }
+                    availableMenuItems.set(menuItem.menuItemId, menuItem);
+                    availableMenuItemsByName.set(menuItem.name.toLowerCase(), menuItem);
                 });
+            });
+            cart.forEach(function (cartItem) {
+                let menuItem = cartItem.menuItemId
+                    ? availableMenuItems.get(cartItem.menuItemId)
+                    : availableMenuItemsByName.get(cartItem.name.toLowerCase());
+                if (!menuItem && !cartItem.menuItemId) {
+                    const originalMenuItemId =
+                        menuShowcaseIdsByName.get(cartItem.name.toLowerCase());
+                    menuItem = availableMenuItems.get(originalMenuItemId);
+                }
+                if (menuItem) {
+                    cartItem.menuItemId = menuItem.menuItemId;
+                    cartItem.name = menuItem.name;
+                    cartItem.price = menuItem.price;
+                }
+            });
+            const removedCartItems = cart.filter(function (item) {
+                return !item.menuItemId || !availableMenuItems.has(item.menuItemId);
+            });
+            removedCartItems.forEach(function (item) {
+                cart.splice(cart.indexOf(item), 1);
             });
             if (!menuCategories.some(function (category) {
                 return category.category === activeMenuCategory;
@@ -623,6 +765,9 @@ window.addEventListener("storage", function (event) {
             renderMenuCategoryButtons();
             renderMenuItems();
             displayCart();
+            if (removedCartItems.length) {
+                AppFeedback.warning("A deleted menu item was removed from your cart.");
+            }
         } catch (error) {
             console.error("Unable to refresh the customer menu:", error);
             AppFeedback.error("The menu could not be refreshed.");

@@ -27,16 +27,7 @@ LoginForm.addEventListener("submit", async function (event) {
     submitButton.disabled = true;
 
     try {
-        let customer = await CustomerAccounts.authenticate(identifier, password);
-
-        if (!customer &&
-            identifier.toLowerCase() === "benjaminajao02@gmail.com" &&
-            password === "12345") {
-            customer = {
-                name: "Benjamin Ajao",
-                email: "benjaminajao02@gmail.com"
-            };
-        }
+        const customer = await CustomerAccounts.authenticate(identifier, password);
 
         if (!customer) {
             AppFeedback.error("The email/username or password is incorrect.");

@@ -48,6 +48,22 @@ body {
     font-weight: 600;
 }
 
+.Account_Creation form .show-password-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: start;
+    cursor: pointer;
+}
+
+.Account_Creation .show-password-control input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #FF8C00;
+    cursor: pointer;
+}
+
 .Account_Creation form button {
     margin-top: 10px;
 }
